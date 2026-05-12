@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "668a8d363d1d320e",
+        "id": "fb104928987afe7a",
         "type": "tabs",
         "children": [
           {
-            "id": "fab9d1b12a7a8bd6",
+            "id": "3a70c67de75efb2e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "system-design/基础概念.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "基础概念"
+              "title": "New tab"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "system-design/基础概念.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 基础概念"
+              "title": "Backlinks"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "system-design/基础概念.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 基础概念"
+              "title": "Outgoing links"
             }
           },
           {
@@ -156,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "system-design/基础概念.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 基础概念"
+              "title": "Outline"
             }
           }
         ]
@@ -183,13 +176,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "fab9d1b12a7a8bd6",
+  "active": "631ec585a6520780",
   "lastOpenFiles": [
+    "knowledge/数据库.md",
+    "Untitled.base",
+    "system-design/基础概念.md",
     "knowledge/计算机网络.md",
     "knowledge/消息队列.md",
-    "knowledge/数据库.md",
     "knowledge/操作系统.md",
-    "system-design/基础概念.md",
     "_复习清单.md",
     "README.md"
   ]

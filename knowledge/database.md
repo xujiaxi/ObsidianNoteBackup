@@ -1,6 +1,6 @@
-# 数据库
+# Database
 
-## 目录（待整理）
+## To Review
 
 - [ ] ACID
 - [ ] 事务隔离级别

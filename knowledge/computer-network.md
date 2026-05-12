@@ -1,6 +1,6 @@
-# 计算机网络
+# Computer Network
 
-## 目录（待整理）
+## To Review
 
 - [ ] TCP/UDP 区别
 - [ ] TCP 三次握手、四次挥手

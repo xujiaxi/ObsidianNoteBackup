@@ -1,6 +1,6 @@
-# 系统设计基础
+# System Design Fundamentals
 
-## 目录（待整理）
+## To Review
 
 - [ ] 水平扩展 vs 垂直扩展
 - [ ] 负载均衡策略

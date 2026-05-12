@@ -1,6 +1,6 @@
-# 操作系统
+# Operating System
 
-## 目录（待整理）
+## To Review
 
 - [ ] 进程与线程区别
 - [ ] 进程调度算法

@@ -1,6 +1,6 @@
-# 消息队列
+# Message Queue
 
-## 目录（待整理）
+## To Review
 
 - [ ] Kafka vs RabbitMQ vs RocketMQ
 - [ ] 消息可靠性保证
