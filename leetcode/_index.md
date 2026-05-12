@@ -4,27 +4,31 @@
 
 | Topic | Problems | Directory |
 |-------|----------|-----------|
-| Array | 0 | `array/` |
-| Hash Table | 0 | `hash-table/` |
-| String | 0 | `string/` |
-| Linked List | 0 | `linked-list/` |
-| Stack & Queue | 0 | `stack-queue/` |
-| Tree | 0 | `tree/` |
-| Heap | 0 | `heap/` |
-| Dynamic Programming | 0 | `dynamic-programming/` |
-| Backtracking | 0 | `backtracking/` |
-| Greedy | 0 | `greedy/` |
-| Binary Search | 0 | `binary-search/` |
-| Sorting | 0 | `sorting/` |
-| Two Pointers | 0 | `two-pointers/` |
-| Sliding Window | 0 | `sliding-window/` |
-| Prefix Sum | 0 | `prefix-sum/` |
-| Math | 0 | `math/` |
+| Array | 1 | `array/` |
+| Binary Search | 2 | `binary-search/` |
 | Bit Manipulation | 0 | `bit-manipulation/` |
-| Graph | 0 | `graph/` |
-| Union Find | 0 | `union-find/` |
-| Trie | 0 | `trie/` |
+| Graph | 3 | `graph/` |
+| Linked List | 4 | `linked-list/` |
+| Sliding Window | 2 | `sliding-window/` |
+| Tree | 6 | `tree/` |
+| Backtracking | 0 | `backtracking/` |
 | Design | 0 | `design/` |
+| Dynamic Programming | 0 | `dynamic-programming/` |
+| Greedy | 0 | `greedy/` |
+| Hash Table | 0 | `hash-table/` |
+| Heap | 0 | `heap/` |
+| Math | 0 | `math/` |
+| Prefix Sum | 0 | `prefix-sum/` |
+| Sorting | 0 | `sorting/` |
+| Stack & Queue | 0 | `stack-queue/` |
+| String | 0 | `string/` |
+| Trie | 0 | `trie/` |
+| Two Pointers | 0 | `two-pointers/` |
+| Union Find | 0 | `union-find/` |
+
+## 当前进度
+
+已完成 **18 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
 
 ## 搜索技巧
 

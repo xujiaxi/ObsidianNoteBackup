@@ -15,6 +15,16 @@
 ## 三大 DFS 场景模板
 
 ### 1. 矩阵搜索（Number of Islands）
+
+```python
+def dfs(grid, r, c):
+    if r < 0 or c < 0 or r >= len(grid) or c >= len(grid[0]) or grid[r][c] == '0':
+        return
+    grid[r][c] = '0'  # 淹没
+    for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]:
+        dfs(grid, r + dr, c + dc)
+```
+
 ```java
 void dfs(char[][] grid, int r, int c) {
     if (越界 || 是水) return;
@@ -27,6 +37,19 @@ void dfs(char[][] grid, int r, int c) {
 ```
 
 ### 2. 图深拷贝（Clone Graph）
+
+```python
+visited = {}
+def dfs(node):
+    if not node: return None
+    if node in visited: return visited[node]
+    clone = Node(node.val)
+    visited[node] = clone  # 先入表！再递归！
+    for neighbor in node.neighbors:
+        clone.neighbors.append(dfs(neighbor))
+    return clone
+```
+
 ```java
 HashMap<Node, Node> visited = new HashMap<>();
 Node dfs(Node node) {
@@ -40,6 +63,19 @@ Node dfs(Node node) {
 ```
 
 ### 3. 环检测三色标记（Course Schedule）
+
+```python
+# visited[i]: 0=未访问 1=访问中 2=已完成
+def dfs(curr):
+    if visited[curr] == 1: return True   # 发现环
+    if visited[curr] == 2: return False  # 剪枝
+    visited[curr] = 1
+    for nxt in adj[curr]:
+        if dfs(nxt): return True
+    visited[curr] = 2
+    return False
+```
+
 ```java
 // int[] visited: 0=未访问 1=访问中 2=已完成
 boolean dfs(int curr) {
@@ -76,6 +112,25 @@ Stack (栈): 存放函数的"分身"（每个递归调用一个栈帧）
 
 ## Kahn 算法（BFS 拓扑排序）
 
+```python
+# 核心：入度数组 + deque 队列
+from collections import deque
+
+indegree = [0] * n
+# ... 建图并填充 indegree ...
+
+q = deque([i for i in range(n) if indegree[i] == 0])
+count = 0
+while q:
+    curr = q.popleft()
+    count += 1
+    for nxt in adj[curr]:
+        indegree[nxt] -= 1
+        if indegree[nxt] == 0:
+            q.append(nxt)
+return count == n  # 有环则 count < n
+```
+
 ```java
 // 核心：入度数组 + 队列
 int[] indegree = new int[n];
@@ -96,16 +151,32 @@ return count == n; // 有环则 count < n
 
 **不需要 visited 数组**：`indegree[next] == 0` 天然防重。
 
+## 关于队列：Python deque vs list
+
+| 操作 | deque | list |
+|------|-------|------|
+| `popleft()` / `pop(0)` | **O(1)** | **O(N)**（所有元素前移） |
+| `append()` | O(1) | O(1) |
+| 底层 | 双向链表 | 动态数组 |
+
+BFS 中**必须用 `deque`**，否则 `list.pop(0)` 会导致总时间退化为 O(N²)。
+
 ## 关键设计模式
 
 ### 1. 淹没策略（Sinking）
-直接改原数组做 visited 标记，省额外空间。
+直改原数组做 visited 标记，省额外空间。
+```python
+grid[r][c] = '0'
+```
 ```java
 grid[r][c] = '0';
 ```
 ⚠️ 面试确认是否允许修改原数据
 
 ### 2. 哈希表防环
+```python
+visited[node] = clone  # 先入表！再递归！
+```
 ```java
 visited.put(node, cloneNode);  // 先入表！再递归！
 ```
