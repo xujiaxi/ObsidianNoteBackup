@@ -10,99 +10,99 @@
 ## 75 题完整列表
 
 ### 1. Arrays (数组)
-- [ ] Two Sum
-- [ ] Best Time to Buy and Sell Stock
-- [ ] Contains Duplicate
-- [ ] Product of Array Except Self
-- [ ] Maximum Subarray
-- [ ] Maximum Product Subarray
-- [x] Find Minimum in Rotated Sorted Array
-- [x] Search in Rotated Sorted Array
-- [ ] 3Sum
-- [ ] Container With Most Water
+- [ ] [Two Sum](https://leetcode.com/problems/two-sum/)
+- [ ] [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+- [ ] [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
+- [ ] [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)
+- [ ] [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
+- [ ] [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
+- [x] [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+- [x] [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+- [ ] [3Sum](https://leetcode.com/problems/3sum/)
+- [ ] [Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
 
 ### 2. Binary (Bit Manipulation)
-- [ ] Sum of Two Integers
-- [ ] Number of 1 Bits
-- [ ] Counting Bits
-- [ ] Missing Number
-- [ ] Reverse Bits
+- [ ] [Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/)
+- [ ] [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)
+- [ ] [Counting Bits](https://leetcode.com/problems/counting-bits/)
+- [ ] [Missing Number](https://leetcode.com/problems/missing-number/)
+- [ ] [Reverse Bits](https://leetcode.com/problems/reverse-bits/)
 
 ### 3. Dynamic Programming
-- [ ] Climbing Stairs
-- [ ] Coin Change
-- [ ] Longest Increasing Subsequence
-- [ ] Longest Common Subsequence
-- [ ] Word Break
-- [ ] Combination Sum
-- [ ] House Robber
-- [ ] House Robber II
-- [ ] Decode Ways
-- [ ] Unique Paths
-- [ ] Jump Game
+- [ ] [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)
+- [ ] [Coin Change](https://leetcode.com/problems/coin-change/)
+- [ ] [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
+- [ ] [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
+- [ ] [Word Break](https://leetcode.com/problems/word-break/)
+- [ ] [Combination Sum](https://leetcode.com/problems/combination-sum/)
+- [ ] [House Robber](https://leetcode.com/problems/house-robber/)
+- [ ] [House Robber II](https://leetcode.com/problems/house-robber-ii/)
+- [ ] [Decode Ways](https://leetcode.com/problems/decode-ways/)
+- [ ] [Unique Paths](https://leetcode.com/problems/unique-paths/)
+- [ ] [Jump Game](https://leetcode.com/problems/jump-game/)
 
 ### 4. Graphs
-- [x] Clone Graph
-- [x] Course Schedule
-- [ ] Pacific Atlantic Water Flow
-- [x] Number of Islands
-- [ ] Longest Consecutive Sequence
+- [x] [Clone Graph](https://leetcode.com/problems/clone-graph/)
+- [x] [Course Schedule](https://leetcode.com/problems/course-schedule/)
+- [ ] [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
+- [x] [Number of Islands](https://leetcode.com/problems/number-of-islands/)
+- [ ] [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)
 - [ ] Alien Dictionary (Premium)
 - [ ] Graph Valid Tree (Premium)
 - [ ] Number of Connected Components in an Undirected Graph (Premium)
 
 ### 5. Intervals
-- [ ] Insert Interval
-- [ ] Merge Intervals
-- [ ] Non-overlapping Intervals
+- [ ] [Insert Interval](https://leetcode.com/problems/insert-interval/)
+- [ ] [Merge Intervals](https://leetcode.com/problems/merge-intervals/)
+- [ ] [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)
 - [ ] Meeting Rooms (Premium)
 - [ ] Meeting Rooms II (Premium)
 
 ### 6. Linked List
-- [x] Reverse a Linked List
-- [x] Detect Cycle in a Linked List
-- [x] Merge Two Sorted Lists
-- [ ] Merge K Sorted Lists
-- [x] Remove Nth Node From End Of List
-- [ ] Reorder List
+- [x] [Reverse a Linked List](https://leetcode.com/problems/reverse-linked-list/)
+- [x] [Detect Cycle in a Linked List](https://leetcode.com/problems/linked-list-cycle/)
+- [x] [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)
+- [ ] [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)
+- [x] [Remove Nth Node From End Of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
+- [ ] [Reorder List](https://leetcode.com/problems/reorder-list/)
 
 ### 7. Matrix
-- [ ] Set Matrix Zeroes
-- [ ] Spiral Matrix
-- [ ] Rotate Image
-- [ ] Word Search
+- [ ] [Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)
+- [ ] [Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)
+- [ ] [Rotate Image](https://leetcode.com/problems/rotate-image/)
+- [ ] [Word Search](https://leetcode.com/problems/word-search/)
 
 ### 8. Strings
-- [x] Longest Substring Without Repeating Characters
-- [ ] Longest Repeating Character Replacement
-- [x] Minimum Window Substring
-- [ ] Valid Anagram
-- [ ] Group Anagrams
-- [ ] Valid Parentheses
-- [ ] Valid Palindrome
-- [ ] Longest Palindromic Substring
-- [ ] Palindromic Substrings
+- [x] [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+- [ ] [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)
+- [x] [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)
+- [ ] [Valid Anagram](https://leetcode.com/problems/valid-anagram/)
+- [ ] [Group Anagrams](https://leetcode.com/problems/group-anagrams/)
+- [ ] [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+- [ ] [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
+- [ ] [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
+- [ ] [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
 - [ ] Encode and Decode Strings (Premium)
 
 ### 9. Trees
-- [x] Maximum Depth of Binary Tree
-- [ ] Same Tree
-- [x] Invert/Flip Binary Tree
-- [ ] Binary Tree Maximum Path Sum
-- [x] Binary Tree Level Order Traversal
-- [ ] Serialize and Deserialize Binary Tree
-- [ ] Subtree of Another Tree
-- [x] Construct Binary Tree from Preorder and Inorder Traversal
-- [ ] Validate Binary Search Tree
-- [ ] Kth Smallest Element in a BST
-- [x] Lowest Common Ancestor of BST
-- [ ] Implement Trie (Prefix Tree)
-- [ ] Add and Search Word (Trie)
-- [ ] Word Search II
+- [x] [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+- [ ] [Same Tree](https://leetcode.com/problems/same-tree/)
+- [x] [Invert/Flip Binary Tree](https://leetcode.com/problems/invert-binary-tree/)
+- [ ] [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+- [x] [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+- [ ] [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+- [ ] [Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)
+- [x] [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+- [ ] [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
+- [ ] [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+- [x] [Lowest Common Ancestor of BST](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+- [ ] [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/)
+- [ ] [Add and Search Word (Trie)](https://leetcode.com/problems/design-add-and-search-words-data-structure/)
+- [ ] [Word Search II](https://leetcode.com/problems/word-search-ii/)
 
 ### 10. Heaps
-- [ ] Top K Frequent Elements
-- [ ] Find Median from Data Stream
+- [ ] [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
+- [ ] [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
 
 > 注：Premium 题目可在 NeetCode.io / HackerRank / LintCode 找到替代
 
@@ -157,4 +157,4 @@
 - 理解 **Stack vs. Heap**。深度递归 (DFS) 即使在数据量不大的情况下也可能导致 `StackOverflowError`，需要了解底层原因。
 
 ### 笔记与复习 (Notion Summaries)
-- 制作精简、可复制粘贴的要点，作为面试前快速复习的“作弊条” (Cheat Sheets)。
+- 制作精简、可复制粘贴的要点，作为面试前快速复习的"作弊条" (Cheat Sheets)。

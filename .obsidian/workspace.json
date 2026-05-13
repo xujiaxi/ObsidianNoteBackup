@@ -11,10 +11,14 @@
             "id": "3a70c67de75efb2e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "knowledge/blind-75-overview.md",
+                "mode": "preview",
+                "source": true
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "blind-75-overview"
             }
           }
         ]
@@ -37,7 +41,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -176,10 +180,25 @@
       "bases:Create new base": false
     }
   },
-  "active": "631ec585a6520780",
+  "active": "3a70c67de75efb2e",
   "lastOpenFiles": [
-    "knowledge/数据库.md",
+    "knowledge/bfs-dfs-core.md",
+    "leetcode/_index.md",
+    "knowledge/python-syntax-for-leetcode.md",
+    "knowledge/sliding-window-template.md",
+    "knowledge/tree-core.md",
+    "knowledge/database.md",
+    "knowledge/binary-search-template.md",
+    "knowledge/linked-list-template.md",
+    "knowledge/os.md",
+    "knowledge/message-queue.md",
+    "knowledge/computer-network.md",
+    "knowledge/blind-75-overview.md",
+    "leetcode/_模板.md",
+    "Untitled 2.base",
+    "Untitled 1.base",
     "Untitled.base",
+    "knowledge/数据库.md",
     "system-design/基础概念.md",
     "knowledge/计算机网络.md",
     "knowledge/消息队列.md",
