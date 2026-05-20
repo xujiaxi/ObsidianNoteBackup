@@ -1,22 +1,22 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-05-18）
+## 📅 今日复习（2026-05-19）
 
 ### 需要回顾
-- [ ] **树 — 递归与 BFS**：LC104 最大深度（`max(left, right) + 1` 分治，`if not root: return 0` 防溢出）、LC102 层序遍历（`collections.deque` BFS 队列，`for _ in range(level_size)` 分层）、LC226 翻转二叉树（交换左右子节点后递归，`root.left, root.right = root.right, root.left`）、LC105 构造二叉树（前序首个元素为根，中序定位后分治递归，用 HashMap 缓存 `inorder` 索引 O(1) 查询）、LC235 BST 的 LCA（利用 BST 大小性质，`p.val < root.val < q.val` 时 root 即为 LCA）、LC236 二叉树的 LCA（后续遍历递归，`if left and right: return root`）— **树的递归模板是多道 DP 题的基石，务必吃透**
-- [ ] **链表 — 指针操作**：LC206 反转（`prev, curr, next` 三指针迭代或 `head.next = None` 递归终止）、LC141 环检测（快慢指针 `slow = head, fast = head.next`，注意初始化避免环小死循环）、LC21 合并有序链表（哨兵 `dummy` 节点 + 双指针尾插，`l1.val < l2.val` 时接 l1 否则接 l2）、LC19 删除倒数第 N（快慢指针间隔 n 步 + `dummy` 节点统一处理头节点删除）— **链表题 90% 可以用 dummy node + 快慢指针框架解决**
+- [ ] **图 — DFS/BFS 遍历与拓扑排序**：LC133 克隆图（HashMap 深拷贝，**先入表再递归**防环，否则 A→B→A 无限递归 StackOverflow）、LC200 岛屿数量（沉岛算法 `grid[r][c] = '0'` 直接改原数组省 visited、DFS 递归四方向遍历，注意越界检查）、LC207 课程表（DFS 三色标记法环检测：0=未访问→1=访问中→2=已完成，撞见状态 1 则为环；BFS Kahn 算法：入度数组 + 队列，入度为 0 入队，poll 后后继入度减 1，最终 count == numCourses 则无环）— **三色标记 + Kahn 入度是图面试两大核心模板，务必熟记**
+- [ ] **滑动窗口 — 找最长 vs 找最短模板**：LC3 无重复最长子串（`int[128]` 计数，r 扩张遇到重复时 l 收缩 while，`right - left + 1` 更新 max，**常见错误**：先 `l++` 再 `remove` 导致删除错误字符）、LC76 最小覆盖子串（`need[]` + `window[]` 双数组 + `valid` 计数器，窗口满足条件 (`valid == totalNeeded`) 时 l 试探收缩更新 minLen，**关键**：`valid` 在 `window[c] == need[c]` 瞬间 +1，避免 O(K) 全量遍历；`var` 用自动拆箱注意 Integer `==` 陷阱）— **LC3 非法收缩 vs LC76 合法收缩，两个模板方向相反，面试混用必挂**
 
 ### 重点坑
-- [ ] **递归终止条件遗漏** — LC104 最大深度、LC226 翻转二叉树：忘记 `if not root: return ...` 会导致无限递归栈溢出。树的递归题第一步永远是写 base case
-- [ ] **链表反转指针保存顺序** — LC206：`next = curr.next` 必须在 `curr.next = prev` 之前执行，否则断链后无法访问剩余节点。固定节奏：`next = curr.next → curr.next = prev → prev = curr → curr = next`
-- [ ] **LC105 前序+中序构造的索引查找** — 用 `inorder.index(val)` 是 O(n²)，必须用 HashMap 缓存 `{val: index}`，否则 LeetCode 大数据集超时。同一模式也适用于后序+中序构造
+- [ ] **Kahn 入度更新遗漏** — LC207 Course Schedule BFS：出队节点后必须遍历其**全部邻接节点**逐一减入度，`adj.get(curr).forEach(next -> indegree[next]--)`，漏掉一个邻居就导致入度永远降不到 0，count 永远到不了 numCourses。和 LC200 的沉岛不同，沉岛只淹当前格子无需遍历邻居列表
+- [ ] **Clone Graph 的先入表再递归顺序** — LC133：`visited.put(node, cloneNode)` 必须在 `for (neighbor)` 递归之前执行。Tree 的克隆（先递归子树再创建节点 + 赋值）和图恰恰相反。**口诀：树是后序 → 先孩子再自己；图是先入表 → 先自己再孩子，防环**
+- [ ] **滑动窗口收缩方向混淆** — LC3（找最长无重复）：`while (count[rChar] > 1)` 窗口**非法时收缩**，合法时记录结果。LC76（找最短覆盖）：`while (valid == totalNeeded)` 窗口**合法时收缩**，非法时扩张。方向搞反 → 结果全错。找最长：非法收缩；找最短：合法收缩
 
 ### 建议刷的新题
-- [ ] **字符串/哈希**：Group Anagrams（Medium）— 字符串排序后作为哈希键分桶，或用计数数组（26 长度）作为键；关联已掌握的 HashMap 模式（LC76 最小覆盖子串的双哈希表计数 + LC3 窗口去重），同一套"数据归类"思路
-- [ ] **数组/双指针**：3Sum（Medium）— 排序 + 双指针遍历 + 去重跳过；关联已掌握的双指针模式（滑动窗口 + 链表快慢指针），从"两指针向中"扩展到"固定一值 + 双指针"，面试第二高频
-- [ ] **DP 入门**：House Robber（Medium）— 一维 DP：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`；关联已掌握的递归分治思维（Tree 专题 LC104 的 `max(left, right) + 1` 结构与此一致），是 DP 专题的最佳突破口
-- [ ] **树/DFS**：Binary Tree Maximum Path Sum（Hard）— 后序遍历 + 全局最大值，`max(0, left_gain) + max(0, right_gain) + node.val`；对 Tree 专题已有 6 题基础的你，这是自然进阶，且面经高频
-- [ ] **数组/贪心**：Best Time to Buy and Sell Stock（Easy）— 一次遍历更新 `min_price` 和 `max_profit`；关联已掌握的 O(n) 扫描模式（滑动窗口 + Kadane 思想），是 Array 专题最简单的开始
+- [ ] **图/DFS**：Pacific Atlantic Water Flow（Medium）— 从太平洋和大西洋边界分别逆向 DFS 向中间推进，标记各自能到达的格子，交集即为答案；关联已掌握的 LC200 沉岛算法的坐标遍历（四方向递归）+ DFS 框架，同一套「从边界出发逆向遍历」思路是高频变体
+- [ ] **滑动窗口**：Longest Repeating Character Replacement（Medium）— 窗口内 `maxFreq` 统计 + 收缩条件 `windowLen - maxFreq > k`（超过 k 次替换允许时收缩）；关联已掌握的 LC3 int[128] 计数 + LC76 valid 计数器，三道题覆盖滑动窗口**全部**模板（去重、覆盖、替换），面经中 90% 变体出自这三题
+- [ ] **链表综合**：Reorder List（Medium）— 三步走：快慢指针找中点 → 反转后半段 → 交替合并；一题检验三项基本功，关联已掌握的 LC206 反转、LC141 快慢指针、LC21 合并链表，面试中频
+- [ ] **数组/贪心**：Best Time to Buy and Sell Stock（Easy）— 一次遍历更新 `minPrice` 和 `maxProfit`，O(n) 扫描单变量维护；关联已掌握的滑动窗口扫描模式 + LC76 的「移动过程中维护状态」思想，Array 专题最佳进阶起点
+- [ ] **数组/DP 入门**：House Robber（Medium）— 一维 DP：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`，空间可优化到 O(1) 滚动数组；关联已掌握的 Tree 分治递归（LC104 `max(left, right) + 1` 结构与 `max(取, 不取)` 一致），DP 专题最佳突破口，从递归到 DP 的自然过渡
 
 ## 📊 LeetCode 刷题进度
 
