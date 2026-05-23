@@ -1,22 +1,23 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-05-21）
+## 📅 今日复习（2026-05-22）
 
 ### 需要回顾
-- [ ] **图 DFS/BFS**：LC133 克隆图（DFS 递归克隆 + HashMap 缓存已克隆节点，**注意** `visited.containsKey(node)` 优先判断避免无限递归）、LC200 岛屿数量（沉岛算法：遍历网格遇到 '1' → DFS 标记为 '0' → count++，**外层双层 for 嵌套 DFS 的写法是核心模式**）、LC207 课程表（拓扑排序：Kahn's Algorithm BFS 入度表或 DFS 三色标记环检测，**关键是构建邻接表 `List<List<Integer>>` + 入度数组 `int[] indegree`**）
-- [ ] **二分查找**：LC153 旋转数组最小值（与右边界 `nums[right]` 比较：`if nums[mid] > nums[right] → left = mid + 1` 最小值在右边；`else → right = mid` 最小值在左边，**mid 与右边界比较比左边界可靠**）、LC33 搜索旋转排序数组（先判哪边有序：`if nums[left] <= nums[mid]` 左边有序 → 判断 target 是否在左侧区间；否则右边有序 → 判断是否在右侧区间）
+- [ ] **树递归/分治**：LC104 最大深度（DFS 分治 `max(left,right)+1`，最简单的分治模板）、LC226 翻转二叉树（递归交换左右子树，**前序遍历位置操作**）、LC102 层序遍历（BFS 队列逐层收集，**`for i in range(size)` 分层写法**）、LC105 从前序与中序遍历构造二叉树（前序确定根 → 中序划分左右子树 → 递归构建，**HashMap 预存中序索引 O(1) 查找**）、LC235 BST 的 LCA（利用 BST 性质 `root.val` 在 p 和 q 之间即为 LCA，**无需递归遍历全部节点**）
+- [ ] **链表**：LC206 反转链表（迭代：`prev → curr → nextTemp` 三指针逐个反转；递归：先反转后续、再让 `head.next.next = head`）、LC141 环检测（快慢指针，**`while (fast != null && fast.next != null)` 循环条件**）、LC21 合并两个有序链表（**哨兵节点 `dummy` + 尾插法**，递归写法更简洁）、LC19 删除链表倒数第 N 个节点（快慢指针法：快指针先走 N 步，然后同步移动，快指针到末尾时慢指针指向待删节点的前驱，**也要用 dummy 节点避免删除头节点时的边界问题**）
+- [ ] **滑动窗口**：LC3 无重复字符最长子串（`HashMap<Character, Integer>` 记录字符最新索引，窗口收缩时 `left = Math.max(left, map.get(c) + 1)`，**left 不能回退**）、LC76 最小覆盖子串（`HashMap` 记录 t 中字符需求 → 扩展右指针满足需求 → 收缩左指针求最短，**`formed == required` 判断已全部覆盖**，此模板可解几乎所有子串问题）
 
 ### 重点坑
-- [ ] **图 visited 标记位置** — BFS 入队时立即标记 visited（`visited.add(neighbor); queue.offer(neighbor);`），不要在出队时才标记。否则同一节点被多个邻居入队 → 队列膨胀 → 重复处理 → 死循环或 `OutOfMemoryError`
-- [ ] **二分查找 mid 边界** — `mid = left + (right - left) / 2` 必须用此写法防止 `(left + right)` 整数溢出；LC153 中 `while (left < right)` 用 `right = mid`（不 -1）因 mid 可能是最小值，LC33 中 `while (left <= right)` 用 `right = mid - 1` / `left = mid + 1`（精确匹配），**两个模板的 while 条件和 right 赋值不同，混用会死循环**
-- [ ] **LC207 入度表与邻接表构建** — 先初始化 `indegree[i] = 0` 和空的邻接表 `graph[i] = new ArrayList<>()`，遍历 `prerequisites` 数组时：`indegree[course]++` 和 `graph[prerequisite].add(course)`。**常见误**：方向弄反 → 拓扑排序结果不对
+- [ ] **树递归返回值类型混淆** — LC104 用 `int` 返回深度，LC226 用 `TreeNode` 返回翻转后的根，LC105 用 `TreeNode` 返回构建的节点。**高频 Bug**：分治递归时混淆了「返回给父节点的值」和「当前层局部变量」—— LC105 中构建完左右子树后 `root.left = left; root.right = right;` 再 `return root`，三步顺序不能错
+- [ ] **链表 dummy 节点遗忘** — 链表头可能被删除或修改时（LC19 删除头节点、LC21 合并的头不确定），**必须创建 `ListNode dummy = new ListNode(0); dummy.next = head;`** 并在最后 `return dummy.next`。面试中忘记 dummy 节点是常见扣分点
+- [ ] **滑动窗口 left 移动逻辑** — LC3 中 `left = Math.max(left, map.get(c) + 1)` 用 max 防止 left 回退；LC76 中收缩时 `left++` 后要更新计数器和 `formed`。**两个模板的 left 收缩条件不同**：LC3 是无重复（窗口内字符频率 ≤1），LC76 是满足覆盖（`formed == required` 时收缩求最短）
 
 ### 建议刷的新题
-- [ ] **图/DFS**：Pacific Atlantic Water Flow（Medium）— 从四条边界分别逆向 DFS，两套 visited 矩阵记录能到达太平洋/大西洋的格子，取交集即可。关联已掌握的 LC200 沉岛算法坐标遍历 + LC133 图 DFS 递归模式，同一套「从边界逆向遍历」思想是高频变体
-- [ ] **树/BST**：Validate Binary Search Tree（Medium）— 中序遍历记录 prev，检查是否单调递增；或递归传递 (min, max) 区间约束每个节点值范围。关联已掌握的树递归框架（LC104 分治 + LC235 BST 性质），BST 类题目核心基础，面经必考
-- [ ] **滑动窗口**：Longest Repeating Character Replacement（Medium）— 滑动窗口内维护字符频率，`windowSize - maxFreq <= k` 时收缩左指针，否则扩展右指针取最大窗口。关联已掌握的 LC3 滑动窗口通用模板（`while` 扩展右指针 → `while` 条件收缩左指针），为 LC76 最小覆盖子串再巩固
-- [ ] **区间**：Merge Intervals（Medium）— 按 start 排序后遍历：`if (curr.start <= prev.end)` 说明重叠 → 合并；否则加入结果列表。关联已掌握的 LC21 合并有序链表（「当前能否与上一个合并」的思维一脉相承），为 Interval 专题打基础
-- [ ] **DP 入门**：House Robber（Medium）— 一维 DP：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`，空间可优化为 O(1) 滚动数组。关联已掌握的 LC104 `max(left, right) + 1` 分治递归模式（同一类「取或不取」的 max 决策），DP 专题最佳突破口
+- [ ] **数组/哈希**：[Two Sum](https://leetcode.com/problems/two-sum/)（Easy）— 哈希表存 `(value → index)`，遍历时检查 `target - nums[i]` 是否在表中。文件已存在可复用，哈希表查重模式关联已掌握的 LC3 滑动窗口 HashMap 写法，是「空间换时间」思维起点
+- [ ] **链表综合**：[Reorder List](https://leetcode.com/problems/reorder-list/)（Medium）— 三步法：快慢指针找中点 → 反转后半段链表 → 交替合并前半和后半。关联已掌握的 LC206 反转链表 + LC141 快慢指针，链表多步操作综合题，面经高频
+- [ ] **树/递归**：[Same Tree](https://leetcode.com/problems/same-tree/)（Easy）— 同时递归遍历两棵树：`if (p == null && q == null) return true;` 遇到不等立即返回 false。关联已掌握的树递归框架（LC104 分治 + LC226 递归翻转），强化「同时遍历两棵树」的比较模式
+- [ ] **栈/字符串**：[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)（Easy）— 遇到开括号入栈，闭括号出栈并检查是否匹配，最后栈为空则有效。关联已掌握的拓扑排序入度概念（LC207 课程表），栈匹配是「后进先出」最经典应用
+- [ ] **DP 入门**：[Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)（Easy）— `dp[i] = dp[i-1] + dp[i-2]` 斐波那契递推，空间可优化为 O(1) 滚动数组。关联已掌握的 LC104 `max(left,right)+1` 分治递归模式（同一类「状态转移」思维），DP 专题零门槛突破口
 
 ## 📊 LeetCode 刷题进度
 
