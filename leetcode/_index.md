@@ -12,7 +12,7 @@
 | Sliding Window | 2 | `sliding-window/` |
 | Tree | 6 | `tree/` |
 | Backtracking | 0 | `backtracking/` |
-| Design | 0 | `design/` |
+| Design | 1 | `design/` |
 | Dynamic Programming | 0 | `dynamic-programming/` |
 | Greedy | 0 | `greedy/` |
 | Hash Table | 0 | `hash-table/` |

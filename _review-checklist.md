@@ -1,22 +1,22 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-05-24）
+## 📅 今日复习（2026-05-25）
 
 ### 需要回顾
-- [ ] **链表综合**：LC206 反转链表（`prev/curr/next` 三指针迭代 + 递归）、LC141 环检测（快慢指针，**相遇后找入口：慢指针重置到头，快慢同速走，再次相遇即入口**）、LC21 合并有序链表（哨兵节点 + 递归）、LC19 删除倒数第 N 个（快指针先走 N 步，慢指针与快指针同步走，**注意 dummy 节点处理头节点删除**）
-- [ ] **树分治/构造**：LC104 最大深度（分治 `max(maxDepth(left), maxDepth(right)) + 1`）、LC226 翻转二叉树（递归 swap 左右子树）、LC102 层序遍历（BFS 队列，**每层提前记录 queue.size() 作为本层循环次数**）、LC105 构造二叉树（preorder[0] 为根 → inorder 定位左右子树大小 → 递归构造，**注意传入 preorder/inorder 的索引偏移量**）、LC235 BST 的 LCA（利用 BST 大小关系 O(h)：`p.val < root.val && q.val < root.val` → left；`p.val > root.val && q.val > root.val` → right；否则 root 即为 LCA）
+- [ ] **图 DFS/BFS**：LC133 克隆图（**DFS 递归 + HashMap 记录已克隆节点**，避免无限递归）、LC200 岛屿数量（沉岛算法：遇到 '1' 则 DFS 沉没整岛，**注意边界检查 + visited 数组或直接修改原数组**）、LC207 课程表（拓扑排序 Kahn 算法：入度数组 + BFS 队列，**检测环：最终入队列的节点数是否等于总节点数**）
+- [ ] **二分查找**：LC153 旋转数组最小值（**与右边界 `nums[right]` 比较**，`nums[mid] > nums[right]` → 最小值在右侧，否则在左侧）、LC33 搜索旋转排序数组（先二分找旋转点，再在有序半区二分找目标，或**一次二分判断 target 与 nums[mid] 是否在同一有序半区**）
 
 ### 重点坑
-- [ ] **链表反转指针丢失** — `next = curr.next` 必须在 `curr.next = prev` **之前**保存，顺序一错就断链。递归版要记得返回新头节点（原尾节点）
-- [ ] **树构造题索引偏移** — LC105 用 inorder 中根节点的位置（`int rootIndex = inorderMap.get(preorder[preStart])`）计算左子树大小（`int leftSize = rootIndex - inStart`），然后 preorder 的 `preStart` 和 inorder 的 `inStart/inEnd` 都要同步偏移，**最容易 off-by-one**
-- [ ] **BST vs 普通二叉树 LCA 混淆** — BST 的 LCA 用大小关系 O(h) 解决；普通二叉树（LC236）需要后序遍历回溯，`if (root == null || root == p || root == q) return root`，**两种题解法不同，面试时先确认有没有 BST 性质**
+- [ ] **图 DFS 递归栈溢出** — 图过大时递归 DFS 可能导致 StackOverflowError，**优先考虑 BFS（队列显式迭代）**，特别是 LC200 岛屿数量在大矩阵时
+- [ ] **拓扑排序环检测漏判** — 只检查入度为 0 的节点入队，但**最终要比较入队节点数是否等于 `numCourses`**，否则有环时队列提前空但并非所有节点都被处理
+- [ ] **二分查找边界混淆** — 旋转数组最小值用 `nums[mid] > nums[right]` 判断；搜索目标值时用 `if (target >= nums[left] && target < nums[mid])` 判断 target 是否在左半有序区，**两个题模板不同不要混淆**
 
 ### 建议刷的新题
-- [ ] **链表**：[Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)（Hard）— 关联已掌握 LC21 合并两个有序链表，扩展到 K 个用优先队列 O(n log k) 或分治归并，**面试常考 Follow-up**
-- [ ] **树/验证**：[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)（Medium）— 关联已掌握树递归框架 + BST LCA，用** min/max 边界递归**（`isValid(root, null, null)` 逐层传递允许范围）或中序遍历递增检查
-- [ ] **树/路径**：[Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)（Hard）— 关联已掌握 LC104 最大深度分治模式，后序遍历 + **全局变量跟踪最大路径**，每个节点返回 `max(left, right) + root.val`（负值截断为 0），**后序遍历 Hard 签到题**
-- [ ] **滑动窗口**：[Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)（Medium）— 关联已掌握 LC3/LC76 滑动窗口通用模板，将窗口收缩条件从「无重复」变为「窗口大小 - 最多字符频次 ≤ k」，**滑动窗口最频繁扩展题型**
-- [ ] **数组/子数组**：[Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)（Medium）— Kadane 算法（维护 `currMax = max(nums[i], currMax + nums[i])`，全局 `maxSum = max(maxSum, currMax)`），O(n) 贪心，**面经出现率 Top 5**，关联已掌握二分查找思维转向 DP/贪心模式
+- [ ] **图**：[Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)（Medium）— 关联已掌握图的 DFS/BFS + 沉岛思维，从边界反向逆流 BFS/DFS，**多源反向遍历经典题**
+- [ ] **数组/双指针**：[3Sum](https://leetcode.com/problems/3sum/)（Medium）— 排序 + 双指针 O(n²)，关联二分查找的有序思维，**面经出现率 Top 3**
+- [ ] **图/哈希**：[Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)（Medium）— HashSet O(n)，关联图连通分量的「连通区间」思维，**最优解与并查集同构**
+- [ ] **数组/双指针**：[Container With Most Water](https://leetcode.com/problems/container-with-most-water/)（Medium）— 左右指针贪心收缩短板，关联二分查找的左右边界操控思维
+- [ ] **矩阵/回溯**：[Word Search](https://leetcode.com/problems/word-search/)（Medium）— 矩阵 DFS + 回溯（恢复现场），关联图 DFS 遍历 + 岛屿问题的矩阵搜索模式
 
 ## 📊 LeetCode 刷题进度
 
