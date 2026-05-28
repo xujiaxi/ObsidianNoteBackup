@@ -1,23 +1,20 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-05-26）
+## 📅 今日复习（2026-05-27）
 
 ### 需要回顾
-- [ ] **树综合**：LC104 最大深度（**分治：`max(left, right) + 1`，不要用遍历思维**）、LC102 层序遍历（BFS 队列，**每层先取 `size` 再出队**）、LC105 构造二叉树（**前序定根，中序分左右，递归构造**）、LC226 翻转（**后序翻转：左右交换再递归**）、LC235 LCA（BST 特性：**同时大于/小于则往对应方向走，否则当前节点即 LCA**）
-- [ ] **链表综合**：LC206 反转链表（**三指针 prev/curr/next，防止 next 断裂**）、LC141 环检测（快慢指针，**fast 走两步 slow 走一步，判空：`fast != null && fast.next != null`**）、LC21 合并有序链表（**哨兵节点 + 两两比较、合并后直接接剩余**）、LC19 删除倒数第 N（**快慢指针 + dummy 节点，快指针先走 N 步**）
-- [ ] **滑动窗口**：LC3 无重复字符最长子串（**窗口内用 Set/Map 判重，重复时收缩左指针直到不重复**）、LC76 最小覆盖子串（**needMap + haveCount 双计数，满足条件时收缩左指针找最小**）
+- [ ] **图 DFS/BFS**：LC133 克隆图（**DFS 递归 + HashMap 缓存已克隆节点**，避免无限循环；也可用 BFS 层克隆）、LC200 岛屿数量（**沉岛算法**：遇到 '1' 计数后 DFS 沉没整个岛屿，注意边界检查 + 防止重复访问）、LC207 课程表（**拓扑排序 Kahn's Algorithm**：入度数组 + BFS 队列，最终比较入队节点数是否等于 `numCourses` 来检测环）
+- [ ] **二分查找**：LC153 旋转数组最小值（**与右边界 `nums[right]` 比较**，`nums[mid] > nums[right]` → 最小值在右半，否则在左半；注意数组未旋转的边界情况）、LC33 搜索旋转排序数组（**一次二分**：先判断 `mid` 落在左/右有序半区，再判断 target 是否在该半区内，以此决定收缩方向）
 
 ### 重点坑
-- [ ] **树递归栈溢出** — 退化链表场景（如斜树）深度可达 O(n)，递归 DFS 可能 StackOverflow，**考虑用 BFS/迭代栈兜底**
-- [ ] **链表反转指针时序** — 三指针必须 `next = curr.next` → `curr.next = prev` → `prev = curr` → `curr = next`，**顺序不能乱，否则链表断裂**
-- [ ] **滑动窗口收缩条件混淆** — LC3 有重复时收缩，LC76 当 need 全部满足时收缩。**前者用 Set 判重，后者用计数判包含；注意 LC3 收缩到重复移除才停，LC76 收缩到不满足条件才停，逻辑相反不要搞混**
+- [ ] **BFS vs DFS 选用场景混淆** — BFS 适合求最短路径/层级遍历（如克隆图、层序遍历），DFS 适合求全部路径/连通分量（如岛屿数量、排列组合）。**图过大时优先 BFS 避免递归栈溢出；拓扑排序必须用 BFS（Kahn）或后序 DFS 配合 visited 状态检测环**
+- [ ] **二分查找死循环 & 边界溢出** — 计算 mid 始终用 `mid = left + (right - left) / 2` 避免 `(left + right)` 整数溢出。旋转数组最小值：`nums[mid] > nums[right]` 时 `left = mid + 1`，否则 `right = mid`（**不要写 `right = mid - 1`，可能跳过最小值**）
 
 ### 建议刷的新题
-- [ ] **树**：[Same Tree](https://leetcode.com/problems/same-tree/)（Easy）— 关联已掌握的树 DFS 递归遍历（LC104），**同步遍历两棵树逐节点比较，递归最简实现**
-- [ ] **树**：[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)（Medium）— 关联已掌握的树遍历 + LCA 的 BST 特性，**中序遍历升序 / 递归传递 `(min, max)` 范围**
-- [ ] **链表**：[Reorder List](https://leetcode.com/problems/reorder-list/)（Medium）— **综合性最强链表中频题**：关联已掌握的快慢指针找中点（LC141）+ 反转链表（LC206）+ 合并链表（LC21），一道题考三个技能
-- [ ] **链表**：[Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)（Hard）— 关联已掌握的合并两个有序链表（LC21），**优先队列 O(n log k) 或分治合并，高频 Hard**
-- [ ] **滑动窗口/字符串**：[Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)（Medium）— 关联已掌握的滑动窗口模板（LC3/LC76），**窗口内最多替换 k 个字符，核心是 `windowSize - maxFreq <= k`**
+- [ ] **树/DP**：[Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)（Hard）— 关联已掌握的树 DFS 遍历（LC104 最大深度）+ 本周 DP 目标，**后序遍历 + 全局最大值，每层返回 `max(left, right) + node.val`，更新全局 `max(left + right + node.val)`**
+- [ ] **数组/DP**：[Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)（Medium）— 关联已掌握的滑动窗口维护思维（LC3/LC76）+ 本周 DP 目标，**Kadane 算法：`cur = max(num, cur + num)`，`maxSum = max(maxSum, cur)`，这是最简单的一维 DP 模板**
+- [ ] **DP**：[Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)（Easy）— 关联已掌握的树分治（LC104 本质也是分治）+ 本周 DP 目标，**Fibonacci 递推 `dp[i] = dp[i-1] + dp[i-2]`，空间可优化为 O(1)，DP 入门第一题**
+- [ ] **区间**：[Merge Intervals](https://leetcode.com/problems/merge-intervals/)（Medium）— 按起点排序 + 遍历合并，关联已掌握的排序思维和链表合并（LC21）的**合并重叠区间模板：排完序后，`cur.end >= next.start` 则合并，否则加入结果，高频 Medium**
 
 ## 📊 LeetCode 刷题进度
 
