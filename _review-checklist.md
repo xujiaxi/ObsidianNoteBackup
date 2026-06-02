@@ -1,23 +1,22 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-05-31）
+## 📅 今日复习（2026-06-01）
 
 ### 需要回顾
-- [ ] **图 DFS/BFS** — LC133 克隆图（**DFS 递归 / BFS 队列 + HashMap<原节点, 拷贝> 防重复**）、LC200 岛屿数量（**沉岛：遇到 1 就 DFS/BFS 沉掉整块，计数++**）、LC207 课程表（**拓扑排序：Kahn BFS 入度表 / DFS 三色标记检测环**）
-- [ ] **滑动窗口** — LC3 无重复字符最长子串（**ASCII 频次数组 + 右扩左缩，左边频次>1 时持续收缩**）、LC76 最小覆盖子串（**计数数组 + valid 变量跟踪匹配进度，窗口满足条件后收缩左边界记录结果**）
-- [ ] **二分查找** — LC153 旋转数组最小值（**与 nums[right] 比较，中 > 右则最小值在右半，否则左半**）、LC33 搜索旋转排序数组（**先定 mid 在左/右半，再判 target 位置，二分搜索**）
+- [ ] **树递归/构造** — LC104 最大深度（**max(left, right) + 1，null → 0**）、LC226 翻转二叉树（**root.left, root.right = root.right, root.left，递归/迭代都要会**）、LC102 层序遍历（**BFS 队列，每层先记 size 再 for 循环**）、LC105 前序中序构造（**前序第一个是根，中序 hash 定位根，分左右递归**）、LC235 BST 的 LCA（**p/q 在 root 两侧或等于 root 则返回 root，利用 BST 性质剪枝**）、LC236 BT 的 LCA（**后序遍历，左右子树分别返回 p/q 则 root 是 LCA**）
+- [ ] **链表综合** — LC206 反转链表（**三指针 prev/curr/next 或递归，迭代更安全**）、LC141 环检测（**快慢指针，快走两步慢走一步，相遇即有环**）、LC21 合并有序链表（**哨兵 dummy 节点 + 双指针比较，别忘了处理剩余**）、LC19 删除倒数第 N（**快慢指针保持 N 步差距，一次遍历**）
 
 ### 重点坑
-- [ ] **图：DFS 克隆图栈溢出** — 深拷贝用 BFS 更安全，DFS 递归深度可能随图变大爆栈；拓扑排序 Kahn 算法必须正确维护入度表，队列中所有入度变 0 的节点都要入队
-- [ ] **滑动窗口：收缩条件写错** — LC76 必须用 valid 计数变量跟踪 t 中字符种类是否全部覆盖，不要直接用窗口频次与 t 频次逐字符比较（O(n·m)）；LC3 右移左指针时频次数组别忘了减 1
-- [ ] **二分查找：旋转数组边界混乱** — 与右边界 nums[right] 比较比左边界更可靠；LC33 先判 mid 落在左半（nums[mid] >= nums[left]）还是右半，再决定 target 在哪一侧
+- [ ] **树：递归基忘记处理 null** — 所有树递归必须先判断 root == null 返回 0/None；BST 合法性验证用全局 prev 指针中序遍历，不要只比较 left < root < right（会漏掉层级约束）
+- [ ] **链表：反转时丢失 next 引用** — 每次移动前务必保存 `next = curr.next`，顺序是 curr → next → prev；删除节点时注意 head 可能被删除，用 dummy 节点简化
+- [ ] **树：LC105 构造时中序 hash 化** — 必须先建中序值→下标的 hash 映射，不然后续每次查找 O(n) 导致整体 O(n²)，面试必问优化
 
 ### 建议刷的新题
-- [ ] **图**：[Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)（Medium）— 关联已掌握 DFS/BFS（LC200 岛屿），**反向思维：从太平洋/大西洋边界出发 DFS/BFS 向中心搜索，取交集即可；标记两个布尔矩阵而非沉岛，避免状态冲突；面试高频**
-- [ ] **滑动窗口/字符串**：[Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)（Medium）— 关联已掌握滑动窗口（LC3/LC76），**滑动窗口 + 字符频率统计 + `窗口长度 - 最高频次 ≤ k` 决定收缩；易错：maxFreq 只需和当前字符频率比较即可，不需要扫全表**
-- [ ] **数组**：[Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)（Medium）— 关联已掌握二分查找，**经典 Kadane 算法 O(n)：dp[i] = max(nums[i], dp[i-1] + nums[i])；同时也支持分治 O(n log n)，面试 follow-up 常问**
-- [ ] **图**：[Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)（Medium）— 关联已掌握 DFS/BFS（LC200 岛屿）和并查集，**DFS 遍历/Union-Find 两种实现都要会；与 LC200 岛屿本质 identical，只是变到图表示**
-- [ ] **数组**：[Two Sum](https://leetcode.com/problems/two-sum/)（Easy）— **最佳 warm-up 题，HashMap 一 pass：存值到下标映射，每步检查 target - nums[i] 是否已在 map 中；面试天天见，必须 2 分钟内写完无 bug**
+- [ ] **树**：[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)（Medium）— 关联已掌握 BST（LC235），**中序遍历升序 + prev 指针比较；或用递归传递 (min, max) 范围约束；两个方法都要会，面试常考变体**
+- [ ] **树**：[Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)（Easy）— 关联已掌握树递归（LC104/LC226），**双重递归：isSubtree 遍历每个节点 + isSame 判断两树是否完全相同；可序列化成字符串用 KMP 优化**
+- [ ] **链表**：[Reorder List](https://leetcode.com/problems/reorder-list/)（Medium）— 关联已掌握链表反转（LC206）+ 快慢指针（LC141），**三步走：快慢找中点 → 反转后半 → 交错合并；易错：后半断开连接，最后节点指向 null**
+- [ ] **链表/堆**：[Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)（Hard）— 关联已掌握合并两链表（LC21），**优先队列 O(n log k) 或分治归并 O(n log k)；分治空间 O(1)，面试更推荐；注意自定义比较器写法**
+- [ ] **数组（拓展）**：[Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)（Medium）— **前缀积 + 后缀积各一次遍历，O(n) 时间 O(1) 额外空间（输出数组不算）；与 sliding window 模式互补**
 
 ## 📊 LeetCode 刷题进度
 
