@@ -1,23 +1,22 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-03）
+## 📅 今日复习（2026-06-04）
 
 ### 需要回顾
-- [ ] **树** — LC104 最大深度（**DFS 递归求高度，base case root==null 返回 0**）、LC226 翻转二叉树（**前/后序遍历 swap 左右子树，层序也能做**）、LC102 层序遍历（**BFS 队列模板，每层 for 循环按长度出队**）、LC105 构造二叉树（**前序找根、中序分左右，递归分治，注意偏移计算**）、LC235 BST 的 LCA（**利用 BST 性质，p<root<q 即 LCA，迭代比递归省栈空间**）
-- [ ] **链表** — LC206 反转链表（**迭代三指针 prev/curr/next，递归从后往前理解**）、LC141 环检测（**快慢指针 Floyd 判环，fast 两步 slow 一步**）、LC21 合并两个有序链表（**Dummy Node 迭代 or 递归，注意剩余节点拼接**）、LC19 删除倒数第 N 个节点（**快指针先走 n 步，慢指针从 dummy 出发，差一步时删除**）
+- [ ] **图 BFS/DFS** — LC133 克隆图（**BFS/DFS + HashMap 原→克隆重映射，visited 防死循环**）、LC200 岛屿数量（**Sinking Island 沉岛算法，DFS 四方向遍历淹没陆地**）、LC207 课程表（**Kahn's Algorithm BFS 入度表拓扑排序 or DFS 三色标记法环检测**）
+- [ ] **滑动窗口** — LC3 无重复字符最长子串（**右指针扩展直至遇到重复，左指针跳到重复字符后一位，HashSet/HashMap 维护窗口**）、LC76 最小覆盖子串（**通用模板：右扩直到满足全部字符，左缩直到不再满足，记录最小长度时的左右索引**）
 
 ### 重点坑
-- [ ] **树：LC105 构造索引偏移计算** — `int leftSize = index - inStart; root.left = build(preStart+1, inStart, leftSize); root.right = build(preStart+1+leftSize, index+1, inEnd)` 偏移计算极易忘加 1，建议手画例子验证
-- [ ] **树：LC235 BST LCA 方向判断误区** — 条件是 `p.val < root.val && q.val < root.val` 往左，`p.val > root.val && q.val > root.val` 往右；不要用 while 循环时忘记比较另一侧；如果 p 或 q 就是 root 则直接返回 root
-- [ ] **链表：Dummy Head 遗漏导致头节点特判** — LC19 删除头节点时如果没有 Dummy Head 需要额外 if 判断；LC21/LC206 用 Dummy Head 统一逻辑，最后返回 `dummy.next`
-- [ ] **链表：快慢指针初始化与 null 检查** — LC141 快指针 `fast = head.next` 起步，while 循环条件必须先判 fast 再判 fast.next，防止 NPE；LC19 快指针走 n 步后要检查 null
+- [ ] **图：LC207 拓扑排序环检测** — Kahn's Algorithm 核心是找到入度为 0 的节点入队，每弹出一个就减少其邻居的入度；如果处理完的节点数 ≠ 总节点数，说明存在环；DFS 三色标记（白/灰/黑）中，遍历到灰色节点即发现 BACK EDGE 表示有环
+- [ ] **图：LC200 沉岛边界检查顺序** — 方向数组 `dx = {0,0,1,-1}, dy = {1,-1,0,0}`，遍历邻居时必须**先判断越界再判断值**（`if r<0 || r>=m || c<0 || c>=n || grid[r][c]!='1'`），顺序反了会 NPE
+- [ ] **滑动窗口：LC76 needs/window 计数器混淆** — `needs` 存储目标串目标计数，`window` 存储当前窗口实际计数；仅当 `window[c] == needs[c]` 时 `match++`；左侧收缩时 `window[d] == needs[d]` 时 `match--`；容易忘记匹配数增减条件
 
 ### 建议刷的新题
-- [ ] **树**：[Same Tree](https://leetcode.com/problems/same-tree/)（Easy）— 关联已掌握树递归（LC104/LC226），**递归判断 `p.val == q.val && isSame(p.left, q.left) && isSame(p.right, q.right)`；迭代可用 BFS 双队列同步比较**
-- [ ] **树**：[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)（Medium）— 关联已掌握 BST 性质（LC235），**中序遍历递增序列 or 递归传递 `min/max` 边界；注意用 `long` 避免 `Integer.MIN_VALUE` 边界值，null 节点直接返回 true**
-- [ ] **树**：[Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)（Easy/Medium）— 关联 Same Tree 判断，**遍历每个节点 + isSameTree 判断子树是否相等；序列化 + KMP 可优化到 O(n)**
-- [ ] **链表**：[Reorder List](https://leetcode.com/problems/reorder-list/)（Medium）— 关联已掌握链表反转（LC206）和快慢指针（LC141），**三步法：快慢指针找中点 → 反转后半段 → 交错合并（注意切断前半段尾部）**
-- [ ] **链表**：[Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)（Hard）— 关联已掌握合并两个有序链表（LC21），**分治归并（两两合并，O(N log k)）或 PriorityQueue min-heap 逐个取最小头节点（O(N log k)）；PriorityQueue 需自定义 Comparator 比较 ListNode.val**
+- [ ] **图**：[Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)（Medium）— 关联已掌握 DFS/BFS（LC200 岛屿），**反向思维从海岸边 DFS/BFS，维护两个可达集合（太平洋 + 大西洋），最后取交集**
+- [ ] **图**：[Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)（Medium）— 关联已掌握图的连通性思维，**HashSet 存所有数，从序列起点（`num-1` 不在 set 中）开始向后计数，O(n) 时间**
+- [ ] **树**：[Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)（Hard）— 关联已掌握树遍历（LC102 层序 + LC105 构造），**BFS/DFS 序列化为字符串，反序列化用队列/递归重建；注意处理 null 占位符**
+- [ ] **区间**：[Merge Intervals](https://leetcode.com/problems/merge-intervals/)（Medium）— 关联已掌握排序思维，**按 start 排序后遍历，当前 end >= 下一个 start 则合并取最大 end，否则加入结果**
+- [ ] **区间**：[Insert Interval](https://leetcode.com/problems/insert-interval/)（Medium）— 关联已掌握 Merge Intervals 思维，**分三段处理：左侧不重叠直接加入 → 合并重叠区间 → 右侧不重叠直接加入**
 
 ## 📊 LeetCode 刷题进度
 
