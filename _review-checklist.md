@@ -1,22 +1,22 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-04）
+## 📅 今日复习（2026-06-05）
 
 ### 需要回顾
-- [ ] **图 BFS/DFS** — LC133 克隆图（**BFS/DFS + HashMap 原→克隆重映射，visited 防死循环**）、LC200 岛屿数量（**Sinking Island 沉岛算法，DFS 四方向遍历淹没陆地**）、LC207 课程表（**Kahn's Algorithm BFS 入度表拓扑排序 or DFS 三色标记法环检测**）
-- [ ] **滑动窗口** — LC3 无重复字符最长子串（**右指针扩展直至遇到重复，左指针跳到重复字符后一位，HashSet/HashMap 维护窗口**）、LC76 最小覆盖子串（**通用模板：右扩直到满足全部字符，左缩直到不再满足，记录最小长度时的左右索引**）
+- [ ] **树递归/遍历** — LC104 最大深度（**递归 base case null 返回 0，左右子树 max + 1**）、LC226 翻转二叉树（**递归先翻转左右子树再交换**）、LC102 层序遍历（**BFS queue，每层记录当前队列 size**）、LC105 从前序与中序构造二叉树（**前序第一个为根，中序定位根索引，递归构建左右子树**）、LC235 BST 的 LCA（**利用 BST 性质，p<root<q 则 root 为 LCA**）
+- [ ] **链表操作** — LC206 反转链表（**迭代三指针 prev/curr/next，递归两种方式**）、LC141 环检测（**快慢指针，相遇即有环**）、LC21 合并两个有序链表（**dummy node + 双指针逐个比较**）、LC19 删除链表倒数第 N 个节点（**dummy node + 快慢指针，快指针先走 n 步**）
 
 ### 重点坑
-- [ ] **图：LC207 拓扑排序环检测** — Kahn's Algorithm 核心是找到入度为 0 的节点入队，每弹出一个就减少其邻居的入度；如果处理完的节点数 ≠ 总节点数，说明存在环；DFS 三色标记（白/灰/黑）中，遍历到灰色节点即发现 BACK EDGE 表示有环
-- [ ] **图：LC200 沉岛边界检查顺序** — 方向数组 `dx = {0,0,1,-1}, dy = {1,-1,0,0}`，遍历邻居时必须**先判断越界再判断值**（`if r<0 || r>=m || c<0 || c>=n || grid[r][c]!='1'`），顺序反了会 NPE
-- [ ] **滑动窗口：LC76 needs/window 计数器混淆** — `needs` 存储目标串目标计数，`window` 存储当前窗口实际计数；仅当 `window[c] == needs[c]` 时 `match++`；左侧收缩时 `window[d] == needs[d]` 时 `match--`；容易忘记匹配数增减条件
+- [ ] **树递归 base case 顺序** — 必须先判 `root == null` 再取值（如 `root.val`），顺序反了直接 NPE；后序遍历中 `int left = maxDepth(root.left)` 之前一定先 check null
+- [ ] **链表 dummy node 使用** — LC19 和 LC21 中 `dummy.next = head`，最后返回 `dummy.next`；操作时用 `prev = dummy` 遍历，注意循环结束后 `prev.next` 可能为 null 需要处理
+- [ ] **LC102 BFS 层序遍历** — 每层开始时先取 `int size = queue.size()`，用 `for` 循环处理当前层而非 `while(!queue.isEmpty())`，否则找不到分层边界
 
 ### 建议刷的新题
-- [ ] **图**：[Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)（Medium）— 关联已掌握 DFS/BFS（LC200 岛屿），**反向思维从海岸边 DFS/BFS，维护两个可达集合（太平洋 + 大西洋），最后取交集**
-- [ ] **图**：[Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)（Medium）— 关联已掌握图的连通性思维，**HashSet 存所有数，从序列起点（`num-1` 不在 set 中）开始向后计数，O(n) 时间**
-- [ ] **树**：[Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)（Hard）— 关联已掌握树遍历（LC102 层序 + LC105 构造），**BFS/DFS 序列化为字符串，反序列化用队列/递归重建；注意处理 null 占位符**
-- [ ] **区间**：[Merge Intervals](https://leetcode.com/problems/merge-intervals/)（Medium）— 关联已掌握排序思维，**按 start 排序后遍历，当前 end >= 下一个 start 则合并取最大 end，否则加入结果**
-- [ ] **区间**：[Insert Interval](https://leetcode.com/problems/insert-interval/)（Medium）— 关联已掌握 Merge Intervals 思维，**分三段处理：左侧不重叠直接加入 → 合并重叠区间 → 右侧不重叠直接加入**
+- [ ] **树**：[Same Tree](https://leetcode.com/problems/same-tree/)（Easy）— 关联已掌握递归遍历（LC104），**同时递归比较两棵树的左右子树：都 null 则 true，一个 null 则 false，值不同则 false**
+- [ ] **树**：[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)（Medium）— 关联已掌握 LCA + BST 性质（LC235），**中序遍历递增 or 递归传 min/max 区间约束每个节点值范围**
+- [ ] **链表**：[Reorder List](https://leetcode.com/problems/reorder-list/)（Medium）— 关联已掌握反转链表（LC206）+ 快慢指针（LC141），**三步法：快慢指针找中點 → 反转后半部分 → 交错合并两个链表**
+- [ ] **树**：[Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)（Easy/Medium）— 关联 Same Tree + 树遍历，**遍历 s 树的每个节点用 Same Tree 比较是否与 t 相同**
+- [ ] **树**：[Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)（Hard）— 关联后序遍历（LC104），**后序遍历同时返回「以当前节点为端点的单边最大路径」，全局变量更新「含当前节点的最大路径和」**
 
 ## 📊 LeetCode 刷题进度
 
