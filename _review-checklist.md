@@ -1,22 +1,23 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-05）
+## 📅 今日复习（2026-06-06）
 
 ### 需要回顾
-- [ ] **树递归/遍历** — LC104 最大深度（**递归 base case null 返回 0，左右子树 max + 1**）、LC226 翻转二叉树（**递归先翻转左右子树再交换**）、LC102 层序遍历（**BFS queue，每层记录当前队列 size**）、LC105 从前序与中序构造二叉树（**前序第一个为根，中序定位根索引，递归构建左右子树**）、LC235 BST 的 LCA（**利用 BST 性质，p<root<q 则 root 为 LCA**）
-- [ ] **链表操作** — LC206 反转链表（**迭代三指针 prev/curr/next，递归两种方式**）、LC141 环检测（**快慢指针，相遇即有环**）、LC21 合并两个有序链表（**dummy node + 双指针逐个比较**）、LC19 删除链表倒数第 N 个节点（**dummy node + 快慢指针，快指针先走 n 步**）
+- [ ] **图 DFS/BFS** — LC133 克隆图（**DFS/BFS 用 HashMap 存新旧节点映射，先创建新节点再递归邻居，避免环中无限递归**）、LC200 岛屿数量（**沉岛算法：遍历到 '1' 时 count++ 并 DFS 沉掉整个岛屿**）、LC207 课程表（**拓扑排序：Kahn 算法计算入度，BFS 从入度 0 开始逐层移除**）
+- [ ] **滑动窗口** — LC3 无重复字符最长子串（**双指针 + HashSet/数组，右指针扩展，遇到重复则收缩左指针直到无重复**）、LC76 最小覆盖子串（**双指针 + 计数数组，先扩展右指针到覆盖所有 t，再收缩左指针找最优解**）
+- [ ] **二分查找** — LC153 旋转数组最小值（**与右边界 `nums[right]` 比较，`while(left < right)` 模板，不要求找 target**）、LC33 搜索旋转排序数组（**先判断 mid 在左段还是右段，再根据 target 范围缩小区间**）
 
 ### 重点坑
-- [ ] **树递归 base case 顺序** — 必须先判 `root == null` 再取值（如 `root.val`），顺序反了直接 NPE；后序遍历中 `int left = maxDepth(root.left)` 之前一定先 check null
-- [ ] **链表 dummy node 使用** — LC19 和 LC21 中 `dummy.next = head`，最后返回 `dummy.next`；操作时用 `prev = dummy` 遍历，注意循环结束后 `prev.next` 可能为 null 需要处理
-- [ ] **LC102 BFS 层序遍历** — 每层开始时先取 `int size = queue.size()`，用 `for` 循环处理当前层而非 `while(!queue.isEmpty())`，否则找不到分层边界
+- [ ] **图 DFS 克隆图顺序** — 克隆图时必须先 `map.put(node, new Node(node.val))` 再加入 map，再递归处理邻居 neighbors，否则在环状图中会因重复 dfs 同一节点而无限递归，导致 StackOverflowError
+- [ ] **滑动窗口收缩条件** — 窗口满足条件后（如 LC76 count == tLen），收缩左指针时先更新结果再移动左指针，且左指针移出窗口后要恢复计数（`sCount[sChar[left]]--`），注意左右指针的边界处理
+- [ ] **二分查找旋转数组边界选择** — 与右边界 `nums[right]` 比较比左边界更可靠；找最小值用 `while(left < right)` 模板避免死循环，`left = mid + 1` / `right = mid` 的移动规则需熟记
 
 ### 建议刷的新题
-- [ ] **树**：[Same Tree](https://leetcode.com/problems/same-tree/)（Easy）— 关联已掌握递归遍历（LC104），**同时递归比较两棵树的左右子树：都 null 则 true，一个 null 则 false，值不同则 false**
-- [ ] **树**：[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)（Medium）— 关联已掌握 LCA + BST 性质（LC235），**中序遍历递增 or 递归传 min/max 区间约束每个节点值范围**
-- [ ] **链表**：[Reorder List](https://leetcode.com/problems/reorder-list/)（Medium）— 关联已掌握反转链表（LC206）+ 快慢指针（LC141），**三步法：快慢指针找中點 → 反转后半部分 → 交错合并两个链表**
-- [ ] **树**：[Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)（Easy/Medium）— 关联 Same Tree + 树遍历，**遍历 s 树的每个节点用 Same Tree 比较是否与 t 相同**
-- [ ] **树**：[Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)（Hard）— 关联后序遍历（LC104），**后序遍历同时返回「以当前节点为端点的单边最大路径」，全局变量更新「含当前节点的最大路径和」**
+- [ ] **图**：[Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)（Medium）— 关联已掌握图 DFS（LC200），**反向思维：从四条边界分别向内地 DFS，标记能流入 Pacific 和 Atlantic 的格子，最后求交集**
+- [ ] **图/数组**：[Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)（Medium）— 关联已掌握图遍历（LC200），**用 HashSet 去重，只从 `num-1` 不在集合中的数开始计数**，哈希表思维
+- [ ] **数组**：[Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)（Medium）— 关联已掌握二分查找模式（LC153），**Kadane 算法 O(n)：`maxEndingHere = max(nums[i], maxEndingHere + nums[i])`**，经典 DP 入门
+- [ ] **字符串**：[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)（Easy）— 关联已掌握栈数据结构（BFS 层序使用 queue），**栈匹配括号：左括号 push，右括号检查栈顶是否匹配，最后栈空则有效**
+- [ ] **树**：[Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)（Medium）— 关联已掌握 BST 性质 + LCA（LC235），**中序遍历 BST 递增，第 k 个访问的节点即为答案**，可用迭代栈实现
 
 ## 📊 LeetCode 刷题进度
 
