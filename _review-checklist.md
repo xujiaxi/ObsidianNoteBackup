@@ -1,23 +1,24 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-10）
+## 📅 今日复习（2026-06-11）
 
 ### 需要回顾
-- [ ] **图（DFS/BFS/拓扑排序）** — LC133 克隆图（**DFS/HashMap：visited 映射原节点→克隆节点，递归克隆邻居**）、LC200 岛屿数量（**DFS 沉岛法：grid[i][j]=='1' 时 mark 为 '0'，递归四周**）、LC207 课程表（**拓扑排序：入度表 + Kahn BFS，处理有向图环检测**）
-- [ ] **二分查找（旋转数组）** — LC153 寻找旋转数组最小值（**与右边界比较：`if nums[mid] > nums[right]` 最小值在右半，`left = mid+1`，否则 `right = mid`**）、LC33 搜索旋转排序数组（**先判断 mid 在左半/右半段，再针对性收缩**）
-- [ ] **滑动窗口** — LC3 无重复字符最长子串（**外层扩展 right，内层 `while` 遇重复收缩 left**，用 HashSet 维护窗口）、LC76 最小覆盖子串（**HashMap 计数 + count 维护有效字符，窗口满足时收缩 left 找最短子串**）
+- [ ] **树（递归 / 构造 / 遍历）**：LC104 最大深度、LC226 翻转、LC102 层序、LC105 从前序+中序构造二叉树、LC236/235 LCA — 树递归的 5 种核心场景：深度计算、镜像翻转、层序遍历、前序/中序构造、BST/普通树 LCA。**递归终止条件 + 当前层逻辑 + 递归返回值** 是根本框架，LCA 需区分 BST（利用大小比较）和普通树（后序遍历找 p/q）。
+- [ ] **链表（双指针 / 反转 / 合并）**：LC206 反转、LC141 环检测（快慢指针）、LC21 合并有序链表、LC19 删除倒数第 N 个 — **反转时保存 prev/current/next 三步走**；**环检测注意 fast/slow 都从 head 出发，相遇后再将 slow 重置为 head，同速前进找入口**。
+- [ ] **设计 / 综合题**：LC348 设计 Tic-Tac-Toe（**行/列/对角线计数，O(1) 判定胜负**）、LC362 设计 Hit Counter（**滑动窗口 + 二分 / 循环队列维护时间戳**）— 高频 系统设计/面向对象 面试题，注意边界和并发。
 
 ### 重点坑
-- [ ] **二分查找边界处理** — LC153 搜索最小值时，和 `nums[right]` 比较；LC33 搜索目标值时，每次先判断 `nums[mid]` 在左半段还是右半段，再决定哪半边缩
-- [ ] **BFS 拓扑排序入度更新** — Kahn 算法每出队一个节点，将其邻接点入度 -1，入度归零时才进队；别忘了单独处理所以没有先修课（入度为0）的课程
-- [ ] **滑动窗口 HashMap 计数失效** — 收缩 left 前，先恢复 map[s[left]] 的计数，再右移 left；另外 `validCount` 只在 `need[c] == have[c]` 时增加，不是每次都会
+- [ ] **树构造递归下标越界** — LC105 用前序+中序构造时，`rootVal` 在中序中的索引 `inIdx` 划分左右子树长度，务必用 `inIdx - inStart` 作为前序左子树长度，递归参数极易错位。
+- [ ] **链表反转漏接尾节点** — 反转前保存 `next = cur.next`，再 `cur.next = prev`，然后 `prev = cur; cur = next`，顺序不可颠倒，否则断链。
+- [ ] **LCA 普通树 vs BST 混淆** — BST 直接利用 `root.val` 与 `p.val/q.val` 的大小关系剪枝；普通树需递归左右子树查找，后序判断。
+- [ ] **滑动窗口收缩漏更新计数** — 收缩 `left` 前，先恢复 `map[s[left]]` 的计数，再 `left++`；`validCount` 只在 `need[c] == have[c]` 时增加，不是每次都会。
 
 ### 建议刷的新题
-- [ ] **数组**：Maximum Subarray（Medium）— 关联已掌握 LC153/LC33 二分查找/数组，**Kadane 贪心：`maxEnding = max(nums[i], maxEnding + nums[i])`**，高频且是 DP 基础
-- [ ] **滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握 LC3+LC76 滑动窗口，**窗口内维护最高频字符，`windowLen - maxFreq ≤ k`，否则收缩左指针**
-- [ ] **图**：Pacific Atlantic Water Flow（Medium）— 关联已掌握 LC200 岛屿数量，**从四条边界逆流 DFS/BFS，标记能流向太平洋/大西洋的格子，取交集**
-- [ ] **DP 入门**：Climbing Stairs（Easy）— 关联已掌握递归/分治思维，**`dp[i] = dp[i-1] + dp[i-2]`，斐波那契递推**，为后续 Coin Change / House Robber 打基础
-- [ ] **数组双指针**：Container With Most Water（Medium）— 关联已掌握 LC3/LC76 双指针/滑动窗口思想，**左右指针向中间收缩，每次移动高度较小的一边**，面试高频经典题
+- [ ] **数组**：Two Sum（Easy）— 关联已掌握 HashTable 思维，**`map[target - num]` 一次遍历求补数**，DP/双指针的基础。
+- [ ] **DP 入门**：Climbing Stairs（Easy）— 关联已掌握递归/分治思维，**`dp[i] = dp[i-1] + dp[i-2]`，斐波那契递推**，为 Coin Change / House Robber 打基础。
+- [ ] **图 / DFS+BFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握 LC200 岛屿数量，**从四条边界逆流 DFS/BFS，标记能流向太平洋/大西洋的格子，取交集**。
+- [ ] **滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握 LC3 / LC76 滑动窗口，**窗口内维护最高频字符，`windowLen - maxFreq ≤ k`，否则收缩左指针**
+- [ ] **数组双指针**：Container With Most Water（Medium）— 关联已掌握 LC3/LC76 双指针思想，**左右指针向中间收缩，每次移动高度较小的一边**，面试高频经典题。
 
 ## 📊 LeetCode 刷题进度
 
