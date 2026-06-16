@@ -56,7 +56,7 @@
 - [ ] [Merge Intervals](https://leetcode.com/problems/merge-intervals/)
 - [ ] [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)
 - [ ] Meeting Rooms (Premium)
-- [ ] Meeting Rooms II (Premium)
+- [x] Meeting Rooms II (Premium)
 
 ### 6. Linked List
 - [x] [Reverse a Linked List](https://leetcode.com/problems/reverse-linked-list/)

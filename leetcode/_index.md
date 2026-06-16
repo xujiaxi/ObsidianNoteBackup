@@ -16,7 +16,7 @@
 | Dynamic Programming | 0 | `dynamic-programming/` |
 | Greedy | 0 | `greedy/` |
 | Hash Table | 0 | `hash-table/` |
-| Heap | 0 | `heap/` |
+| Heap | 1 | `heap/` |
 | Math | 0 | `math/` |
 | Prefix Sum | 0 | `prefix-sum/` |
 | Sorting | 0 | `sorting/` |
