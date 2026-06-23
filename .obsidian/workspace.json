@@ -44,7 +44,7 @@
                 "autoReveal": true
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "文件列表"
             }
           },
           {
@@ -171,29 +171,29 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
     }
   },
   "active": "3a70c67de75efb2e",
   "lastOpenFiles": [
-    "knowledge/bfs-dfs-core.md",
     "leetcode/_index.md",
+    "knowledge/blind-75-overview.md",
+    "knowledge/binary-search-template.md",
+    "knowledge/bfs-dfs-core.md",
     "knowledge/python-syntax-for-leetcode.md",
     "knowledge/sliding-window-template.md",
     "knowledge/tree-core.md",
     "knowledge/database.md",
-    "knowledge/binary-search-template.md",
     "knowledge/linked-list-template.md",
     "knowledge/os.md",
     "knowledge/message-queue.md",
     "knowledge/computer-network.md",
-    "knowledge/blind-75-overview.md",
     "leetcode/_模板.md",
     "Untitled 2.base",
     "Untitled 1.base",

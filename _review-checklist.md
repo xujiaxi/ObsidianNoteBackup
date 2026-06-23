@@ -1,23 +1,23 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-21）
+## 📅 今日复习（2026-06-22）
 
 ### 需要回顾
-- [ ] **图**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200） — **核心：Clone Graph 用 HashMap 作为新旧节点映射，先入表再递归处理邻居，防止环导致死循环；Course Schedule 三色标记法检测环（0未访问、1访问中、2已完成），状态1再次碰到说明有环，也可改用 Kahn 算法（BFS拓扑排序）用入度判断；Number of Islands 用沉岛策略直接改原数组 '1'→'0'，DFS/BFS 都可，选一个顺手的模板记住。注意矩阵访问先检查越界再检查值。**
-- [ ] **二分查找**：Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33） — **核心：旋转排序数组的最小值用右边界判断更可靠（`nums[mid] > nums[right]` → 最小值在右边），`while (left < right)` 找极值；搜索目标值则用 `while (left <= right)`，核心是“找到有序的那一半，看 target 在不在里面”—— 左半边有序就检查 `[left, mid)`，否则检查右半边。**
+- [ ] **树**：Maximum Depth of Binary Tree（LC104）、Invert Binary Tree（LC226）、Construct Binary Tree from Preorder and Inorder（LC105）、Lowest Common Ancestor of BST（LC235/LC236） — **核心：递归三要素（终止条件 + 递归逻辑 + 返回值），Invert 是最经典的递归分治+后序遍历，Construct 用 preorder[0] 定位中序根节点再划分子区间，LCA 利用 BST 性质或递归查找；注意 LCA of BST 和 LCA of Binary Tree 的区别。**
+- [ ] **链表**：Reverse Linked List（LC206）、Remove Nth Node From End（LC19）、Merge Two Sorted Lists（LC21） — **核心：反转链表用三指针（prev/curr/next），哨兵节点 dummy 统一头尾操作；Remove Nth 快慢指针或先走 n 步再一起动；Merge 用 dummy 头简化边界，尾插法逐个比较。**
 
 ### 重点坑
-- [ ] **Clone Graph 中 HashMap 先入表再递归** — 如果先递归再 put，A→B→A 时 A 还没进表 → 无限递归。切记创建新节点后**立刻入表**，再处理邻居。
-- [ ] **旋转排序数组二分查找与左边界比较会出错** — `nums[left]` 可能处于大段升序的任意位置，判断哪半有序时优先用 `nums[left] <= nums[mid]` 确认左半边有序，或者用右边界 `nums[right]` 判断更可靠（LC153）。
-- [ ] **混淆 `while (left < right)` 和 `while (left <= right)`** — LC153 找极值用 `<`（左右相遇时退出），LC33 找目标值用 `<=`（还有元素时继续），选错模板会导致死循环或漏判。
-- [ ] **Java Integer 比较用 == 而不是 equals** — 特别是 HashMap/HashSet 中超出 Integer Cache (-128 ~ 127) 范围的 `Integer` 值用 == 会判定为 false，导致逻辑错误。牢记用 `.equals()` 或自动拆箱后用基本类型比较。
+- [ ] **反转链表时未更新 next 指针或丢失后续链表** — 先从 curr.next 保存 nextTemp，再让 curr.next 指向 prev，然后同步移动 prev 和 curr。顺序必须对：先保存 next → 改 curr.next → prev 和 curr 前移。
+- [ ] **快慢指针找倒数第 n 个节点时索引差一错** — fast 先走 n+1 步还是 n 步取决于要找的是倒数第 n 个还是第 n+1 个。推荐先让 fast 走 n 步，然后 slow/fast 同步前进，fast 到末尾时 slow 正好在倒数第 n+1 个，便于做删除操作。
+- [ ] **Construct Binary Tree 时 preorder 起始索引越界** — 用中序根节点位置计算左子树长度 leftLen = in_root_idx - in_left， preorder 子区间起始是 pre_left + 1，右子树起始是 pre_left + 1 + leftLen，容易算错。写的时候先标清楚各个区间的 [left, right)。
+- [ ] **BST LCA 和普通二叉树 LCA 混淆** — BST 可以直接比较 val 决定走左/右子树；普通二叉树不能直接比较，必须两边都递归，看哪边返回 non-null 来决定结果。
 
 ### 建议刷的新题
-- [ ] **图 / 多源 BFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握的 BFS/DFS（LC200 Number of Islands），**从四周海洋反向淹没，找同时能到达两个海洋的单元格90594331。是 LC200 的多源扩展。**
-- [ ] **区间 / 排序**：Merge Intervals（Medium）— 关联已掌握的排序思想和 Meeting Rooms II（LC253），**先按起始位置排序，然后逐个合并重叠区间。关键是排序后只用比较当前区间的 start 和上一个 merged 区间的 end。**
-- [ ] **滑动窗口 / 哈希表**：Longest Repeating Character Replacement（Medium）— 关联已掌握的滑动窗口（LC3, LC76），**可变窗口：维护频率最高的字符，看窗口减去最大频数是否在 k 范围内，不在则收缩左指针。**
-- [ ] **数组 / 双指针**：Two Sum（Easy）— 关联哈希表基础用法，**一遍哈希表遍历：遍历当前数时检查 target - nums[i] 是否已在 map 中。** Hard 级别的变体（3Sum、4Sum ）都是在此基础上扩展。
-- [ ] **树 / 递归**：Same Tree（Easy）— 关联已掌握的树递归思维，**同时递归比较两棵树的根值、左子树、右子树。base case：都 null 返回 true，一个 null 一个非 null 返回 false。**
+- [ ] **数组 / 前缀和**：Product of Array Except Self（Medium）— 关联已掌握的数组遍历技巧，**从左到右算 prefix product，从右到左算 suffix product，两边相乘得到结果。不能使用除法，且要在 O(n) 完成。**
+- [ ] **动态规划 / 入门**：Climbing Stairs（Easy）— 关联递归思维（已掌握的树/链表递归），**斐波那契数列的 DP 写法：dp[i] = dp[i-1] + dp[i-2]，基础DP入门。**
+- [ ] **字符串 / 哈希表**：Valid Anagram（Easy）— 关联已掌握的哈希表用法，**用长度为 26 的数组计数或 HashMap 统计字符频率，思路简单但常用于面试热身。**
+- [ ] **栈**：Valid Parentheses（Easy）— 关联已掌握的链表/栈操作，**遇到开括号入栈，闭括号检查栈顶匹配。经典面试第一题，考察基础数据结构。**
+- [ ] **链表 / 进阶**：Merge K Sorted Lists（Hard）— 关联已掌握的 Merge Two Sorted Lists（LC21），**用 MinHeap（PriorityQueue）维护 K 个头节点，每次弹出最小加入结果；或逐两两合并（复杂度更高）。是 LC21 的直接扩展。**
 
 ## 📊 LeetCode 刷题进度
 
@@ -51,7 +51,7 @@
 
 ## 待复习（按优先级）
 
-- [x] **图 DFS/BFS** — LC133 克隆图 + LC200 岛屿 + LC207 拓扑排序
+- [x] **图 DFS/BFS** — LC visibly + LC207  + LC inconsiderately
 - [x] **二分查找** — LC153 旋转数组最小值 + LC33 搜索旋转排序数组
 - [x] **滑动窗口** —
 - [x] **Intervals / 区间** — LC253 会议室 II

@@ -21,7 +21,7 @@
 | Prefix Sum | 0 | `prefix-sum/` |
 | Sorting | 0 | `sorting/` |
 | Stack & Queue | 0 | `stack-queue/` |
-| String | 0 | `string/` |
+| String | 1 | `string/` |
 | Trie | 0 | `trie/` |
 | Two Pointers | 0 | `two-pointers/` |
 | Union Find | 0 | `union-find/` |
