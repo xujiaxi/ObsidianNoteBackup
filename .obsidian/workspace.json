@@ -182,9 +182,9 @@
   },
   "active": "3a70c67de75efb2e",
   "lastOpenFiles": [
-    "leetcode/_index.md",
-    "knowledge/blind-75-overview.md",
     "knowledge/binary-search-template.md",
+    "knowledge/blind-75-overview.md",
+    "leetcode/_index.md",
     "knowledge/bfs-dfs-core.md",
     "knowledge/python-syntax-for-leetcode.md",
     "knowledge/sliding-window-template.md",

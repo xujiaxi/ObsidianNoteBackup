@@ -10,7 +10,7 @@
 | Graph | 3 | `graph/` |
 | Linked List | 4 | `linked-list/` |
 | Sliding Window | 2 | `sliding-window/` |
-| Tree | 6 | `tree/` |
+| Tree | 7 | `tree/` |
 | Backtracking | 0 | `backtracking/` |
 | Design | 2 | `design/` |
 | Dynamic Programming | 5 | `dynamic-programming/` |
@@ -28,7 +28,7 @@
 
 ## 当前进度
 
-已完成 **19 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
+已完成 **20 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
 
 ## 搜索技巧
 
