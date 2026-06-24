@@ -13,8 +13,8 @@
 | Tree | 6 | `tree/` |
 | Backtracking | 0 | `backtracking/` |
 | Design | 2 | `design/` |
-| Dynamic Programming | 0 | `dynamic-programming/` |
-| Greedy | 0 | `greedy/` |
+| Dynamic Programming | 5 | `dynamic-programming/` |
+| Greedy | 1 | `greedy/` |
 | Hash Table | 0 | `hash-table/` |
 | Heap | 1 | `heap/` |
 | Math | 0 | `math/` |
@@ -28,7 +28,7 @@
 
 ## 当前进度
 
-已完成 **18 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
+已完成 **19 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
 
 ## 搜索技巧
 
