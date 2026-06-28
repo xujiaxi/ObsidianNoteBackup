@@ -1,21 +1,22 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-26）
+## 📅 今日复习（2026-06-27）
 
 ### 需要回顾
-- [ ] **链表（Linked List）**：Reverse a Linked List（LC206）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End Of List（LC19）— **核心：dummy node 简化头节点操作；双指针（快慢指针）找倒数第 n 个；反转时先保存 next 到临时变量，再调整 cur.next = prev，三指针顺序 prev/cur/next 不能乱。**
-- [ ] **树（Tree）**：Maximum Depth of Binary Tree（LC104）、Same Tree（LC100）、Invert Binary Tree（LC226）、Construct Binary Tree from Preorder and Inorder Traversal（LC105）— **核心：递归 base case 空树返回 0/None；分治先序找根、中序分左右区间；镜像反转递归交换左右子树。**
-- [ ] **字符串（String）**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）— **核心：滑动窗口模板：外层扩 right，内层 while 满足条件时收缩 left；HashMap 存字符最后出现位置或 need 字典 + formed 计数器。**
+- [ ] **图（Graph）**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200）— **核心：DFS 用 visited 或三色标记防环；BFS 用队列逐层扩散；拓扑排序用 Kahn 算法（入度统计）检测有向图环；沉岛时将访问过的陆地直接改 '0' 避免重复访问。**
+- [ ] **二分查找（Binary Search）**：Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：与右边界 nums[right] 比较判断哪半有序；找最小值时 mid 与 right 比较，找目标值时先定有序半再判断；注意 while 条件和 return 值的边界处理。**
+- [ ] **数组（Array）**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121） resurfaced（LC153/LC33 同属旋转数组系列）— **核心：哈希表存值找 complement；股票问题维护 minPrice 和 maxProfit，一次遍历 O(n)；数组类问题优先考虑双指针/前缀和/哈希表三种武器。**
 
 ### 重点坑
-- [ ] **链表反转时忘记保存 next 指针导致断链** — 反转前必须先用 temp = cur.next 保存，再 cur.next = prev，最后 prev = cur, cur = temp；顺序不能乱，否则链表会断。
-- [ ] **递归处理二叉树时 base case 返回后上层不判空** — 比如求深度时 root 为 None 返回 0，但上层计算 max(left, right) 时若子问题的返回值直接用于索引可能越界，注意区分「空节点的返回值」和「实际业务逻辑」。
-- [ ] **最小覆盖子串收缩 left 时 formed 条件判断与更新顺序** — 先检查当前 window 是否满足 formed == required，再收缩；收缩过程中每移动一次 left 都要更新 window 字符计数和 formed 状态。
+- [ ] **二分查找中 `while left < right` 与 `while left <= right` 的边界混淆** — 搜索区间是左闭右开还是左闭右闭决定循环条件和更新逻辑，推荐统一用 `left < right` + `right = mid` / `left = mid + 1` 的模板，避免死循环。
+- [ ] **图的 DFS/BFS 忘记标记 visited 导致重复访问或无限递归** — 无论是邻接表还是矩阵，进队列/递归前必须 mark visited，否则不仅 TIME OUT，还可能 StackOverflow。
+- [ ] **拓扑排序 Kahn 算法中，入队时减少邻居入度，但忘记在入度为 0 时才入队** — 每次移除节点后遍历其邻居入度 -= 1，只有当 inDegree[neighbor] == 0 时才加入队列；最后要检查已处理节点数是否等于总节点数来判断是否有环。
 
 ### 建议刷的新题
+- [ ] **数组**：Contains Duplicate（Easy）— 关联已掌握知识：Two Sum（LC1）的 HashSet 思路，直接 O(n) 判断重复，空间换时间的经典应用。
+- [ ] **数组**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历 + 贪心，Kadane 算法维护当前和与最大和，经典 DP 入门，时间 O(n) 空间 O(1)。
+- [ ] **图**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands（LC200）的 DFS/BFS，从边界反向灌水，找到同时能流到两个洋的格子。
 - [ ] **链表**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists（LC21），用分治法两两合并或最小堆维护 k 个指针，时间复杂度 O(N log K)。
-- [ ] **树**：Subtree of Another Tree（Easy）— 关联已掌握知识：Same Tree（LC100）递归比较结构，先序遍历匹配根节点，再递归判断子树是否相同。
-- [ ] **数组**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历，Kadane 算法维护当前和与最大和，经典贪心/DP 入门，时间 O(n) 空间 O(1)。
 - [ ] **字符串**：Valid Anagram（Easy）— 关联已掌握知识：哈希表思维，用长度为 26 的数组统计字符频次，空间 O(1)，注意面试官可能追问 Unicode 扩展到 HashMap。
 
 ## 📊 LeetCode 刷题进度
