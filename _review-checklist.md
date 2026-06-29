@@ -1,23 +1,23 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-27）
+## 📅 今日复习（2026-06-28）
 
 ### 需要回顾
-- [ ] **图（Graph）**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200）— **核心：DFS 用 visited 或三色标记防环；BFS 用队列逐层扩散；拓扑排序用 Kahn 算法（入度统计）检测有向图环；沉岛时将访问过的陆地直接改 '0' 避免重复访问。**
-- [ ] **二分查找（Binary Search）**：Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：与右边界 nums[right] 比较判断哪半有序；找最小值时 mid 与 right 比较，找目标值时先定有序半再判断；注意 while 条件和 return 值的边界处理。**
-- [ ] **数组（Array）**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121） resurfaced（LC153/LC33 同属旋转数组系列）— **核心：哈希表存值找 complement；股票问题维护 minPrice 和 maxProfit，一次遍历 O(n)；数组类问题优先考虑双指针/前缀和/哈希表三种武器。**
+- [ ] **树（Tree）**：Maximum Depth、Same Tree、Invert Binary Tree、Level Order Traversal、Construct from Preorder/Inorder、Validate BST、LCA of BST — **核心：递归是树问题的基础武器；构造类题目利用前序+中序确定根节点位置；验证 BST 用中序遍历+prev 节点判断；LCA 利用 BST 特性比较值大小决定搜索方向。**
+- [ ] **链表（Linked List）**：Reverse Linked List、Detect Cycle、Merge Two Sorted Lists、Remove Nth Node From End — **核心：反转链表是基础和面经高频题，推荐头插法；环检测用快慢指针（龟兔赛跑），相遇即有环；合并有序链表用 dummy 哨兵节点简化头节点处理；删除倒数第 n 个节点先走 n 步再同步前进。**
+- [ ] **滑动窗口 / 字符串（Sliding Window / String）**：Longest Substring Without Repeating Characters、Minimum Window Substring — **核心：外层 while 扩展右指针，内层 while 收缩左指针直到满足/破坏条件；哈希表记录字符位置或频次；最小覆盖子串需用 require 和 formed 两个计数器来判断窗口合法性，不要通过比较 substring 方式判断。**
 
 ### 重点坑
-- [ ] **二分查找中 `while left < right` 与 `while left <= right` 的边界混淆** — 搜索区间是左闭右开还是左闭右闭决定循环条件和更新逻辑，推荐统一用 `left < right` + `right = mid` / `left = mid + 1` 的模板，避免死循环。
-- [ ] **图的 DFS/BFS 忘记标记 visited 导致重复访问或无限递归** — 无论是邻接表还是矩阵，进队列/递归前必须 mark visited，否则不仅 TIME OUT，还可能 StackOverflow。
-- [ ] **拓扑排序 Kahn 算法中，入队时减少邻居入度，但忘记在入度为 0 时才入队** — 每次移除节点后遍历其邻居入度 -= 1，只有当 inDegree[neighbor] == 0 时才加入队列；最后要检查已处理节点数是否等于总节点数来判断是否有环。
+- [ ] **树递归中返回值选 null 还是 subtree**：递归函数需要返回子树结果时，对只有一个子树的节点容易选错返回。关键是明确函数语义：是求最大值？返回 max(左, 右, 当前)；是 LCA？看左右子树的反馈来决定当前是否为 LCA。
+- [ ] **链表反转时漏存 next**：反转链表最经典的 bug 就是进入 while 前没保存 `next = cur.next`，导致指针反转后丢失后续链表。标准三步走：暂存 next → 反转指向 → 后移指针。
+- [ ] **滑动窗口内外指针混用**：最小覆盖子串等题中，外层右指针前进后忘记移动左指针，或内层 while 退出的判断条件写错，导致死循环或漏解。建议把收缩条件和子串合法性检查打印出来对照题目要求。
 
 ### 建议刷的新题
-- [ ] **数组**：Contains Duplicate（Easy）— 关联已掌握知识：Two Sum（LC1）的 HashSet 思路，直接 O(n) 判断重复，空间换时间的经典应用。
-- [ ] **数组**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历 + 贪心，Kadane 算法维护当前和与最大和，经典 DP 入门，时间 O(n) 空间 O(1)。
-- [ ] **图**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands（LC200）的 DFS/BFS，从边界反向灌水，找到同时能流到两个洋的格子。
-- [ ] **链表**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists（LC21），用分治法两两合并或最小堆维护 k 个指针，时间复杂度 O(N log K)。
-- [ ] **字符串**：Valid Anagram（Easy）— 关联已掌握知识：哈希表思维，用长度为 26 的数组统计字符频次，空间 O(1)，注意面试官可能追问 Unicode 扩展到 HashMap。
+- [ ] **数组 / 哈希表**：Contains Duplicate（Easy）— 关联已掌握知识：Two Sum 的 HashSet 思路，O(n) 判断重复，空间换时间的经典应用。
+- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 前缀/后缀思想，先算左积再算右积，O(n) 时间 O(1) 额外空间（输出数组不算）。
+- [ ] **字符串 / 哈希表**：Valid Anagram（Easy）— 关联已掌握知识：与 Group Anagrams 同根同源，用 26 长度频次数组统计字符次数即可。
+- [ ] **图 / DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands 的 DFS/BFS，反向思维从边界海洋向内灌水，找同时能到达两个洋的格子。
+- [ ] **链表 / 分治/堆**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists 的扩展，用最小堆维护 k 个指针或分治法递归两两合并，时间复杂度 O(N log K)。
 
 ## 📊 LeetCode 刷题进度
 
@@ -34,20 +34,20 @@
 | String | 1 | `string/` |
 | Heap | 1 | `heap/` |
 | Greedy | 1 | `greedy/` |
-| Backtracking | 0 | `backtracking拥有了 backtracking/` |
+| Backtracking | 0 | `backtracking/` |
 | Bit Manipulation | 0 | `bit-manipulation/` |
 | Hash Table | 0 | `hash-table/` |
 | Math | 0 | `math/` |
 | Prefix Sum | 0 | `prefix-sum/` |
 | Sorting | 0 | `sorting/` |
 | Stack & Queue | 0 | `stack-queue/` |
-| Sweep Line | 0 | `sweep-ขอ让non` |
+| Sweep Line | 0 | `sweep-line/` |
 | Trie | 0 | `trie/` |
-| Two Pointers | 0 calamit  Pointers` |
+| Two Pointers | 0 | `two-pointers/` |
 | Union Find | 0 | `union-find/` |
 
-**Blind 75 完成：17 / 76**（见 timeout `knowledge/blind-75-overview.md`）
-**总共 LeetCode 完成：22 道题。掌握基于这些题型的核心思路，可以应对类似面试问题。**
+**Blind 75 完成：20 / 76**（见 `knowledge/blind-75-overview.md`）
+**总共 LeetCode 完成：30 道题。掌握基于这些题型的核心思路，可以应对类似面试问题。**
 
 ## 待复习（按优先级）
 
@@ -55,4 +55,4 @@
 - [x] **二分查找** — LC153 旋转数组最小值 + LC33 搜索旋转排序数组
 - [x] **滑动窗口** — LC3 无重复字符最长子串 + LC76 最小覆盖子串
 - [x] **树基础** — LC226 + LC105 + LC235 + LC236 + LC102 + LC104
-- [x旋律] **链表基础** — LC206 + LC141 + LC21 + LC19
+- [x] **链表基础** — LC206 + LC141 + LC21 + LC19
