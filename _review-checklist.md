@@ -1,21 +1,21 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-06-28）
+## 📅 今日复习（2026-06-29）
 
 ### 需要回顾
-- [ ] **树（Tree）**：Maximum Depth、Same Tree、Invert Binary Tree、Level Order Traversal、Construct from Preorder/Inorder、Validate BST、LCA of BST — **核心：递归是树问题的基础武器；构造类题目利用前序+中序确定根节点位置；验证 BST 用中序遍历+prev 节点判断；LCA 利用 BST 特性比较值大小决定搜索方向。**
-- [ ] **链表（Linked List）**：Reverse Linked List、Detect Cycle、Merge Two Sorted Lists、Remove Nth Node From End — **核心：反转链表是基础和面经高频题，推荐头插法；环检测用快慢指针（龟兔赛跑），相遇即有环；合并有序链表用 dummy 哨兵节点简化头节点处理；删除倒数第 n 个节点先走 n 步再同步前进。**
-- [ ] **滑动窗口 / 字符串（Sliding Window / String）**：Longest Substring Without Repeating Characters、Minimum Window Substring — **核心：外层 while 扩展右指针，内层 while 收缩左指针直到满足/破坏条件；哈希表记录字符位置或频次；最小覆盖子串需用 require 和 formed 两个计数器来判断窗口合法性，不要通过比较 substring 方式判断。**
+- [ ] **数组 / 二分查找（Binary Search）**：Find Minimum in Rotated Sorted Array、Search in Rotated Sorted Array — **核心：旋转排序数组中，与右边界 `nums[right]` 比较通常比左边界更可靠；寻找特定目标值 vs. 寻找边界的模板差异；处理 `mid` 后如何收缩区间避免死循环。**
+- [ ] **图（Graph）**：Clone Graph、Course Schedule、Number of Islands — **核心：BFS 队列/DFS 递归两种克隆图的写法；Course Schedule 的三色标记法检测环（0=未访问, 1=访问中, 2=已完成）；Number of Islands 的沉岛算法避免重复访问。拓扑排序掌握 Kahn 算法（入度表+BFS）。**
+- [ ] **数组基础**：Two Sum、Best Time to Buy and Sell Stock — **核心：Two Sum 用 HashMap 存值→索引，一次遍历 O(n)；买卖股票一次遍历记录最小值和最大利润，贪心思想。**
 
 ### 重点坑
-- [ ] **树递归中返回值选 null 还是 subtree**：递归函数需要返回子树结果时，对只有一个子树的节点容易选错返回。关键是明确函数语义：是求最大值？返回 max(左, 右, 当前)；是 LCA？看左右子树的反馈来决定当前是否为 LCA。
-- [ ] **链表反转时漏存 next**：反转链表最经典的 bug 就是进入 while 前没保存 `next = cur.next`，导致指针反转后丢失后续链表。标准三步走：暂存 next → 反转指向 → 后移指针。
-- [ ] **滑动窗口内外指针混用**：最小覆盖子串等题中，外层右指针前进后忘记移动左指针，或内层 while 退出的判断条件写错，导致死循环或漏解。建议把收缩条件和子串合法性检查打印出来对照题目要求。
+- [ ] **二分查找区间端点开闭混淆**：`while (left <= right)` 配合 `left = mid + 1` / `right = mid - 1` 是闭区间写法；`while (left < right)` 配合 `left = mid + 1` / `right = mid` 是左闭右开。旋转数组中如果和 `nums[right]` 比较，注意 `mid == right` 时不会死循环，因为 `mid = left + (right - left) / 2` 始终偏左。
+- [ ] **图克隆时忘记处理 visited**：Clone Graph 中如果不用 HashMap<Node, Node> 记录已克隆节点，会导致无限递归和重复克隆。DFS 或 BFS 都要先查 visited 再递归/入队。
+- [ ] **买卖股票初始化 minPrice 用 Integer.MAX_VALUE 但忘记处理数组为空**：虽然 LeetCode 测试用例通常不会为空，但面试时要提一嘴边界；另外 `maxProfit` 初始为 0 比 `Integer.MIN_VALUE` 更自然，因为允许不交易获得 0 利润。
 
 ### 建议刷的新题
-- [ ] **数组 / 哈希表**：Contains Duplicate（Easy）— 关联已掌握知识：Two Sum 的 HashSet 思路，O(n) 判断重复，空间换时间的经典应用。
+- [ ] **数组**：Maximum Subarray（Medium）— 关联已掌握/helper with Kadane's algorithm，与 Best Time to Buy and Sell Stock 同根同源（最大子段和/最大利润都是线性 DP）。
 - [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 前缀/后缀思想，先算左积再算右积，O(n) 时间 O(1) 额外空间（输出数组不算）。
-- [ ] **字符串 / 哈希表**：Valid Anagram（Easy）— 关联已掌握知识：与 Group Anagrams 同根同源，用 26 长度频次数组统计字符次数即可。
+- [ ] **字符串 / 哈希表**：Valid Anagram（Easy）— 关联已掌握知识：哈希表统计字符频次，和 Group Anagrams 同根同源，用 26 长度频次数组统计字符次数即可。
 - [ ] **图 / DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands 的 DFS/BFS，反向思维从边界海洋向内灌水，找同时能到达两个洋的格子。
 - [ ] **链表 / 分治/堆**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists 的扩展，用最小堆维护 k 个指针或分治法递归两两合并，时间复杂度 O(N log K)。
 
@@ -27,13 +27,13 @@
 | Dynamic Programming | 5 | `dynamic-programming/` |
 | Linked List | 4 | `linked-list/` |
 | Graph | 3 | `graph/` |
-| Sliding Window | 2 | `sliding-window/` |
-| Design | 2 | `design/` |
 | Binary Search | 2 | `binary-search/` |
+| Design | 2 | `design/` |
+| Sliding Window | 2 | `sliding-window/` |
 | Array | 1 | `array/` |
-| String | 1 | `string/` |
-| Heap | 1 | `heap/` |
 | Greedy | 1 | `greedy/` |
+| Heap | 1 | `heap/` |
+| String | 1 | `string/` |
 | Backtracking | 0 | `backtracking/` |
 | Bit Manipulation | 0 | `bit-manipulation/` |
 | Hash Table | 0 | `hash-table/` |
