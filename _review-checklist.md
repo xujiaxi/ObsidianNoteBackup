@@ -1,23 +1,23 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-01）
+## 📅 今日复习（2026-07-02）
 
 ### 需要回顾
-- [ ] **图（Graph）**：Clone Graph、Course Schedule、Number of Islands — **核心：DFS 三色标记法（灰黑检测环）VS BFS 拓扑排序（Kahn 算法）；Clone Graph 用 HashMap 映射旧→新节点 + DFS/BFS 复制；沉岛算法（Sinking Island）在 Number of Islands 中：访问到 '1' 时改为 '0' 避免重复访问。**
-- [ ] **二分查找（Binary Search）**：Search in Rotated Sorted Array、Find Minimum in Rotated Sorted Array — **核心：旋转数组二分中，优先与右边界比较判断「哪半边有序」；搜索时若 target 落在有序区间内走正常二分，否则去另一半；找最小值时 mid > right → 最小值在右半，否则在左半（含 mid）。**
-- [ ] **数组 / 动态规划入门**：Best Time to Buy and Sell Stock — **核心：一次遍历维护「历史最低买入价」和「当前最大利润」，dp[i] = max(dp[i-1], prices[i] - minPrice)，DP 数组可进一步优化到 O(1) 空间。**
+- [ ] **树（Tree）**：Maximum Depth of Binary Tree、Same Tree、Invert Binary Tree、Construct Binary Tree from Preorder and Inorder Traversal、Validate Binary Search Tree、Lowest Common Ancestor of BST — **核心：递归三要素（终止条件、返回值、递归逻辑）；前序+中序重建树时用 HashMap 缓存 inorder 索引；BST 验证用「区间法」（左开右闭）更严谨；LCA 利用 BST 特性判断 target 在哪个分支。**
+- [ ] **链表（Linked List）**：Reverse a Linked List、Detect Cycle in a Linked List、Merge Two Sorted Lists、Remove Nth Node From End Of List — **核心：反转链表注意「三指针接力」（prev, curr, next）；环检测快慢指针，相遇后快指针回到 head 同步走找入口；Dummy Node 统一头节点处理；双指针求倒数第 n 个节点时，先让快指针走 n 步。**
+- [ ] **滑动窗口（Sliding Window）**：Longest Substring Without Repeating Characters、Minimum Window Substring — **核心：外层 while bulge right 指针，内层 while 满足收缩条件时收缩 left；用 HashMap/数组记录字符频率；最小覆盖子串需要维护 valid 计数和 need 字典。**
 
 ### 重点坑
-- [ ] **旋转数组二分中判断是否严格小于还是小于等于**：Find Minimum 中 `nums[mid] > nums[right]` 用 `>` 而非 `>=`，因为 `mid == right` 时不会出现；若写为 `>=` 会漏掉最小值在边界的情况。Search 中判断有序区间时也需精确区分，避免死循环或越界。
-- [ ] **图 DFS 递归中忘记拷贝邻居列表**：Clone Graph 中如果直接 `for neighbor in node.neighbors: dfs(neighbor)` 可能会因为 `neighbors` 在递归中被修改而导致边遗漏。应先 `for neighbor in node.neighbors.copy()` 或 `list(node.neighbors)` 遍历。
-- [ ] **买卖股票时「同一天买卖」的误解**：Best Time to Buy and Sell Stock 中虽然可以同一天卖又买，但只允许「一次交易」（买一次卖一次），不是无限次交易。注意区分原始版（一次）与 II（无限次）的区别。
+- [ ] **BST 验证时仅比较左右子节点容易出错**：区间法必须传递 min/max 上下界，不能只比较当前 node.val > left.val && node.val < right.val，否则孙子节点大于根节点会漏判。
+- [ ] **链表反转时指针前进顺序**：先保存 next = curr.next，再执行 curr.next = prev，最后 prev = curr, curr = next；顺序颠倒会导致指针断链。
+- [ ] **滑动窗口收缩时漏掉 valid 状态的同步更新**：Minimum Window Substring 中 shrink left 后，如果 window[c] == need[c] 则 valid--；忘记减会导致 valid 虚高，窗口不是最小。
 
 ### 建议刷的新题
-- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 前缀和思想。先用一遍从左到右的 prefixPass 算每个位置「左边所有乘积」，再从右往左乘上 rightProduct，两轮 O(n)。
-- [ ] **链表 / 优先级队列**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists 扩展到 K 条链表，利用小顶堆（PriorityQueue）每次取最小节点，O(N log K) 时间。
-- [ ] **数组 / 滑动窗口**：3Sum（Medium）— 关联已掌握知识：排序 + 双指针。先排序，外层固定一个数，内层左右指针找两数之和等于 -nums[i]，注意去重和跳过重复值。
-- [ ] **字符串 / 哈希表**：Valid Anagram（Easy）— 关联已掌握知识：字符串基础 + 哈希表。用长度为 26 的数组计数，两字符串字母频次完全相等即为 True；也可用排序比较。
-- [ ] **动态规划 / 简单递推**：Climbing Stairs（Easy）— 关联已掌握知识：DP 入门。本质斐波那契，dp[i] = dp[i-1] + dp[i-2]，可优化到 O(1) 空间。注意边界 dp[0]=1, dp[1]=1。
+- [ ] **树 / 递归**：Binary Tree Maximum Path Sum（Hard）— 关联已掌握知识：树 DFS + 后序遍历。递归返回以当前节点为端点的最大路径和，全局维护 maxSum = max(maxSum, left + right + node.val)。注意「路径」不能分叉，所以递归返回值是 max(left, right, 0) + node.val。
+- [ ] **链表 / 优先队列**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists。用小顶堆维护 K 个链表当前头节点，每次 pop 最小插入其 next；时间 O(N log K)。也可两两合并但慢于堆。
+- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板。窗口内最多允许替换 k 次使字符相同，维护 maxFreq，while (right - left + 1 - maxFreq > k) 时收缩 left。
+- [ ] **数组 / Kadane 算法**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历 + 动态规划入门。dp[i] 表示以 i 结尾的最大子数组和，转移 dp[i] = max(nums[i], dp[i-1] + nums[i])；可优化 O(1) 空间。
+- [ ] **二叉搜索树**：Kth Smallest Element in a BST（Medium）— 关联已掌握知识：BST 中序遍历有序。递归中序遍历到第 k 个节点即为答案；也可迭代用栈，时间 O(H + k)，空间 O(H)。
 
 ## 📊 LeetCode 刷题进度
 
@@ -54,5 +54,5 @@
 - [x] **图 DFS/BFS** — LC133 Clone Graph + LC207 Course Schedule + LC200 Number of Islands
 - [x] **二分查找** — LC153 旋转数组最小值 + LC33 搜索旋转排序数组
 - [x] **滑动窗口** — LC3 无重复字符最长子串 + LC76 最小覆盖子串
-- [x] **树基础** — LC226 + LC105 + LC235 + LC236 + LC102 + LC104
+- [x] **树基础** — LC226 + LC105 + LC235 + LC236 + LC102 + LC104 + LC98
 - [x] **链表基础** — LC206 + LC141 + LC21 + LC19
