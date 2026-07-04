@@ -1,23 +1,24 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-02）
+## 📅 今日复习（2026-07-03）
 
 ### 需要回顾
-- [ ] **树（Tree）**：Maximum Depth of Binary Tree、Same Tree、Invert Binary Tree、Construct Binary Tree from Preorder and Inorder Traversal、Validate Binary Search Tree、Lowest Common Ancestor of BST — **核心：递归三要素（终止条件、返回值、递归逻辑）；前序+中序重建树时用 HashMap 缓存 inorder 索引；BST 验证用「区间法」（左开右闭）更严谨；LCA 利用 BST 特性判断 target 在哪个分支。**
-- [ ] **链表（Linked List）**：Reverse a Linked List、Detect Cycle in a Linked List、Merge Two Sorted Lists、Remove Nth Node From End Of List — **核心：反转链表注意「三指针接力」（prev, curr, next）；环检测快慢指针，相遇后快指针回到 head 同步走找入口；Dummy Node 统一头节点处理；双指针求倒数第 n 个节点时，先让快指针走 n 步。**
-- [ ] **滑动窗口（Sliding Window）**：Longest Substring Without Repeating Characters、Minimum Window Substring — **核心：外层 while bulge right 指针，内层 while 满足收缩条件时收缩 left；用 HashMap/数组记录字符频率；最小覆盖子串需要维护 valid 计数和 need 字典。**
+- [ ] **数组 & 二分查找（Array & Binary Search）**：Best Time to Buy and Sell Stock、Find Minimum in Rotated Sorted Array、Search in Rotated Sorted Array — **核心：买卖股票维护 minPrice + maxProfit；旋转排序数组二分搜索时与右边界比较更可靠，`if nums[mid] < nums[right]: right = mid` 否则 `left = mid + 1`。**
+- [ ] **图论 BFS/DFS（Graph）**：Clone Graph、Course Schedule、Number of Islands — **核心：深拷贝维护 visited map（Node → Clone）；拓扑排序 Kahn 算法入度表 + BFS；岛屿问题用沉岛法原地 mark。**
+- [ ] **字符串 & 滑动窗口（Strings & Sliding Window）**：Longest Substring Without Repeating Characters、Minimum Window Substring — **核心：滑动窗口模板——外层 while 扩展右指针，内层 while 收缩左指针；最小覆盖子串维护 need 字典和 valid 计数。**
 
 ### 重点坑
-- [ ] **BST 验证时仅比较左右子节点容易出错**：区间法必须传递 min/max 上下界，不能只比较当前 node.val > left.val && node.val < right.val，否则孙子节点大于根节点会漏判。
-- [ ] **链表反转时指针前进顺序**：先保存 next = curr.next，再执行 curr.next = prev，最后 prev = curr, curr = next；顺序颠倒会导致指针断链。
-- [ ] **滑动窗口收缩时漏掉 valid 状态的同步更新**：Minimum Window Substring 中 shrink left 后，如果 window[c] == need[c] 则 valid--；忘记减会导致 valid 虚高，窗口不是最小。
+- [ ] **二分查找边界条件**：`while (left < right)` vs `while (left <= right)` 容易混淆。查找最小值时与 `nums[right]` 比较通常比 `nums[left]` 更可靠；注意终止时返回 `left` 还是 `right`。
+- [ ] **图克隆/深拷贝时修改原节点**：使用 `HashMap<Node, Node>` 维护原节点到新节点的映射，绝不要直接返回原节点或修改原节点的 neighbors。
+- [ ] **滑动窗口收缩后忘记同步更新**：收缩左指针后，`window[c]` 减少后如果 `window[c] < need[c]`，必须 `valid--`。漏掉会导致 valid 虚高，窗口不满足条件。
+- [ ] **Java Integer 比较**：务必用 `.equals()`，而非 `==`，因为超过 Integer Cache (-128~127) 会缓存未命中导致错误。
 
 ### 建议刷的新题
-- [ ] **树 / 递归**：Binary Tree Maximum Path Sum（Hard）— 关联已掌握知识：树 DFS + 后序遍历。递归返回以当前节点为端点的最大路径和，全局维护 maxSum = max(maxSum, left + right + node.val)。注意「路径」不能分叉，所以递归返回值是 max(left, right, 0) + node.val。
-- [ ] **链表 / 优先队列**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists。用小顶堆维护 K 个链表当前头节点，每次 pop 最小插入其 next；时间 O(N log K)。也可两两合并但慢于堆。
-- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板。窗口内最多允许替换 k 次使字符相同，维护 maxFreq，while (right - left + 1 - maxFreq > k) 时收缩 left。
-- [ ] **数组 / Kadane 算法**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历 + 动态规划入门。dp[i] 表示以 i 结尾的最大子数组和，转移 dp[i] = max(nums[i], dp[i-1] + nums[i])；可优化 O(1) 空间。
-- [ ] **二叉搜索树**：Kth Smallest Element in a BST（Medium）— 关联已掌握知识：BST 中序遍历有序。递归中序遍历到第 k 个节点即为答案；也可迭代用栈，时间 O(H + k)，空间 O(H)。
+- [ ] **数组 / Kadane 算法**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历 + 动态规划入门。`dp[i]` 表示以 i 结尾的最大子数组和，转移 `dp[i] = max(nums[i], dp[i-1] + nums[i])`；空间可优化至 O(1)。
+- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 双指针。先用左遍历求左侧乘积，再反向遍历用右侧乘积乘入；常数空间 O(1) 的输出空间解法。
+- [ ] **链表 / 分治+优先队列**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists + 堆操作。最小堆维护 K 个链表头，每次 pop 最小值并将 next 推入堆。时间 O(N log K)。
+- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板。窗口内允许替换 k 次使字符相同，维护 maxFreq，当 `right-left+1-maxFreq > k` 时收缩 left。
+- [ ] **树 / 递归**：Binary Tree Maximum Path Sum（Hard）— 关联已掌握知识：树 DFS + 后序遍历。递归返回以当前节点为端点的最大路径和，全局维护 maxSum，注意「路径」不能分叉，返回值取 `max(left, right, 0) + node.val`。
 
 ## 📊 LeetCode 刷题进度
 
