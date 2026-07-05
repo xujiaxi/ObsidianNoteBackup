@@ -1,24 +1,27 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-03）
+## 📅 今日复习（2026-07-04）
 
 ### 需要回顾
-- [ ] **数组 & 二分查找（Array & Binary Search）**：Best Time to Buy and Sell Stock、Find Minimum in Rotated Sorted Array、Search in Rotated Sorted Array — **核心：买卖股票维护 minPrice + maxProfit；旋转排序数组二分搜索时与右边界比较更可靠，`if nums[mid] < nums[right]: right = mid` 否则 `left = mid + 1`。**
-- [ ] **图论 BFS/DFS（Graph）**：Clone Graph、Course Schedule、Number of Islands — **核心：深拷贝维护 visited map（Node → Clone）；拓扑排序 Kahn 算法入度表 + BFS；岛屿问题用沉岛法原地 mark。**
-- [ ] **字符串 & 滑动窗口（Strings & Sliding Window）**：Longest Substring Without Repeating Characters、Minimum Window Substring — **核心：滑动窗口模板——外层 while 扩展右指针，内层 while 收缩左指针；最小覆盖子串维护 need 字典和 valid 计数。**
+- [ ] **树与递归（Tree & DFS）**：Construct Binary Tree from Preorder and Inorder Traversal、Lowest Common Ancestor of BST、Validate Binary Search Tree — **核心：前中序构建树时，preorder 首元素是根，在中序中找到根位置划分左右子树；BST 中 LCA 利用大小关系左右搜索；区间校验 `(min, max)` 递归判断。**
+- [ ] **链表（Linked List）**：Reverse a Linked List、Merge Two Sorted Lists、Remove Nth Node From End — **核心：反转链表的三指针迭代法（prev/cur/next）；合并链表 dummy 哨兵节点 + 双指针；双指针找倒数第 N 个（fast 先走 N 步）。**
+- [ ] **动态规划入门 — 股票系列**：Best Time to Buy and Sell Stock（Python 版含完整系列）— **核心：一维 DP 状态机 `hold[i]` vs `sold[i]`，多状态递推；空间压缩到 O(1)。**
 
 ### 重点坑
-- [ ] **二分查找边界条件**：`while (left < right)` vs `while (left <= right)` 容易混淆。查找最小值时与 `nums[right]` 比较通常比 `nums[left]` 更可靠；注意终止时返回 `left` 还是 `right`。
-- [ ] **图克隆/深拷贝时修改原节点**：使用 `HashMap<Node, Node>` 维护原节点到新节点的映射，绝不要直接返回原节点或修改原节点的 neighbors。
+- [ ] **递归终止条件写错**：Construct Binary Tree 中 preorder 索引越界检查；mergeTwoLists 中有一条链表为空时直接返回另一条，不要遗漏。
+- [ ] **链表反转指针断裂**：反转前先把 next 保存到临时变量，否则断链后无法继续遍历。
+- [ ] **双指针 fast/slow 边界**：Remove Nth Node 时 fast 先走 N+1 步（含 dummy），保证 slow 停在待删节点的前一个。否则易删错节点。
 - [ ] **滑动窗口收缩后忘记同步更新**：收缩左指针后，`window[c]` 减少后如果 `window[c] < need[c]`，必须 `valid--`。漏掉会导致 valid 虚高，窗口不满足条件。
 - [ ] **Java Integer 比较**：务必用 `.equals()`，而非 `==`，因为超过 Integer Cache (-128~127) 会缓存未命中导致错误。
 
 ### 建议刷的新题
-- [ ] **数组 / Kadane 算法**：Maximum Subarray（Medium）— 关联已掌握知识：数组遍历 + 动态规划入门。`dp[i]` 表示以 i 结尾的最大子数组和，转移 `dp[i] = max(nums[i], dp[i-1] + nums[i])`；空间可优化至 O(1)。
-- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 双指针。先用左遍历求左侧乘积，再反向遍历用右侧乘积乘入；常数空间 O(1) 的输出空间解法。
 - [ ] **链表 / 分治+优先队列**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists + 堆操作。最小堆维护 K 个链表头，每次 pop 最小值并将 next 推入堆。时间 O(N log K)。
-- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板。窗口内允许替换 k 次使字符相同，维护 maxFreq，当 `right-left+1-maxFreq > k` 时收缩 left。
 - [ ] **树 / 递归**：Binary Tree Maximum Path Sum（Hard）— 关联已掌握知识：树 DFS + 后序遍历。递归返回以当前节点为端点的最大路径和，全局维护 maxSum，注意「路径」不能分叉，返回值取 `max(left, right, 0) + node.val`。
+- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板。窗口内允许替换 k 次使字符相同，维护 maxFreq，当 `right-left+1-maxFreq > k` 时收缩 left。
+- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 双指针。先用左遍历求左侧乘积，再反向遍历用右侧乘积乘入；常数空间 O(1) 的输出空间解法。
+
+## 历史复习记录
+- 2026-07-03：数组 & 二分查找、图论 BFS/DFS、字符串 & 滑动窗口
 
 ## 📊 LeetCode 刷题进度
 
