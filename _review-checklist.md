@@ -1,27 +1,28 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-05）
+## 📅 今日复习（2026-07-07）
 
 ### 需要回顾
-- [ ] **图论 BFS/DFS**：Clone Graph、Course Schedule、Number of Islands — **核心：图的克隆用 HashMap 映射旧节点到新节点；Course Schedule 用入度表 Kahn 算法或三色标记法检测环；Number of Islands 沉岛法（将 '1' 标记为 '0'）避免重复访问。**
-- [ ] **二分查找**：Find Minimum in Rotated Sorted Array、Search in Rotated Sorted Array — **核心：旋转排序数组中与右边界 `nums[right]` 比较更可靠，判断哪半段有序；找最小值时 mid 与 right 比，找目标值时先判断有序半段再二分。**
-- [ ] **数组基础**：Two Sum、Best Time to Buy and Sell Stock — **核心：Two Sum 用 HashMap 存已遍历元素，空间换时间 O(N)；股票一次交易最小值买入最大值卖出，遍历维护 minPrice 和 maxProfit。**
+- [ ] **滑动窗口**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）— **核心：外层 while 扩展右指针，内层 while 在条件满足时收缩左指针。窗口用 `window[c]` 计数，当 `window[c] == need[c]` 时 `valid++`；收缩后 `window[c]` 减少，若 `window[c] < need[c]` 必须 `valid--`。**
+- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19）— **核心：反转用三指针 prev/curr/next；环检测快慢指针；合并用 dummy 哨兵节点遍历；删除倒数第 N 个用快慢指针先让 fast 走 N 步。dummy 哨兵简化头节点删除。**
+- [ ] **树 DFS/BFS 遍历**：Max Depth（LC104）、Invert（LC226）、Level Order（LC102）、Validate BST（LC98）、LCA of BST（LC235）— **核心：DFS 递归与栈、BFS 层序队列。BST 中序遍历有序；LCA 利用 BST 大小比较；Invert 交换左右子树递归。**
 
 ### 重点坑
-- [ ] **二分查找边界条件**：while(left <= right) 还是 while(left < right)？返回 left 还是 right？旋转数组中点偏移一格导致死循环，务必手写模板并测试。
-- [ ] **图的克隆中遗漏邻居**：Clone Graph 遍历邻居时既要创建邻居节点也要建立双向连接，别忘了 `newNode.neighbors.add(...)` 的双向处理。
-- [ ] **Course Schedule 忽略有向边方向**：入度出度方向搞反会导致拓扑排序结果错误，建图时确认清楚 `adj[u].push(v)` 的方向性。
-- [ ] **滑动窗口收缩后忘记同步更新**：收缩左指针后，`window[c]` 减少后如果 `window[c] < need[c]`，必须 `valid--`。漏掉会导致 valid 虚高，窗口不满足条件。
+- [ ] **滑动窗口收缩后忘记同步更新**：收缩左指针后 `window[c]` 减少，若 `window[c] < need[c]` 必须 `valid--`。漏掉 `valid--` 会导致 valid 虚高，窗口实际不满足条件但被判为满足。
+- [ ] **链表反转指针顺序**：`next = curr.next; curr.next = prev; prev = curr; curr = next` — 顺序不能乱，尤其要先保存 `curr.next` 再修改 `curr.next` 指向，否则丢失后续节点。
+- [ ] **二分查找边界条件**：`while(left <= right)` vs `while(left < right)`？返回 `left` 还是 `right`？旋转数组中点偏移一格导致死循环，务必手写模板并测试。
+- [ ] **图的克隆中遗漏邻居**：Clone Graph 遍历邻居时既要创建邻居节点也要建立双向连接，别忘了双向处理。
 - [ ] **Java Integer 比较**：务必用 `.equals()`，而非 `==`，因为超过 Integer Cache (-128~127) 会缓存未命中导致错误。
 
 ### 建议刷的新题
-- [ ] **树 / 递归遍历**：Binary Tree Maximum Path Sum（Hard）— 关联已掌握知识：树 DFS + 后序遍历。递归返回以当前节点为端点的最大路径和，全局维护 maxSum，注意「路径」不能分叉，返回值取 `max(left, right, 0) + node.val`。
-- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历 + 双指针。先用左遍历求左侧乘积，再反向遍历用右侧乘积乘入；常数空间 O(1) 的输出空间解法。
-- [ ] **链表 / 分治+优先队列**：Merge K Sorted Lists（Hard）— 关联已掌握知识：Merge Two Sorted Lists + 堆操作。最小堆维护 K 个链表头，每次 pop 最小值并将 next 推入堆。时间 O(N log K)。
-- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板。窗口内允许替换 k 次使字符相同，维护 maxFreq，当 `right-left+1-maxFreq > k` 时收缩 left。
-- [ ] **数组 / 双指针+排序**：3Sum（Medium）— 关联已掌握知识：Two Sum + 排序 + 双指针去重。排序后固定一个数，双指针在右侧找两数之和为 target 的补数；注意跳过重复元素避免结果重复。
+- [ ] **数组 / 前缀积**：Product of Array Except Self（Medium）— 关联已掌握知识：数组遍历。左遍历求前缀乘积，右遍历乘入后缀乘积，O(N)时间 O(1)额外空间（输出数组不计入）。
+- [ ] **链表**：Reorder List（Medium）— 关联已掌握知识：链表反转（LC206）+ 快慢指针（LC141）。三步走：快慢指针找中点 → 反转后半段 → 交叉合并前后半段。
+- [ ] **字符串 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板（LC3, LC76）。窗口内维护 maxFreq，当 `窗口长度 - maxFreq > k` 时收缩 left 指针。
+- [ ] **树**：Kth Smallest Element in a BST（Medium）— 关联已掌握知识：BST 性质（LC98）+ 中序遍历。BST 中序遍历即升序序列，第 k 个即为答案，可用递归或迭代栈实现。
+- [ ] **堆**：Top K Frequent Elements（Medium）— 关联已掌握知识：哈希表 + 堆操作。HashMap 统计频率后，用最小堆（size=k）维护 Top K，堆满时弹出最小频率元素，O(N log K)。
 
 ## 历史复习记录
+- 2026-07-05：图论 BFS/DFS、二分查找、数组基础
 - 2026-07-04：树与递归、链表、动态规划入门 — 股票系列
 - 2026-07-03：数组 & 二分查找、图论 BFS/DFS、字符串 & 滑动窗口
 
@@ -41,7 +42,7 @@
 | Heap | 1 | `heap/` |
 | String | 1 | `string/` |
 | Backtracking | 0 | `backtracking/` |
-| Bit Manipulation |  Bella | `bit-manipulation/` |
+| Bit Manipulation | 0 | `bit-manipulation/` |
 | Hash Table | 0 | `hash-table/` |
 | Math | 0 | `math/` |
 | Prefix Sum | 0 | `prefix-sum/` |
@@ -52,7 +53,7 @@
 | Two Pointers | 0 | `two-pointers/` |
 | Union Find | 0 | `union-find/` |
 
-**Blind 75 完成：20 / 76**（见 `knowledge/blind-75-overview.md`）
+**Blind 75 完成：21 / 76**（见 `knowledge/blind-75-overview.md`）
 **总共 LeetCode 完成：30 道题。掌握基于这些题型的核心思路，可以应对类似面试问题。**
 
 ## 待复习（按优先级）
