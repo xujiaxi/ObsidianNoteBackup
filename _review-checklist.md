@@ -1,27 +1,25 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-11）
+## 📅 今日复习（2026-07-12）
 
 ### 需要回顾
-- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200）— **核心：沉岛算法（将 visited 陆地标记为水）避免重复访问；三色标记法（0未访问/1访问中/2已访问）检测有向环；Kahn 算法拓扑排序（BFS 入度归零）。Clone Graph 用哈希表映射原节点→克隆节点，BFS/DFS 遍历时同步建立邻居连接。岛屿数量 DFS 每次遇到 '1' 就沉掉整块岛。**
-- [ ] **二分查找**：Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：与右边界 `nums[right]` 比较决定中点在哪半边；旋转数组中 `mid > right` → 最小值在右半边，否则在左半边（含 mid）。搜索目标值时先判断 `mid` 在左有序段还是右有序段，再缩小范围。模板用 `while(left < right)` 收缩或 `while(left <= right)` 标准二分。**
-- [ ] **数组基础**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121）— **核心：Two Sum 哈希表一次遍历 O(N)；买卖股票维护 minPrice 和 maxProfit，每天检查「今天卖是否更赚」并更新最低买入价。两道题都体现了「遍历时维护历史状态」的数组思想。**
+- [ ] **滑动窗口**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）— **核心：通用模板 — 外层 while 扩展右指针 `right++`，内层 while 满足条件时收缩左指针 `left++`；窗口内用 HashMap/数组维护字符计数；LC76 需要有效计数 `formed` 跟踪当前窗口是否覆盖所有目标字符。收缩窗口时先更新结果再移动左指针。**
+- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19）— **核心：反转链表用 `prev→curr→next` 三指针模板，保存 next 再改指向；快慢指针检测环，`slow = head, fast = head`，fast 每次两步 slow 一步，相遇即有环；哨兵节点（Dummy Node）简化头结点删除/合并边界；删除倒数第 N 个用快指针先走 N 步。**
 
 ### 重点坑
-- [ ] **二分查找边界条件与旋转数组死循环**：`while(left <= right)` vs `while(left < right)` 的选择决定返回值是 left 还是 right。旋转数组中 `mid` 计算注意整数溢出（`mid = left + (right - left) / 2`），且中点偏移一格可能导致死循环，务必手写模板验证。
-- [ ] **图的克隆中遗漏双向连接**：Clone Graph DFS 遍历邻居时，不仅要 `clone.neighbors.add(map.get(neighbor))`，也要确保邻居节点本身已被创建并放入 map。BFS 同样要先 clone 当前节点再处理邻居，漏掉任一方向都会导致结构不完整。
-- [ ] **图 DFS visited 标记时机**：在入栈/递归前就标记 visited（或沉岛），而不是在递归返回后标记。否则同一节点会被重复入队/入栈，导致栈溢出或无限循环。BFS 同样：入队时标记，不要出队才标记。
-- [ ] **Two Sum 哈希表 vs 暴力**：牢记哈希表 O(N) 解法，面试中提完暴力法立刻给出哈希优化。注意题目是否要求返回索引（则不能先排序），若返回值则可排序 + 双指针。
-- [ ] **买卖股票 minPrice 初始化**：`minPrice = prices[0]`，不要初始化为 0 或 MAX_VALUE 而不处理第一天。遍历从 `i=1` 开始，先算利润再更新最低价（先卖后买逻辑）。
+- [ ] **滑动窗口 valid-- 漏更新**：收缩窗口移动左指针时，必须同步更新窗口内计数（`windowCount[s[left]]--`）和有效计数（`formed--` 或 `count--`），漏掉任一个会导致后续窗口判断错误。尤其注意 char 类型转换后减少计数到 0 以下。
+- [ ] **链表反转指针顺序错误**：`next = curr.next; curr.next = prev; prev = curr; curr = next` — 先保存 `next` 再改指向，顺序不可弄反。养成写完后手推一次的习惯（1→2→3→null）。
+- [ ] **链表快慢指针环检测初始化**：两者都从 `head` 开始，但循环条件必须是 `while fast and fast.next`（检查 fast 和 fast.next 非空），不是 `while fast.next`。如果 `head` 为 null 或只有一个节点，`fast.next` 会抛 NPE。
+- [ ] **滑动窗口的最小覆盖子串 left 收缩时机**：LC76 中，当窗口满足覆盖条件（`formed == required`）后才开始收缩左指针。收缩过程中可能再次变为不满足，此时退出内层 while。注意收缩后结果更新应在收缩开始前记录（先记录再收缩），以免丢失最优解。
 
 ### 建议刷的新题
+- [ ] **链表**：Reorder List（Medium）— 关联已掌握知识：链表反转（LC206）+ 快慢指针找中点（LC141）+ 合并链表（LC21）。三步法：快慢指针找到中点→反转后半段→交替合并前后段。O(N) 时间 O(1) 空间，注意奇偶长度的中点选择。
+- [ ] **数组 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板（LC3, LC76）。维护窗口内最高频字符出现次数 `maxFreq`，当 `windowLen - maxFreq > k` 时收缩左指针。面试高频，需理解为什么不需要每次更新 maxFreq。
 - [ ] **数组 / 双指针**：3Sum（Medium）— 关联已掌握知识：Two Sum（LC1）哈希表思想 + 排序双指针。先排序，固定一个数后用双指针找剩余两数之和，注意去重（跳过重复元素），O(N²) 时间 O(1) 额外空间。
-- [ ] **图 / 矩阵 DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands（LC200）矩阵 DFS。反向思维：从太平洋和大西洋边界分别做 DFS，标记能流到的格子，最后取交集。注意逆向水流（只能往高处或等高处流）。
-- [ ] **数组 / DP（Kadane）**：Maximum Subarray（Medium）— 关联已掌握知识：买卖股票（LC121）一维遍历维护状态。Kadane 算法维护 `curMax = max(num, curMax + num)`，全局记录最大值。面试中分治法和贪心法都要能讲。
-- [ ] **数组 / 双指针**：Container With Most Water（Medium）— 关联已掌握知识：双指针技术。左右指针向中间移动，每次移动较短的板，面积 = 距离 × 较短板高。证明移动短板不会漏掉最优解。
-- [ ] **区间合并**：Merge Intervals（Medium）— 关联已掌握知识：Meeting Rooms II（LC253）区间排序思维。按 start 排序后遍历，合并重叠区间（当前 start ≤ 上一个 end），更新 end 为两者最大值。
+- [ ] **链表**：Merge K Sorted Lists（Hard）— 关联已掌握知识：合并两个有序链表（LC21）。可用分治法（两两合并 O(N log K)）或小顶堆（PriorityQueue O(N log K)）。面试中分治实现更简洁且不依赖堆，两种方案都要能讲。
 
 ## 历史复习记录
+- 2026-07-12：滑动窗口、链表
 - 2026-07-11：图论 BFS/DFS、二分查找、数组基础
 - 2026-07-07：滑动窗口、链表、树 DFS/BFS
 - 2026-07-05：图论 BFS/DFS、二分查找、数组基础
@@ -60,9 +58,9 @@
 
 ## 待复习（按优先级）
 
+- [x] **滑动窗口** — LC3 无重复字符最长子串 + LC76 最小覆盖子串
+- [x] **链表基础** — LC206 + LC141 + LC21 + LC19
 - [x] **图 DFS/BFS** — LC133 Clone Graph + LC207 Course Schedule + LC200 Number of Islands
 - [x] **二分查找** — LC153 旋转数组最小值 + LC33 搜索旋转排序数组
 - [x] **数组基础** — LC1 Two Sum + LC121 Best Time to Buy and Sell Stock
-- [x] **滑动窗口** — LC3 无重复字符最长子串 + LC76 最小覆盖子串
 - [x] **树基础** — LC226 + LC105 + LC235 + LC236 + LC102 + LC104 + LC98
-- [x] **链表基础** — LC206 + LC141 + LC21 + LC19
