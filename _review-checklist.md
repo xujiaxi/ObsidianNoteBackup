@@ -1,24 +1,24 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-12）
+## 📅 今日复习（2026-07-13）
 
 ### 需要回顾
-- [ ] **滑动窗口**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）— **核心：通用模板 — 外层 while 扩展右指针 `right++`，内层 while 满足条件时收缩左指针 `left++`；窗口内用 HashMap/数组维护字符计数；LC76 需要有效计数 `formed` 跟踪当前窗口是否覆盖所有目标字符。收缩窗口时先更新结果再移动左指针。**
-- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19）— **核心：反转链表用 `prev→curr→next` 三指针模板，保存 next 再改指向；快慢指针检测环，`slow = head, fast = head`，fast 每次两步 slow 一步，相遇即有环；哨兵节点（Dummy Node）简化头结点删除/合并边界；删除倒数第 N 个用快指针先走 N 步。**
+- [ ] **树与递归**：Invert Binary Tree（LC226）、Maximum Depth of Binary Tree（LC104）、Same Tree（LC100）、Validate Binary Search Tree（LC98）、Lowest Common Ancestor of BST（LC235）、Construct Binary Tree from Preorder and Inorder（LC105）、Binary Tree Level Order Traversal（LC102）、LCA of Binary Tree（LC236）— **核心：递归套路三部曲（终止条件→递归调用→合并结果）；BST 验证必须传递 `min/max` 边界或利用中序遍历递增性；树构造题以 preorder 第一个元素切分 inorder 数组，递归构建左右子树；层序遍历 BFS 用 queue 模板。**
+- [ ] **动态规划**：Best Time to Buy and Sell Stock III（LC123）、Maximum Subarray（LC53）-style Kadane — **核心：DP 三步法 — 定义状态 → 递推公式 → base case；股票系列在 Limited Transactions 场景下用 `dp[k][i] = max(dp[k][i-1], prices[i] - prices[j] + dp[k-1][j-1])`；Kadane 算法 `cur = max(num, cur + num), maxSum = max(maxSum, cur)` 本质上就是压缩到 O(1) 空间的 DP。**
 
 ### 重点坑
-- [ ] **滑动窗口 valid-- 漏更新**：收缩窗口移动左指针时，必须同步更新窗口内计数（`windowCount[s[left]]--`）和有效计数（`formed--` 或 `count--`），漏掉任一个会导致后续窗口判断错误。尤其注意 char 类型转换后减少计数到 0 以下。
-- [ ] **链表反转指针顺序错误**：`next = curr.next; curr.next = prev; prev = curr; curr = next` — 先保存 `next` 再改指向，顺序不可弄反。养成写完后手推一次的习惯（1→2→3→null）。
-- [ ] **链表快慢指针环检测初始化**：两者都从 `head` 开始，但循环条件必须是 `while fast and fast.next`（检查 fast 和 fast.next 非空），不是 `while fast.next`。如果 `head` 为 null 或只有一个节点，`fast.next` 会抛 NPE。
-- [ ] **滑动窗口的最小覆盖子串 left 收缩时机**：LC76 中，当窗口满足覆盖条件（`formed == required`）后才开始收缩左指针。收缩过程中可能再次变为不满足，此时退出内层 while。注意收缩后结果更新应在收缩开始前记录（先记录再收缩），以免丢失最优解。
+- [ ] **树递归栈溢出（StackOverflowError）**：当二叉树退化为链表（如只有左子树）时，递归 DFS 深度 = 节点数，可能栈溢出。解决：掌握迭代遍历（显式 Stack）、Morris Traversal（O(1) 空间）、或调大栈空间。面试时先问「树是否平衡」，再决定用递归还是迭代。
+- [ ] **BST 验证只检查当前节点 vs 左右子节点**：错误写法 `if root.val <= left.val or root.val >= right.val`。必须传递 `(min, max)` 边界到递归函数，确保整个左子树所有值都 < root.val，整个右子树所有值都 > root.val。中序遍历解法只检查相邻递增，更简洁但无法处理重复值。
+- [ ] **DP 状态定义不清晰**：最常见的错误是拿到题就开始想递推公式，没有先明确定义 `dp[i]` 代表什么。经验法则：先想清楚「以 i 结尾」还是「前 i 个元素」，状态定义不同直接决定递推方向。写出状态定义后用 small example 手推验证。
 
 ### 建议刷的新题
-- [ ] **链表**：Reorder List（Medium）— 关联已掌握知识：链表反转（LC206）+ 快慢指针找中点（LC141）+ 合并链表（LC21）。三步法：快慢指针找到中点→反转后半段→交替合并前后段。O(N) 时间 O(1) 空间，注意奇偶长度的中点选择。
-- [ ] **数组 / 滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口模板（LC3, LC76）。维护窗口内最高频字符出现次数 `maxFreq`，当 `windowLen - maxFreq > k` 时收缩左指针。面试高频，需理解为什么不需要每次更新 maxFreq。
-- [ ] **数组 / 双指针**：3Sum（Medium）— 关联已掌握知识：Two Sum（LC1）哈希表思想 + 排序双指针。先排序，固定一个数后用双指针找剩余两数之和，注意去重（跳过重复元素），O(N²) 时间 O(1) 额外空间。
-- [ ] **链表**：Merge K Sorted Lists（Hard）— 关联已掌握知识：合并两个有序链表（LC21）。可用分治法（两两合并 O(N log K)）或小顶堆（PriorityQueue O(N log K)）。面试中分治实现更简洁且不依赖堆，两种方案都要能讲。
+- [ ] **数组 / DP**：Maximum Subarray（Medium）— 关联已掌握知识：股票最佳买卖时机的一遍扫描思想（LC121）。Kadane 算法本质是「到当前位置为止的最大子数组和」的 DP，`dp[i] = max(nums[i], dp[i-1] + nums[i])`。面试最高频题之一，O(N) 时间 O(1) 空间，必须能秒。
+- [ ] **DP**：House Robber（Medium）— 关联已掌握知识：动态规划基础（已做 5 道 DP）。一维 DP 入门模板：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`，再压缩到 O(1) 空间。House Robber II（环形）是自然延伸，一题吃透两种变体。
+- [ ] **图 / DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands 的 DFS 沉岛（LC200）+ Clone Graph 的 BFS/DFS 遍历（LC133）。反向从边界向中间 DFS，分别标记能流入太平洋和大西洋的格子，取交集。面试高频图题。
+- [ ] **滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口通用模板（LC3, LC76）。核心难点：维护窗口内最高频字符 `maxFreq`，当 `windowLen - maxFreq > k` 时收缩左指针。注意无需每次更新 maxFreq（只会变小，不会影响结果）。字节/TikTok 高频题。
 
 ## 历史复习记录
+- 2026-07-13：树与递归、动态规划
 - 2026-07-12：滑动窗口、链表
 - 2026-07-11：图论 BFS/DFS、二分查找、数组基础
 - 2026-07-07：滑动窗口、链表、树 DFS/BFS
