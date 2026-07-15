@@ -1,23 +1,23 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-13）
+## 📅 今日复习（2026-07-14）
 
 ### 需要回顾
-- [ ] **树与递归**：Invert Binary Tree（LC226）、Maximum Depth of Binary Tree（LC104）、Same Tree（LC100）、Validate Binary Search Tree（LC98）、Lowest Common Ancestor of BST（LC235）、Construct Binary Tree from Preorder and Inorder（LC105）、Binary Tree Level Order Traversal（LC102）、LCA of Binary Tree（LC236）— **核心：递归套路三部曲（终止条件→递归调用→合并结果）；BST 验证必须传递 `min/max` 边界或利用中序遍历递增性；树构造题以 preorder 第一个元素切分 inorder 数组，递归构建左右子树；层序遍历 BFS 用 queue 模板。**
-- [ ] **动态规划**：Best Time to Buy and Sell Stock III（LC123）、Maximum Subarray（LC53）-style Kadane — **核心：DP 三步法 — 定义状态 → 递推公式 → base case；股票系列在 Limited Transactions 场景下用 `dp[k][i] = max(dp[k][i-1], prices[i] - prices[j] + dp[k-1][j-1])`；Kadane 算法 `cur = max(num, cur + num), maxSum = max(maxSum, cur)` 本质上就是压缩到 O(1) 空间的 DP。**
+- [ ] **数组 & 二分查找**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：Two Sum 哈希表 O(N) 一 pass；Best Time 用 minPrice 和 maxProfit 一遍扫描；旋转数组二分查找与右边界 nums[right] 比较比左边界更可靠；区分查找指定值（while left <= right）和查找旋转点（while left < right）两种模板。**
+- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200）— **核心：图的邻接表构建；Clone Graph DFS/BFS 用 HashMap 记录原→新节点映射避免重复克隆；Course Schedule 拓扑排序 Kahn 算法（BFS 入度表）和 DFS 三色标记法；Number of Islands 沉岛算法（访问过的 1 改为 0）。**
 
 ### 重点坑
-- [ ] **树递归栈溢出（StackOverflowError）**：当二叉树退化为链表（如只有左子树）时，递归 DFS 深度 = 节点数，可能栈溢出。解决：掌握迭代遍历（显式 Stack）、Morris Traversal（O(1) 空间）、或调大栈空间。面试时先问「树是否平衡」，再决定用递归还是迭代。
-- [ ] **BST 验证只检查当前节点 vs 左右子节点**：错误写法 `if root.val <= left.val or root.val >= right.val`。必须传递 `(min, max)` 边界到递归函数，确保整个左子树所有值都 < root.val，整个右子树所有值都 > root.val。中序遍历解法只检查相邻递增，更简洁但无法处理重复值。
-- [ ] **DP 状态定义不清晰**：最常见的错误是拿到题就开始想递推公式，没有先明确定义 `dp[i]` 代表什么。经验法则：先想清楚「以 i 结尾」还是「前 i 个元素」，状态定义不同直接决定递推方向。写出状态定义后用 small example 手推验证。
+- [ ] **二分查找边界混淆**：`while (left <= right)` 与 `while (left < right)` 的选择直接影响结果。查找确切值用 `<=`（循环结束时 `right < left`，区间为空）；查找旋转点/边界用 `<`（循环结束时 `left == right`，指向目标位置）。在旋转排序数组中，与 `nums[right]` 比较比 `nums[left]` 更可靠，因为旋转点右侧一定是递增段（LC33/153 模板）。
+- [ ] **图遍历未标记已访问**：Clone Graph 中忘记在 HashMap 记录已克隆节点会导致无限递归栈溢出；Number of Islands 中漏掉沉岛标记会导致同一岛屿被重复计数。**黄金原则**：DFS 在递归进入前立即标记 visited，BFS 在入队时标记（而非出队时），确保每个节点只处理一次。
 
 ### 建议刷的新题
-- [ ] **数组 / DP**：Maximum Subarray（Medium）— 关联已掌握知识：股票最佳买卖时机的一遍扫描思想（LC121）。Kadane 算法本质是「到当前位置为止的最大子数组和」的 DP，`dp[i] = max(nums[i], dp[i-1] + nums[i])`。面试最高频题之一，O(N) 时间 O(1) 空间，必须能秒。
-- [ ] **DP**：House Robber（Medium）— 关联已掌握知识：动态规划基础（已做 5 道 DP）。一维 DP 入门模板：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`，再压缩到 O(1) 空间。House Robber II（环形）是自然延伸，一题吃透两种变体。
-- [ ] **图 / DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握知识：Number of Islands 的 DFS 沉岛（LC200）+ Clone Graph 的 BFS/DFS 遍历（LC133）。反向从边界向中间 DFS，分别标记能流入太平洋和大西洋的格子，取交集。面试高频图题。
-- [ ] **滑动窗口**：Longest Repeating Character Replacement（Medium）— 关联已掌握知识：滑动窗口通用模板（LC3, LC76）。核心难点：维护窗口内最高频字符 `maxFreq`，当 `windowLen - maxFreq > k` 时收缩左指针。注意无需每次更新 maxFreq（只会变小，不会影响结果）。字节/TikTok 高频题。
+- [ ] **数组/双指针**：3Sum（Medium）— 关联已掌握 Two Sum 哈希表（LC1）。排序后固定一个数，双指针在剩余区间内查找两数之和等于当前数的相反数。去重模板（跳过重复值）面试高频，O(N²) 时间 O(1) 空间。
+- [ ] **数组/DP**：Maximum Subarray（Medium）— 关联已掌握 Best Time to Buy and Sell Stock（LC121）的一遍扫描思路。Kadane 算法 `cur = max(num, cur + num); maxSum = max(maxSum, cur)` 本质是压缩到 O(1) 空间的 DP，面试最高频题之一，必须能秒。
+- [ ] **图 / DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握 Number of Islands 的 DFS（LC200）。从四条边界向中间反向 DFS，分别标记能流入太平洋和大西洋的格子，最后取交集。核心思维：反向推导比正向模拟简单得多。
+- [ ] **树 / BST**：Kth Smallest Element in a BST（Medium）— 关联已掌握 Validate BST 的中序遍历递增性质（LC98）。BST 中序遍历即有序序列，用递归或迭代栈（显式 Stack）找第 K 个访问节点。掌握 Morris Traversal（O(1) 空间）可加分。
 
 ## 历史复习记录
+- 2026-07-14：数组 & 二分查找、图论 BFS/DFS
 - 2026-07-13：树与递归、动态规划
 - 2026-07-12：滑动窗口、链表
 - 2026-07-11：图论 BFS/DFS、二分查找、数组基础
