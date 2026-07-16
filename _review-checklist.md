@@ -1,22 +1,24 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-14）
+## 📅 今日复习（2026-07-15）
 
 ### 需要回顾
-- [ ] **数组 & 二分查找**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：Two Sum 哈希表 O(N) 一 pass；Best Time 用 minPrice 和 maxProfit 一遍扫描；旋转数组二分查找与右边界 nums[right] 比较比左边界更可靠；区分查找指定值（while left <= right）和查找旋转点（while left < right）两种模板。**
-- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200）— **核心：图的邻接表构建；Clone Graph DFS/BFS 用 HashMap 记录原→新节点映射避免重复克隆；Course Schedule 拓扑排序 Kahn 算法（BFS 入度表）和 DFS 三色标记法；Number of Islands 沉岛算法（访问过的 1 改为 0）。**
+- [ ] **链表**：Reverse Linked List（LC206）、Detect Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19）— **核心：反转链表用三指针 prev/curr/next，先保存 next 再改指针；快慢指针检测环注意 while(fast != null && fast.next != null) 双重判空；合并链表用 Dummy Node 哨兵节点头；删除倒数第 N 个节点用 fast 先走 N 步再同步走。**
+- [ ] **滑动窗口 & 字符串**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）— **核心：通用模板 — 外层 while 右指针扩展并更新状态，内层 while 满足条件时收缩左指针并反向更新状态。LC3 用 Set/Map 记录窗口内字符；LC76 用 need/have 双计数器精确匹配目标子串。**
 
 ### 重点坑
-- [ ] **二分查找边界混淆**：`while (left <= right)` 与 `while (left < right)` 的选择直接影响结果。查找确切值用 `<=`（循环结束时 `right < left`，区间为空）；查找旋转点/边界用 `<`（循环结束时 `left == right`，指向目标位置）。在旋转排序数组中，与 `nums[right]` 比较比 `nums[left]` 更可靠，因为旋转点右侧一定是递增段（LC33/153 模板）。
-- [ ] **图遍历未标记已访问**：Clone Graph 中忘记在 HashMap 记录已克隆节点会导致无限递归栈溢出；Number of Islands 中漏掉沉岛标记会导致同一岛屿被重复计数。**黄金原则**：DFS 在递归进入前立即标记 visited，BFS 在入队时标记（而非出队时），确保每个节点只处理一次。
+- [ ] **链表快慢指针空指针异常**：`while (fast != null && fast.next != null)` 两个条件缺一不可。fast != null 确保节点存在，fast.next != null 确保能走两步。只写 `while (fast.next != null)` 在 fast 为 null 时直接 NPE。反转链表时也容易忘记用 `next = curr.next` 保存下一节点再改指向。
+- [ ] **滑动窗口收缩时忘记反向更新**：窗口扩张时增加计数（map[key]++ / have++），但在内层 while 收缩窗口时常常忘记同步减少计数或移除索引。**黄金模板**：扩张（右移）和收缩（左移）的操作必须成对出现——增加什么就减少什么。
 
 ### 建议刷的新题
-- [ ] **数组/双指针**：3Sum（Medium）— 关联已掌握 Two Sum 哈希表（LC1）。排序后固定一个数，双指针在剩余区间内查找两数之和等于当前数的相反数。去重模板（跳过重复值）面试高频，O(N²) 时间 O(1) 空间。
-- [ ] **数组/DP**：Maximum Subarray（Medium）— 关联已掌握 Best Time to Buy and Sell Stock（LC121）的一遍扫描思路。Kadane 算法 `cur = max(num, cur + num); maxSum = max(maxSum, cur)` 本质是压缩到 O(1) 空间的 DP，面试最高频题之一，必须能秒。
-- [ ] **图 / DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握 Number of Islands 的 DFS（LC200）。从四条边界向中间反向 DFS，分别标记能流入太平洋和大西洋的格子，最后取交集。核心思维：反向推导比正向模拟简单得多。
-- [ ] **树 / BST**：Kth Smallest Element in a BST（Medium）— 关联已掌握 Validate BST 的中序遍历递增性质（LC98）。BST 中序遍历即有序序列，用递归或迭代栈（显式 Stack）找第 K 个访问节点。掌握 Morris Traversal（O(1) 空间）可加分。
+- [ ] **链表**：Reorder List（Medium）— 关联已掌握链表反转（LC206） + 快慢指针（LC141） + 合并链表（LC21）。三步法：找中点、翻转后半、交叉合并。面试高频组合题，一题考三个知识点。
+- [ ] **数组/双指针**：3Sum（Medium）— 关联已掌握 Two Sum 哈希表（LC1）。排序后固定一个数，双指针在剩余区间查找两数之和等于当前数的相反数。去重模板（跳过重复值）面试必考，O(N²) 时间 O(1) 空间。
+- [ ] **数组/DP**：Maximum Subarray（Medium）— 关联已掌握 Best Time to Buy and Sell Stock（LC121）的一遍扫描思路。Kadane 算法 `cur = max(num, cur + num)` 本质是退化到 O(1) 空间的 DP，面试最经典之一。
+- [ ] **图/DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握 Number of Islands（LC200）DFS。从四条边界向中间反向 DFS，分别标记能流入太平洋和大西洋的格子，最后取交集。核心：反向推导比正向模拟简单得多。
+- [ ] **树/BST**：Kth Smallest Element in a BST（Medium）— 关联已掌握 Validate BST（LC98）的中序遍历递增性质。BST 中序遍历即有序序列，用递归或迭代栈找第 K 个节点。进阶掌握 Morris Traversal O(1) 空间。
 
 ## 历史复习记录
+- 2026-07-15：链表、滑动窗口 & 字符串
 - 2026-07-14：数组 & 二分查找、图论 BFS/DFS
 - 2026-07-13：树与递归、动态规划
 - 2026-07-12：滑动窗口、链表
@@ -37,7 +39,7 @@
 | Binary Search | 2 | `binary-search/` |
 | Design | 2 | `design/` |
 | Sliding Window | 2 | `sliding-window/` |
-| Array | 1 | `array/` |
+| Array | 2 | `array/` |
 | Greedy | 1 | `greedy/` |
 | Heap | 1 | `heap/` |
 | String | 1 | `string/` |
@@ -53,8 +55,8 @@
 | Two Pointers | 0 | `two-pointers/` |
 | Union Find | 0 | `union-find/` |
 
-**Blind 75 完成：21 / 76**（见 `knowledge/blind-75-overview.md`）
-**总共 LeetCode 完成：30 道题。掌握基于这些题型的核心思路，可以应对类似面试问题。**
+**Blind 75 完成：22 / 76**（见 `knowledge/blind-75-overview.md`）
+**总共 LeetCode 完成：31 道题。掌握基于这些题型的核心思路，可以应对类似面试问题。**
 
 ## 待复习（按优先级）
 

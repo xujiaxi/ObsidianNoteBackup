@@ -4,7 +4,7 @@
 
 | Topic | Problems | Directory |
 |-------|----------|-----------|
-| Array | 1 | `array/` |
+| Array | 2 | `array/` |
 | Binary Search | 2 | `binary-search/` |
 | Bit Manipulation | 0 | `bit-manipulation/` |
 | Graph | 3 | `graph/` |
@@ -28,7 +28,7 @@
 
 ## 当前进度
 
-已完成 **21 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
+已完成 **22 / 75** 道 Blind 75 题（见 `knowledge/blind-75-overview.md`）
 
 ## 搜索技巧
 

@@ -74,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -181,7 +180,7 @@
       "bases:新建数据库": false
     }
   },
-  "active": "af19a6b6f8fd5e32",
+  "active": "631ec585a6520780",
   "lastOpenFiles": [
     "knowledge/blind-75-overview.md",
     "knowledge/binary-search-template.md",
