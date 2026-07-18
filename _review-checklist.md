@@ -1,24 +1,26 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-16）
+## 📅 今日复习（2026-07-17）
 
 ### 需要回顾
-- [ ] **树与递归**：Maximum Depth of Binary Tree（LC104）、Same Tree（LC100）、Invert Binary Tree（LC226）、Binary Tree Level Order Traversal（LC102）、Validate BST（LC98）、Construct Binary Tree from Preorder+Inorder（LC105）、LCA of BST（LC235）、LCA of Binary Tree（LC236）— **核心：所有树题的根基是递归三步法（base case → 递归处理子树 → 合并结果）。LC102 层序遍历用 BFS + Queue 逐层处理；LC98 验证 BST 用中序遍历递增性（注意不能只比父子，要用 min/max 上下界传递）；LC105 构建树用 preorder[0] 定根、inorder 找根位置切分左右子树；LC236 LCA 用后序遍历——左右子树分别找到 p/q 则当前节点即为答案。**
-- [ ] **图论 BFS/DFS**：Number of Islands（LC200）、Clone Graph（LC133）、Course Schedule（LC207）— **核心：LC200 沉岛算法——DFS 遇到 '1' 就标记为 '0'（原地修改省空间），或用 visited Set。LC133 克隆图用 HashMap 记录 oldNode→newNode 映射，BFS/DFS 遍历邻居时递归克隆。LC207 拓扑排序检测环——Kahn's BFS（入度队列）或 DFS 三色标记法（0=未访问, 1=访问中, 2=已完成），遇到灰色节点说明有环。**
+- [ ] **数组 & 二分查找**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121）、Maximum Subarray（LC53）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：LC1 用 HashMap边遍历边查（一次遍历），不需要排序；LC121 经典状态 DP（minPrice 滚动、maxProfit 更新），O(n) O(1)；LC53 Kadane 算法——`dp[i] = max(nums[i], dp[i-1]+nums[i])`，注意全负数组时返回的是负数本身；LC153/LC33 旋转数组二分——与 `nums[right]` 比较判定哪 half 有序更可靠，LC33 需先判断 mid 在哪 half，再判断 target 是否落在有序 half，否则缩另一 half。**
+- [ ] **链表**（回顾+深化）：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19）— **核心：LC206 三指针法（prev=null, curr, next）每轮反转 1 个指针；LC141 快慢指针（Floyd 龟兔赛跑），相遇即有环，注意 break 后 slow 重置断环；LC21 dummy node 简化头节点，两个指针逐步比较更小的取出；LC19 双指针，快指针先走 n 步再同步走，快到尾时慢指向待删节点的前驱（用 dummy 兜底删头节点）。**
 
 ### 重点坑
-- [ ] **Validate BST 中序遍历陷阱**：不能只比较 node.val 与 node.left.val / node.right.val！因为右子树的最左下角可能小于根。正确做法是用 `(min, max)` 上下界递归传递：`isValid(node, min, max)`，每次更新左子树上界=当前值、右子树下界=当前值。中序遍历法需维护全局 `prev` 变量，检查 `curr > prev`。
-- [ ] **LCA of Binary Tree 的 null 返回值语义**：LC236 中后序遍历返回值有双重含义——找到目标节点返回该节点，未找到返回 null，两个子树都返回非 null 时当前节点就是 LCA。常见错误：找到一侧就提前返回，漏掉另一侧可能找到更深的 LCA。必须递归完左右子树再判断。
-- [ ] **Course Schedule 邻接表建表方向**：`prerequisites[i] = [a, b]` 表示「要上 a 必须先上 b」，即 b→a 的边（b 是 a 的前驱）。建图时 `graph[b].add(a)` 并 `indegree[a]++`。方向搞反导致拓扑排序全部出错。
+- [ ] **Maximum Subarray (Kadane) 的全负数组**：很多人初始化 maxSum=0, curSum=0，结果返回 0 是错的——当数组全是负数时最大子数组就是最小的那个负数。正确初始化 `maxSum = nums[0]`、`curSum = nums[0]`，从 index 1 起更新 `curSum = max(nums[i], curSum + nums[i])`。也可以提前先 sort 取最大负数验证。
+- [ ] **Remove Nth Node From End 删除头节点的边界**：当 n == 链表长度时 slow=/delete 指针会停在 head，但 fast 走 n 步已到 null，slow 没机会先一步。**必须用 dummy node 让 slow 从 dummy 出发**，这样 slow 停在头节点的前驱，才能正确删除头节点。
+- [ ] **Search in Rotated Sorted Array 的 `==` 判定**：比较 mid 与 right 时注意 `nums[mid] == nums[right]` 在本题不会出现（元素不重复），但若改成 Find Minimum II（重复元素）则有陷阱——相等时直接 `right--` 缩边界而不是盲目缩一半。LC33 模板里写 `if (nums[mid] < nums[right]) right = mid`（注意是 mid 不是 mid-1，因为 mid 可能就是答案）。
+- [ ] **Floyd 环检测的断环逻辑顺序**：找到环后必须二次走步——slow 回到 head，两指针同速走，相遇点即环入口。常见错误：忘记重置 slow，或先更新指针再判断遇到（应先判断再更新）。
 
 ### 建议刷的新题
-- [ ] **树/DFS**：Binary Tree Maximum Path Sum（Hard）— 关联已掌握树的后序遍历递归（LC236 LCA）+ LC104 最大深度。核心：后序遍历计算「经过当前节点的最大路径和」= 当前节点值 + max(0, 左子树贡献) + max(0, 右子树贡献)，用全局变量追踪最大值。难点在于区分「全局路径」和「向上返回的单边贡献」。
-- [ ] **图/DFS**：Pacific Atlantic Water Flow（Medium）— 关联已掌握 Number of Islands（LC200）DFS 沉岛思路。从四条边界向中间反向 DFS，分别标记能流入太平洋和大西洋的格子，最后取交集。核心思想：反向推导比正向模拟简单得多。
-- [ ] **树/序列化**：Serialize and Deserialize Binary Tree（Hard）— 关联已掌握 LC105 构建树（preorder+inorder）+ LC102 层序遍历。用 BFS 层序序列化为字符串（null 用 # 占位），反序列化时用 Queue 逐层重建。面试高频设计题，考的是树的完整遍历与重建。
-- [ ] **树/Trie**：Implement Trie (Prefix Tree)（Medium）— 关联已掌握树的递归结构与 DFS 遍历。Trie 本质是 N 叉树，每个节点含 children[26] + isEnd 标志。insert/search/startsWith 三方法，掌握后可拓展到 LC211 Add and Search Word（通配符 `.` 的 DFS）。
-- [ ] **堆**：Top K Frequent Elements（Medium）— 关联已掌握 HashMap 计数（LC1 Two Sum）+ LC253 Meeting Rooms II 堆应用。先用 HashMap 频率统计，再用小顶堆（容量 K）或桶排序（按频率分桶）求 Top K。桶排序 O(N) 比堆 O(N log K) 更优，面试常考两种解法对比。
+- [ ] **数组**：Contains Duplicate（Easy）— 关联已掌握 Two Sum（HashMap 计数）。一行 HashSet 搞定，面试中开场热身题；变体题 Contains Duplicate II（k 距离内重复）+ Contains Duplicate III（值差与下标差）一路深入。
+- [ ] **数组**：Product of Array Except Self（Medium）— 关联已掌握 Two Sum（正向遍历思维）+ Maximum Subarray（前缀区间思想）。**核心：先正向扫累计前缀积 → 再反向扫累计后缀积 → 双扫结果即答案，O(n) O(1)（结果数组不计入辅助空间）**。面试必考，考的是「不使用除法」的巧妙点子。
+- [ ] **数组**：Maximum Product Subarray（Medium）— 关联已掌握 Maximum Subarray（Kadane）。**核心变体**：DP 同时维护 max 和 min（因为负负得正），转移时三者取极值：`max[i] = max(num, max[i-1]*num, min[i-1]*num)`、对称同理。
+- [ ] **堆**：Top K Frequent Elements（Medium）— 关联已掌握 HashMap 计数（LC1）+ LC253 Meeting Rooms II（堆）。先频率统计再小顶堆求 TopK，桶排序 O(N) 是更优解；和 lc253 双堆思路遥相呼应。
+- [ ] **树**：Kth Smallest Element in a BST（Medium）— 关联已掌握 Validate BST（中序遍历）+ BST 性质。**核心：中序遍历 BST 即遍历升序数组，第 k 个访问到的节点就是答案**。掌握迭代式中序（用栈）可在找到目标后立即停止，比完整中序遍历高效。
 
 ## 历史复习记录
+- 2026-07-17：数组 & 二分查找、链表
 - 2026-07-16：树与递归、图论 BFS/DFS
 - 2026-07-15：链表、滑动窗口 & 字符串
 - 2026-07-14：数组 & 二分查找、图论 BFS/DFS
