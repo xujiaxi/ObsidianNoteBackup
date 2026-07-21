@@ -1,25 +1,26 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-19）
+## 📅 今日复习（2026-07-20）
 
 ### 需要回顾
-- [ ] **动态规划：股票系列状态机** — Best Time to Buy and Sell Stock I-IV（LC121/122/123/188）、With Cooldown（LC309）、With Transaction Fee（LC714）— **核心：I（一次交易）→ `minPrice` 扫描 + `maxProfit = max(maxProfit, price - minPrice)`。II（无限次）→ 贪心累加所有 `price[i] > price[i-1]` 的差值。III（两次交易）→ 左右遍历法或 4 状态 DP（buy1/sell1/buy2/sell2 四个变量滚动）。IV（k 次）→ `dp[i][k][0/1]` 三维 DP，k >= n/2 时退化无限次（贪心），否则 2k 个变量空间优化。Cooldown → 冻结一天，状态要扩展 cooldown 维度。Transaction Fee → 卖出时扣 fee，`dp[i][0] = max(dp[i-1][0], dp[i-1][1] + price[i] - fee)`。**
-- [ ] **数组 & 二分查找**：Two Sum（LC1）、Maximum Subarray（LC53）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33）— **核心：LC1 HashMap 一遍扫 `target - num` 匹配。LC53 Kadane 算法——`maxEndingHere = max(num, maxEndingHere + num)`（负贡献舍去），`maxSoFar = max(maxSoFar, maxEndingHere)`。LC153 二分找转折点——`nums[mid] < nums[right]` 说明右边有序，最小值在左半；否则最小值在右半。LC33 先定位有序侧——`nums[mid] <= nums[right]` 则右半有序，否则左半有序，再判断 target 是否在有序半内决定搜索方向。**
+- [ ] **图论 BFS/DFS**：Number of Islands（LC200）、Course Schedule（LC207）、Clone Graph（LC133）— **核心：LC200 沉岛算法——遍历到 '1' 即 DFS/BFS 标记所有连通的 '1' 为 '0'（原地修改避免 visited 数组）。LC207 拓扑排序 + 环检测——三色标记法（white/gray/black），gray 表示在当前 DFS 栈中（发现 gray 即有环）；或 Kahn 算法（BFS）记录入度，入度为 0 入队，每出队一个节点削减邻居入度。LC133 克隆图——HashMap `oldNode → newNode` 避免重复克隆，DFS/BFS 遍历邻居时递归克隆并连接。**时间复杂度**：均为 O(V+E)。
+- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End Of List（LC19）— **核心：LC206 反转——三指针 `prev/curr/next`，迭代写法更稳；递归写法 `reverseList(head.next)` 后接 `head.next.next = head`。LC141 快慢指针——`slow = slow.next, fast = fast.next.next`，相遇则有环；注意 `fast != null && fast.next != null` 的循环条件顺序。LC21 dummy 哑节点——`dummy.next` 锚定结果头，逐节点比较 `l1.val` 与 `l2.val` 拼接。LC19 双指针间距法——`fast` 先走 n 步，再 `slow/fast` 同步走至 `fast == null`，`slow` 即停在待删节点前一位，`slow.next = slow.next.next`。**
 
 ### 重点坑
-- [ ] **Kadane 算法 `maxEndingHere` 更新方式**：必须用 `maxEndingHere = max(num, maxEndingHere + num)` 而非 `maxEndingHere += num`。反例：`nums = [-2, 1]` —— 如果 `maxEndingHere += num`，第一步 -2，第二步 maxEndingHere = -2 + 1 = -1；正确做法第二步 maxEndingHere = max(1, -2+1) = 1（直接从 1 重新开始）。**Kadane 的本质是「要么接续累加，要么从当前位置另起炉灶」。**
-- [ ] **股票 IV（k 次交易）的空间缩退化**：当 `k >= n/2` 时，问题退化为无限次交易（LC122 贪心累加正 diff），**必须单独处理**，否则 `dp[k][2]` 的 O(nk) 会超时/爆内存。`dp[0][1] = -inf` 初始化不能忘记——第 0 天不可能持有股票。另一种常见坑：买入不算次数，卖出才算一次完整交易，循环中 `for t in range(1, k+1)` 注意 dp 维度含义。
-- [ ] **旋转数组二分查找的有序半判断**：用 `nums[mid]` 与 `nums[right]` 比较。当 `nums[mid] <= nums[right]` 时右半有序，否则左半有序。注意边界条件——`<=` 而不是 `<` 处理 mid == right 的情况。**容易犯的错误**：用 `nums[mid] < nums[left]` 判断，在数组长度为 2 时左半判断出错。统一用右边界比较更可靠。
-- [ ] **Two Sum HashMap 的重复值处理**：如果题目要求返回的是索引（而非值），遇到 `target - num` 等于 num 本身时，需要检查 `map[target - num] != i`（自己不能是自己），要在插入 map 之前判断。如果先插入再判断，会拿到同一个索引。正确顺序：`if complement in map: return [map[complement], i]`，然后再 `map[num] = i`。
+- [ ] **LC141 快慢指针循环条件顺序**：必须写成 `while fast != null && fast.next != null`（先 fast 后 fast.next），如果反过来写会 NPE（空指针），因为先访问 `fast.next` 时 fast 可能为 null。另外空链表 `head == null` 时进循环体前应直接返回 false。误以为「快指针走到尾部 = 无环」要相当小心：fast 遇到 null 即终止，**相遇才说明有环**——`slow == fast` 返回 true 必须在快慢指针都走至少一步之后判断（否则同步起跑会直接相等）。
+- [ ] **LC19 删除倒数第 N 个节点的边界**：当 `n == 链表长度` 时（即删除头节点），`fast` 先走 n 步后已经为 null，`slow` 没动——若不用 dummy 节点，需要单独处理「返回 head.next」。**正确写法**：套一个 dummy 节点指向 head，slow 从 dummy 开始，这样所有删除场景统一为 `slow.next = slow.next.next`，无需特殊处理头节点。此外 n 的合法性（1 ≤ n ≤ 长度）一般题目已保证，但面试时要明确假设。
+- [ ] **LC207 三色标记法的颜色含义**：white=未访问，gray=在当前 DFS 路径上（栈中），black=已完成。**关键坑**：发现 gray 节点不一定是环——必须确认这是「当前 DFS 栈」中的 gray。如果遍历结束后才标记 black，但是中途遇到 gray，那才是回边（back edge）。常见错误：用 2 色（visited/unvisited）做 DFS 检测环会误判——例如 A→B, A→C, B→C 中，从 A 出发访问 C 后标记 visited，再从 B 访问 C 看到 visited 误以为有环，其实没有。**3 色是必须的**。
+- [ ] **LC200 沉岛 vs visited 数组的边界**：原地修改 grid 把 '1' 标记为 '0' 可省空间，但**会破坏输入**——面试中要先问面试官「能否修改输入」。如果不能修改，必须用 `visited` 二维数组或 `Set<String>` 记录坐标。DFS 递归深度可能导致 StackOverflow（大网格 300×300），可改用 BFS + 队列避免栈溢出。另外「岛屿」连通性是 4 连通（上下左右），不是 8 连通，写邻居时方向数组 `[(1,0),(-1,0),(0,1),(0,-1)]`。
 
 ### 建议刷的新题
-- [ ] **数组**：Product of Array Except Self（Medium）— 关联已掌握 LC1/LC53（扫描两次 O(n) 模式）。**核心**：先从左到右扫一遍构建 left 前缀积数组，再从右到左同步乘上 right 后缀积，空间可优化到 O(1)（输出数组不算额外空间）。**坑**：注意不能使用除法，需纯乘法构造。边界：`prefix[i] = prefix[i-1] * nums[i-1]`，`prefix[0] = 1`。
-- [ ] **动态规划**：House Robber（Medium）— 关联已掌握股票系列状态机（选/不选的二维状态）。**核心**：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`——不抢当前（继承 i-1）或抢（i-2 + 当前）。空间优化到两个滚动变量。**坑**：base case `dp[0] = nums[0]`，`dp[1] = max(nums[0], nums[1])`，注意处理好长度为 1 的边缘情况。
+- [ ] **数组**：Product of Array Except Self（Medium）— 关联已掌握 LC1/LC53（一遍扫描 O(n) 模式）。**核心**：先从左到右扫一遍构建 left 前缀积数组，再从右到左同步乘上 right 后缀积，空间可优化到 O(1)（输出数组不算额外空间）。**坑**：题目要求不能用除法，需纯乘法构造。边界：`prefix[i] = prefix[i-1] * nums[i-1]`，`prefix[0] = 1`。
 - [ ] **数组/双指针**：3Sum（Medium）— 关联已掌握 LC1 Two Sum（HashMap 对）。**核心**：排序 + 固定第一个数，双指针找 `target = -nums[i]`。去重关键——外层 `i > 0 && nums[i] == nums[i-1]` 跳过，内层 `while left < right && nums[left] == nums[left+1] left++`。**坑**：不排序无法做双指针去重；去重逻辑写错会导致漏解或多解。
+- [ ] **数组/Hash Table**：Contains Duplicate（Easy）— 关联已掌握 LC1（HashMap 用法）。**核心**：HashSet 一遍扫，遇到 `num in set` 返回 true，否则加入 set。O(n) 时间，O(n) 空间。**坑**：常见误区是先排序再判相邻（O(n log n)），实际 HashSet 更优。如果要求 O(1) 空间，可排序后比较相邻元素 `nums[i] == nums[i-1]`。
+- [ ] **动态规划**：House Robber（Medium）— 关联已掌握股票系列状态机（选/不选的二维状态）。**核心**：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`——不抢当前（继承 i-1）或抢（i-2 + 当前）。空间优化到两个滚动变量。**坑**：base case `dp[0] = nums[0]`，`dp[1] = max(nums[0], nums[1])`，注意处理好长度为 1 的边缘情况。
 - [ ] **动态规划**：Climbing Stairs（Easy）— 关联已掌握股票系列 DP 思维。**核心**：斐波那契 `dp[i] = dp[i-1] + dp[i-2]`，O(1) 空间滚动变量。**坑**：base case `dp[1]=1, dp[2]=2` 容易写反；面试中注意不能用递归（栈溢出），用迭代。
-- [ ] **字符串/DP**：Longest Palindromic Substring（Medium）— 关联已掌握 LC3/LC76 滑动窗口。**核心**：中心扩展法 O(n²)——每个位置（n 个字符 + n-1 个间隙）为中心向两边扩展；或 DP O(n²)——`dp[i][j] = (s[i]==s[j] && (j-i<=2 || dp[i+1][j-1]))`。**坑**：中心扩展法要注意回文可奇可偶，需要两轮循环（单字符中心、双字符中心）。DP 法注意遍历顺序——左端 i 从右向左，右端 j 从左向右才能用到 `dp[i+1][j-1]` 的子结果。
 
 ## 历史复习记录
+- 2026-07-20：图论 BFS/DFS、链表
 - 2026-07-19：动态规划、数组 & 二分查找
 - 2026-07-18：树与递归、图论 BFS/DFS、滑动窗口 & 字符串
 - 2026-07-17：数组 & 二分查找、链表
