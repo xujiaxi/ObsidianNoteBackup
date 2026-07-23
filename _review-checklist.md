@@ -1,25 +1,26 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-07-20）
+## 📅 今日复习（2026-07-22）
 
 ### 需要回顾
-- [ ] **图论 BFS/DFS**：Number of Islands（LC200）、Course Schedule（LC207）、Clone Graph（LC133）— **核心：LC200 沉岛算法——遍历到 '1' 即 DFS/BFS 标记所有连通的 '1' 为 '0'（原地修改避免 visited 数组）。LC207 拓扑排序 + 环检测——三色标记法（white/gray/black），gray 表示在当前 DFS 栈中（发现 gray 即有环）；或 Kahn 算法（BFS）记录入度，入度为 0 入队，每出队一个节点削减邻居入度。LC133 克隆图——HashMap `oldNode → newNode` 避免重复克隆，DFS/BFS 遍历邻居时递归克隆并连接。**时间复杂度**：均为 O(V+E)。
-- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End Of List（LC19）— **核心：LC206 反转——三指针 `prev/curr/next`，迭代写法更稳；递归写法 `reverseList(head.next)` 后接 `head.next.next = head`。LC141 快慢指针——`slow = slow.next, fast = fast.next.next`，相遇则有环；注意 `fast != null && fast.next != null` 的循环条件顺序。LC21 dummy 哑节点——`dummy.next` 锚定结果头，逐节点比较 `l1.val` 与 `l2.val` 拼接。LC19 双指针间距法——`fast` 先走 n 步，再 `slow/fast` 同步走至 `fast == null`，`slow` 即停在待删节点前一位，`slow.next = slow.next.next`。**
+- [ ] **树与递归**：Maximum Depth of Binary Tree（LC104）、Binary Tree Level Order Traversal（LC102）、Construct Binary Tree from Preorder and Inorder Traversal（LC105）、Validate Binary Search Tree（LC98）— **核心：LC104 递归 `max(depth(left), depth(right)) + 1`，迭代 BFS 用队列逐层计数。LC102 BFS 逐层入队，`size = queue.size()` 控制当前层节点数，内层 `for` 循环弹出 size 个节点收集到子列表，再扩展下一层。LC105 前序+中序重建——前序首元素是根，在中序里找到根的索引 `idx`，左子树 = `inorder[0:idx]`，右子树 = `inorder[idx+1:]`，递归构建。LC98 验证 BST——**中序遍历必严格递增**，用 `prev` 变量记录前驱节点值；或递归传递 `min/max` 范围（左子树上限 < root.val，右子树下限 > root.val）。**
+- [ ] **滑动窗口 & 字符串**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）— **核心：LC3 通用模板——`left=0`，`right` 右扩，遇到重复字符（在 Set 中）则内层 `while` 收缩 `left` 直到无重复，更新 `result = max(result, right - left + 1)`。LC76 滑动窗口变形——先统计 `t` 的字符频次 `need` + `missing`（还需匹配的字符种类数），`right` 扩展时匹配到 `t` 中字符则减少 `missing`，当 `missing == 0`（窗口覆盖 t）时 `left` 收缩寻找最小窗口；收缩时若弹出的字符属于 `need` 则恢复 `missing`。**
 
 ### 重点坑
-- [ ] **LC141 快慢指针循环条件顺序**：必须写成 `while fast != null && fast.next != null`（先 fast 后 fast.next），如果反过来写会 NPE（空指针），因为先访问 `fast.next` 时 fast 可能为 null。另外空链表 `head == null` 时进循环体前应直接返回 false。误以为「快指针走到尾部 = 无环」要相当小心：fast 遇到 null 即终止，**相遇才说明有环**——`slow == fast` 返回 true 必须在快慢指针都走至少一步之后判断（否则同步起跑会直接相等）。
-- [ ] **LC19 删除倒数第 N 个节点的边界**：当 `n == 链表长度` 时（即删除头节点），`fast` 先走 n 步后已经为 null，`slow` 没动——若不用 dummy 节点，需要单独处理「返回 head.next」。**正确写法**：套一个 dummy 节点指向 head，slow 从 dummy 开始，这样所有删除场景统一为 `slow.next = slow.next.next`，无需特殊处理头节点。此外 n 的合法性（1 ≤ n ≤ 长度）一般题目已保证，但面试时要明确假设。
-- [ ] **LC207 三色标记法的颜色含义**：white=未访问，gray=在当前 DFS 路径上（栈中），black=已完成。**关键坑**：发现 gray 节点不一定是环——必须确认这是「当前 DFS 栈」中的 gray。如果遍历结束后才标记 black，但是中途遇到 gray，那才是回边（back edge）。常见错误：用 2 色（visited/unvisited）做 DFS 检测环会误判——例如 A→B, A→C, B→C 中，从 A 出发访问 C 后标记 visited，再从 B 访问 C 看到 visited 误以为有环，其实没有。**3 色是必须的**。
-- [ ] **LC200 沉岛 vs visited 数组的边界**：原地修改 grid 把 '1' 标记为 '0' 可省空间，但**会破坏输入**——面试中要先问面试官「能否修改输入」。如果不能修改，必须用 `visited` 二维数组或 `Set<String>` 记录坐标。DFS 递归深度可能导致 StackOverflow（大网格 300×300），可改用 BFS + 队列避免栈溢出。另外「岛屿」连通性是 4 连通（上下左右），不是 8 连通，写邻居时方向数组 `[(1,0),(-1,0),(0,1),(0,-1)]`。
+- [ ] **LC102 层次遍历的队列大小快照**：必须在外层循环开始时 `int size = queue.size()` 快照当前层节点数，再写内层 `for (int i = 0; i < size; i++)`。**常见错误**：直接在 `for` 里写 `queue.size()`——因为循环体内不断 `queue.offer()` 加入下一层节点，size 实时变化，会导致当前层混入下一层节点。快照变量切断这个耦合是关键。
+- [ ] **LC98 验证 BST 的范围递归 vs 中序法**：**范围递归法坑**——初学者常写 `left.val < root.val && right.val > root.val` 只检查直接子节点，但 BST 要求整棵子树都满足范围。正确写法是递归传递 `min` 和 `max`（左子树必须 < root.val，右子树必须 > root.val，且这个约束沿树向下传播）。**中序法坑**——`prev` 必须用实例变量或数组引用（(`int[] prev`）在递归中保持可变状态，普通局部变量无法跨递归层传递。不少用例目标 `Long.MIN_VALUE` 会溢出，需求改为 `Long` 或先设标志位。
+- [ ] **LC105 前序+中序重建的边界处理**：在中序里找根用 `HashMap` 预存 `val → index` 避免每层线性查找。递归构建左子树时，区间是 `[preStart+1, preStart+1+leftSize-1]` 和 `[inStart, idx-1]`，右子树区间是 `[preStart+leftSize+1, preEnd]` 和 `[idx+1, inEnd]`——`leftSize = idx - inStart`（中序中根左侧的节点数），下标计算极易写错。空节点判断：`inStart > inEnd` 时返回 `null`。
+- [ ] **LC76 Minimum Window 的 `missing` 计数语义**：`missing` 表示「还缺多少个字符种类」而非「还缺多少个字符实例」。当 `missing == 0` 时窗口覆盖 t，开始收缩。**关键坑**：收缩 `left` 时，弹出的字符不在 `need` 中直接跳过；在 `need` 中则 `count[c]++`（剩余需求增加），若 `count[c] > 0` 说明这个字符从「刚好满足」变为「不足」，`missing++`。这个 `count[c] > 0` 判断是窗口能否合法收缩的关键。
 
 ### 建议刷的新题
-- [ ] **数组**：Product of Array Except Self（Medium）— 关联已掌握 LC1/LC53（一遍扫描 O(n) 模式）。**核心**：先从左到右扫一遍构建 left 前缀积数组，再从右到左同步乘上 right 后缀积，空间可优化到 O(1)（输出数组不算额外空间）。**坑**：题目要求不能用除法，需纯乘法构造。边界：`prefix[i] = prefix[i-1] * nums[i-1]`，`prefix[0] = 1`。
-- [ ] **数组/双指针**：3Sum（Medium）— 关联已掌握 LC1 Two Sum（HashMap 对）。**核心**：排序 + 固定第一个数，双指针找 `target = -nums[i]`。去重关键——外层 `i > 0 && nums[i] == nums[i-1]` 跳过，内层 `while left < right && nums[left] == nums[left+1] left++`。**坑**：不排序无法做双指针去重；去重逻辑写错会导致漏解或多解。
-- [ ] **数组/Hash Table**：Contains Duplicate（Easy）— 关联已掌握 LC1（HashMap 用法）。**核心**：HashSet 一遍扫，遇到 `num in set` 返回 true，否则加入 set。O(n) 时间，O(n) 空间。**坑**：常见误区是先排序再判相邻（O(n log n)），实际 HashSet 更优。如果要求 O(1) 空间，可排序后比较相邻元素 `nums[i] == nums[i-1]`。
-- [ ] **动态规划**：House Robber（Medium）— 关联已掌握股票系列状态机（选/不选的二维状态）。**核心**：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`——不抢当前（继承 i-1）或抢（i-2 + 当前）。空间优化到两个滚动变量。**坑**：base case `dp[0] = nums[0]`，`dp[1] = max(nums[0], nums[1])`，注意处理好长度为 1 的边缘情况。
-- [ ] **动态规划**：Climbing Stairs（Easy）— 关联已掌握股票系列 DP 思维。**核心**：斐波那契 `dp[i] = dp[i-1] + dp[i-2]`，O(1) 空间滚动变量。**坑**：base case `dp[1]=1, dp[2]=2` 容易写反；面试中注意不能用递归（栈溢出），用迭代。
+- [ ] **树**：Subtree of Another Tree（Easy）— 关联已掌握 LC100 Same Tree（递归比价两棵树是否相同）+ LC104 树的递归思维。**核心**：对 `s` 的每个节点做「以该节点为根的子树是否与 `t` 相同」的判断，相当于 LC100 在每个节点上跑一次。递归双入口 `isSubtree(s, t)` + `isSame(s, t)`。**坑**：`s == null` 直接返回 false（空树不可能是 t 的父树，除非 t 也为空），`isSame` 用递归逐节点比较。
+- [ ] **树**：Kth Smallest Element in a BST（Medium）— 关联已掌握 LC98 Validate BST（中序遍历序列）+ LC102 层次遍历。**核心**：BST 的中序遍历是升序序列，第 k 小元素即中序遍历第 k 个访问的节点。迭代中序遍历（栈模拟），弹到第 k 个即返回。**坑**：递归中序需要提前终止（用计数器），迭代法更清晰。Follow-up：BST 经常修改如何优化——可在节点结构里维护子树大小。
+- [ ] **滑动窗口/字符串**：Longest Repeating Character Replacement（Medium）— 关联已掌握 LC3 无重复字符最长子串 + LC76 最小覆盖子串模板。**核心**：滑动窗口维护「窗口长度 - 出现最多字符的次数 ≤ k」的约束——`right` 扩展更新 `maxFreq`，当 `right - left + 1 - maxFreq > k` 时收缩 `left`。**坑**：`maxFreq` 不需要在收缩时减小——「窗口长度 - maxFreq > k」限制窗口扩张，maxFreq 保持历史最大值，窗口只增不减，最终 `result = longest valid right - left + 1` 恒成立。
+- [ ] **字符串/Hash Table**：Valid Anagram（Easy）— 关联已掌握 LC3 的字符频次计数思路。**核心**：长度不同直接 false；长度相同用 26 大小的计数数组或 HashMap 统计 `s` 的每个字符 +1，`t` 的每个字符 -1，最终全为 0 即 true。**坑**：排序法（`s.sorted() == t.sorted()`）虽然简洁但 O(n log n)，面试首选 O(n) 计数法。Unicode 字符用 HashMap 更通用。
+- [ ] **数组/双指针**：Container With Most Water（Medium）— 关联已掌握 LC1 Two Sum（双指针方向）+ LC53 一遍扫描思维。**核心**：双指针从两端向中间收敛，面积 = `min(height[left], height[right]) * (right - left)`，移动较小的一端（因为移动大端面积只会更小）。**坑**：贪心直觉是正确的（可数学证明），面试中需要说明「为何移动大端不可能获得更大面积」的论证逻辑——「短板效应」决定了面积受限于较小端，移动较小端才有机会找到更高的边。
 
 ## 历史复习记录
+- 2026-07-22：树与递归、滑动窗口 & 字符串
 - 2026-07-20：图论 BFS/DFS、链表
 - 2026-07-19：动态规划、数组 & 二分查找
 - 2026-07-18：树与递归、图论 BFS/DFS、滑动窗口 & 字符串
