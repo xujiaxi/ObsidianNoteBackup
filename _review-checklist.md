@@ -1,26 +1,26 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-08-10）
+## 📅 今日复习（2026-08-11）
 
 ### 需要回顾
-- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19） — **核心：LC206 三指针迭代 `prev/curr/next`——先保存 `next` 再改 `curr.next = prev`，最后整体右移；递归版 `head.next.next = head` 后置空 `head.next` 防环。LC141 快慢指针——快指针每次两步、慢指针一步，相遇即有环；要处理空链表/单节点。LC21 哨兵 dummy 节点 + 双指针比较，谁小接谁，收尾接剩余链表。LC19 快指针先走 n 步，再快慢同步走，慢指针停在待删节点**前一个**，配合 dummy 处理删头节点。**面试口述**：链表题先问「能否修改原链表」「是否允许额外空间」；删除类操作一律先挂 dummy。**坑：LC206 忘记保存 `next` 会丢链表；LC19 慢指针要停在待删前驱而不是待删节点本身。**
-- [ ] **树与递归**：Invert Binary Tree（LC226）、Maximum Depth（LC104）、Level Order Traversal（LC102）、Construct Binary Tree from Preorder/Inorder（LC105）、Validate BST（LC98）、LCA of BST（LC235/236） — **核心：LC226 递归交换左右子树，先交换再递归或先递归再交换皆可；LC104 后序 `1 + max(depth(l), depth(r))`。LC102 BFS——队列 + 每层先记录 `size = q.size()` 再循环弹出，层与层不混。LC105 前序第一个元素是根，在 inorder 中定位根（哈希表存索引 O(1)），左子树长度 `k = idx - inLeft`，由此推出 preorder 左右边界。LC98 用上下界递归 `valid(node, lo, hi)` 而不是只比较左右孩子。LC235 利用 BST 性质：`root.val` 在 `p.val` 与 `q.val` 之间即为 LCA；LC236 一般二叉树后序递归——左右子树都找到则当前节点是 LCA。**面试口述**：树的题先明确「递归基（空节点返回什么）」；涉及 BST 优先想中序遍历有序性。**坑：LC98 只比较 node.left.val < node.val < node.right.val 会漏掉「右子树里出现比根小的值」；LC105 递归边界用「左子树长度」推导，别用绝对索引硬记。**
-- [ ] **间隔 / 设计题（堆）**：Meeting Rooms II（LC253）、Design Tic-Tac-Toe（LC348）、Design Hit Counter（LC362） — **核心：LC253 排序 + 最小堆——先按开始时间排序，堆顶存「最早结束的会议」，新会议开始时间 >= 堆顶结束时间则弹出堆顶（复用会议室），否则直接入堆（新开一间），答案 = 堆的大小。LC362 滑动窗口计数——用队列存时间戳，`getHits` 时先把 `timestamp - 300` 之前的全部弹出再返回队列长度；或用环形数组按秒存。LC348 行/列/对角线计数器——`rows[i]`、`cols[j]`、正/反对角线，落子 +1（玩家1）/ -1（玩家2），绝对值达到 n 即获胜。**面试口述**：间隔题先排序再贪心是通用套路；堆的题先问「数据规模」决定用堆还是有序结构。**坑：LC253 忘记排序直接贪心会错；复用条件用 `>=`（前一场刚结束可以无缝衔接）。LC362 队列里时间戳必须单调递增，弹出过期元素要写在返回前。**
-
+- [ ] **数组 & 二分查找**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121）、Maximum Subarray（LC53）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33） — **核心：LC1 哈希表——「先查 `target - nums[i]` 再存入」，一次遍历 O(n)；LC121 维护历史最低价，`profit = max(profit, price - minPrice)`；LC53 Kadane——`maxEndingHere = max(nums[i], maxEndingHere + nums[i])`，`maxSoFar` 取全局最大；LC153/LC33 旋转数组二分——与 `nums[right]` 比较（比左边界更可靠）判断哪半边有序，LC33 先判「左半有序还是右半有序」再决定 target 落在哪边。**面试口述**：二分题先确认数组是否有序/部分有序、是否有重复元素；哈希题先想「空间换时间」。**坑：LC1 先存入再查询会重复使用同一个元素；LC153 用 `nums[mid] > nums[right]` 判断最小值在右半；LC33 的 `lo <= hi` 边界与区间收窄别写错。**
+- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200） — **核心：LC200 沉岛算法——DFS/BFS 遍历到 '1' 即岛屿计数 +1，并把访问过的陆地置 '0' 防止重复访问；注意四方向越界检查。LC207 拓扑排序——Kahn's BFS：统计入度，入度为 0 的课程入队，逐个出队并减少依赖课程入度，最后出队数 == 课程总数则无环；DFS 版用三色标记（0 未访问 / 1 访问中 / 2 已完成），递归路径上遇到「访问中」即有环。LC133 克隆图——哈希表存 `old -> new` 映射，BFS/DFS 遍历时邻居已克隆则直接取映射，否则新建并入队/递归。**面试口述**：图题先问「有向还是无向」「是否允许修改输入」；环检测优先想拓扑排序。**坑：LC200 忘记沉岛会死循环/重复计数；LC207 只用「已访问」集合判环会漏判——必须区分「访问中」与「已完成」。**
+- [ ] **滑动窗口 & 字符串**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）、Longest Common Prefix（LC14） — **核心：通用模板——外层 while 扩展右指针，内层 while 满足条件时收缩左指针。LC3 用 `int[128]` 计数窗口内字符，出现重复则收缩左指针直到无重复，答案 = 最大窗口长度。LC76 用 need 计数 + `valid` 匹配数（need 中已满足的字符种类数）：右扩时若 `window[c] == need[c]` 则 `valid++`，收缩时若 `window[c] == need[c]` 则 `valid--`，`valid == need.size()` 时更新最小窗口。LC14 纵向比较——以第一个字符串为基准逐列比较，遇到不匹配或越界即返回。**面试口述**：滑动窗口题先确认「何时扩张、何时收缩、何时更新答案」三件事。**坑：LC76 更新答案要放在收缩左指针之前（窗口仍覆盖时）；LC3 收缩时记得把左指针字符计数减掉；`valid` 增减时机写反会导致永远不满足。**
 ### 重点坑
-- [ ] **LC98 验证 BST「上下界递归」**：必须传 `(lo, hi)` 区间约束整棵子树，只比较「父 vs 左右孩子」会漏判——典型反例：`[5,4,6,null,null,3,7]` 中右子树里的 3 小于根 5 却不小于其父 6。
-- [ ] **链表「保存 next + dummy 哨兵」**：LC206 迭代反转必须先 `next = curr.next` 再改指向，否则断链；LC19 删除节点时慢指针要停在待删节点的**前驱**，并用 dummy 统一处理删除头节点的边界。
-- [ ] **LC253「先排序 + 复用最早结束」**：间隔贪心第一步永远是按开始时间排序；判断能否复用会议室时比较的是**堆顶（最早结束）**，新会议开始时间 `>=` 堆顶结束时间才弹出复用，别拿当前会议和任意一间比。
-- [ ] **LC105 重建二叉树「用长度推边界」**：inorder 中根的索引 `k` 决定左子树长度 `k - inLeft`，preorder 的右子树起点 = `preLeft + 1 + (k - inLeft)`；边界全靠长度推导，硬记绝对索引必错。
+- [ ] **LC153/LC33 旋转数组二分「与右边界比较」**：最小值/搜索题统一与 `nums[right]` 比较——`nums[mid] > nums[right]` 说明最小值在右半；LC33 先判断哪半有序再二分。坑：`lo < hi` 与 `lo <= hi` 混用、`mid` 与边界相等时的处理。
+- [ ] **LC207 环检测「三色标记」**：DFS 必须区分「访问中（灰）」与「已完成（黑）」，递归路径上再次遇到灰色节点才是有环；只用一个 visited 集合判环会漏判。Kahn's BFS 则检查「出队节点数 == 节点总数」。
+- [ ] **LC76 最小覆盖子串「valid 计数与收缩时机」**：`valid` 只在 `window[c] == need[c]` 的临界点 ±1；更新答案必须在收缩左指针**之前**；用 `int[128]` 数组代替哈希表，避免装箱与 Integer 缓存问题。
+- [ ] **LC1 Two Sum「先查后存」+ Java 比较坑**：先 `containsKey(target - nums[i])` 再 `put`，否则同一个元素会被用两次；Java 中两个 `Integer` 对象比较必须用 `.equals()`（-128~127 之外会踩缓存坑），HashMap 的 values 尤其要注意。
 
 ### 建议刷的新题
-- [ ] **间隔**：Merge Intervals（Medium）— 关联已掌握 LC253 Meeting Rooms II 排序 + 扫描。**核心**：按开始时间排序后一次扫描，`cur.end >= next.start` 则合并（`end = max(end, next.end)`），否则把当前区间加入结果。**坑**：合并时右边界取两者较大值，不是后一个区间的 end；先排序是前提。
-- [ ] **链表**：Merge K Sorted Lists（Hard）— 关联已掌握 LC21 合并两个有序链表 + LC253 堆思想。**核心**：把 k 个头节点放入最小堆，每次弹出最小节点接入结果，再将其 `next` 入堆；或分治两两合并。**坑**：堆中要处理 null；用 PriorityQueue 时节点比较器别写错（按 val 升序）。
-- [ ] **链表**：Reorder List（Medium）— 关联已掌握 LC206 反转链表 + LC141/LC19 快慢指针。**核心**：三步走——快慢指针找中点 → 反转后半段 → 交替合并两半。**坑**：找中点时偶数长度取「左中位」；反转后半段后要把前半段尾部置空，否则成环。
-- [ ] **树**：Subtree of Another Tree（Easy）— 关联已掌握 LC100 Same Tree。**核心**：对 s 每个节点调用 `isSameTree(s, t)`，递归 `s.left` / `s.right`；也可序列化后做子串匹配。**坑**：判子树是「s 的某个子树与 t 完全相同」，不能只比根值相等；注意空树边界。
-- [ ] **树**：Kth Smallest Element in a BST（Medium）— 关联已掌握 LC98 验证 BST（中序遍历有序）。**核心**：BST 中序遍历即升序，第 k 个访问的节点即答案；迭代版用栈 + 计数器，走到 k 就提前返回（O(H+k)）。**坑**：递归版要带返回值提前剪枝，别把整棵树遍历完；k 是 1-indexed，计数器从 1 开始。
+- [ ] **滑动窗口**：Longest Repeating Character Replacement（LC424，Medium）— 关联已掌握 LC3/LC76 滑动窗口模板。**核心**：窗口内 `windowLen - maxCount <= k` 时右扩，否则收缩左指针；`maxCount` 为窗口内出现次数最多的字符数。**坑**：收缩时 `maxCount` 不必回退（历史最大值即可，答案只增不减）。
+- [ ] **图论**：Pacific Atlantic Water Flow（LC417，Medium）— 关联已掌握 LC200 Number of Islands 的 DFS/BFS。**核心**：从四条边界**反向** DFS/BFS，分别标记能流到太平洋/大西洋的格子，两个 boolean 矩阵都为 true 的格子即答案。**坑**：从海向陆地反向推（水往低处流，反向即往高处走）；别从每个格子正向 DFS，会超时。
+- [ ] **数组**：Maximum Product Subarray（LC152，Medium）— 关联已掌握 LC53 Maximum Subarray 的 Kadane。**核心**：同时维护 `maxProd` 与 `minProd`（负负得正），遇 0 重置为 1。**坑**：只维护最大值会漏掉「两个负数相乘变大」的情况。
+- [ ] **数组 / 双指针**：3Sum（LC15，Medium）— 关联已掌握 LC1 Two Sum 的哈希/双指针思想。**核心**：排序后固定 i，双指针 l/r 逼近 `-nums[i]`；跳过重复元素去重。**坑**：先排序是前提；去重要同时处理 i、l、r 三处重复。
+- [ ] **图论 / 回溯**：Word Search（LC79，Medium）— 关联已掌握 LC200/LC133 的 DFS 遍历。**核心**：网格 DFS + 回溯，访问过的格子临时标记（如置 '#'）再恢复；首字母不匹配直接剪枝跳过。**坑**：回溯后必须恢复现场；别忘记越界检查。
 
 ## 历史复习记录
+- 2026-08-11：数组 & 二分查找、图论 BFS/DFS、滑动窗口 & 字符串
 - 2026-08-10：链表、树与递归、间隔 / 设计题（堆）
 - 2026-08-09：图论 BFS/DFS、数组 & 二分查找、动态规划（股票系列）
 - 2026-08-08：链表、树与递归、滑动窗口 & 字符串
