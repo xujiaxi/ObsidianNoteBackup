@@ -1,25 +1,26 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-08-11）
+## 📅 今日复习（2026-08-12）
 
 ### 需要回顾
-- [ ] **数组 & 二分查找**：Two Sum（LC1）、Best Time to Buy and Sell Stock（LC121）、Maximum Subarray（LC53）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33） — **核心：LC1 哈希表——「先查 `target - nums[i]` 再存入」，一次遍历 O(n)；LC121 维护历史最低价，`profit = max(profit, price - minPrice)`；LC53 Kadane——`maxEndingHere = max(nums[i], maxEndingHere + nums[i])`，`maxSoFar` 取全局最大；LC153/LC33 旋转数组二分——与 `nums[right]` 比较（比左边界更可靠）判断哪半边有序，LC33 先判「左半有序还是右半有序」再决定 target 落在哪边。**面试口述**：二分题先确认数组是否有序/部分有序、是否有重复元素；哈希题先想「空间换时间」。**坑：LC1 先存入再查询会重复使用同一个元素；LC153 用 `nums[mid] > nums[right]` 判断最小值在右半；LC33 的 `lo <= hi` 边界与区间收窄别写错。**
-- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200） — **核心：LC200 沉岛算法——DFS/BFS 遍历到 '1' 即岛屿计数 +1，并把访问过的陆地置 '0' 防止重复访问；注意四方向越界检查。LC207 拓扑排序——Kahn's BFS：统计入度，入度为 0 的课程入队，逐个出队并减少依赖课程入度，最后出队数 == 课程总数则无环；DFS 版用三色标记（0 未访问 / 1 访问中 / 2 已完成），递归路径上遇到「访问中」即有环。LC133 克隆图——哈希表存 `old -> new` 映射，BFS/DFS 遍历时邻居已克隆则直接取映射，否则新建并入队/递归。**面试口述**：图题先问「有向还是无向」「是否允许修改输入」；环检测优先想拓扑排序。**坑：LC200 忘记沉岛会死循环/重复计数；LC207 只用「已访问」集合判环会漏判——必须区分「访问中」与「已完成」。**
-- [ ] **滑动窗口 & 字符串**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76）、Longest Common Prefix（LC14） — **核心：通用模板——外层 while 扩展右指针，内层 while 满足条件时收缩左指针。LC3 用 `int[128]` 计数窗口内字符，出现重复则收缩左指针直到无重复，答案 = 最大窗口长度。LC76 用 need 计数 + `valid` 匹配数（need 中已满足的字符种类数）：右扩时若 `window[c] == need[c]` 则 `valid++`，收缩时若 `window[c] == need[c]` 则 `valid--`，`valid == need.size()` 时更新最小窗口。LC14 纵向比较——以第一个字符串为基准逐列比较，遇到不匹配或越界即返回。**面试口述**：滑动窗口题先确认「何时扩张、何时收缩、何时更新答案」三件事。**坑：LC76 更新答案要放在收缩左指针之前（窗口仍覆盖时）；LC3 收缩时记得把左指针字符计数减掉；`valid` 增减时机写反会导致永远不满足。**
+- [ ] **动态规划（股票系列）**：Best Time to Buy and Sell Stock（LC121）、II（LC122）、III（LC123）、IV（LC188）、含冷却期（LC309）、含手续费（LC714） — **核心：股票系列本质是「持有 / 不持有」两状态的状态机 DP，`dp[i][0]` 持有、`dp[i][1]` 不持有，初始化 `dp[0][0] = -prices[0]`。LC121 一次交易可贪心——维护历史最低价，`profit = max(profit, price - minPrice)`；LC122 无限次交易——只要 `prices[i] > prices[i-1]` 就累加差价；LC123 最多两次——拆左右两段（前缀最大利润 + 后缀最大利润）相加；LC188 k 次——k ≥ n/2 时退化为无限次交易；LC309 冷却期——卖出后隔一天才能买，需三状态或错位一天；LC714 手续费——卖出时 `- fee`。**面试口述**：先确认「交易次数限制」「是否有冷却期 / 手续费」，再决定用贪心还是状态机 DP。**坑：初始化 `dp[0][持有]` 漏写；LC309 转移顺序写反会「当天卖当天买」。**
+- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19） — **核心：LC206 迭代反转——`prev / curr / next` 三指针，先存 `next = curr.next` 再改 `curr.next = prev`，最后整体前移。LC141 快慢指针——`slow` 一步、`fast` 两步，相遇即有环。LC21 合并——`dummy` 哨兵节点 + 双指针比较，谁小接谁。LC19 删除倒数第 N——`dummy` + 快指针先走 N 步，再快慢同步走，慢指针停在待删节点前一个。**面试口述**：先想「是否需要 dummy 节点」「空链表 / 单节点 / 删头节点」边界。**坑：反转时先存 next 再改指向，否则断链；`fast` 移动前判空。**
+- [ ] **树与递归**：Maximum Depth（LC104）、Same Tree（LC100）、Invert Binary Tree（LC226）、Level Order Traversal（LC102）、Construct Binary Tree（LC105）、Validate BST（LC98）、LCA of BST（LC235）/ Binary Tree（LC236） — **核心：LC104 后序——`max(left, right) + 1`；LC100 递归比较左右子树；LC226 反转——swap 左右后递归；LC102 层序——BFS + queue 按层记录；LC105 重建——前序首元素为根，中序定位切分左右区间递归；LC98 验证 BST——中序遍历严格递增或递归传 `(min, max)` 区间；LC235 BST 的 LCA 按值比较走左右，LC236 普通树 LCA 后序递归、左右都非空即答案。**面试口述**：先定「前/中/后序还是层序」与「递归返回值代表什么」。**坑：LC98 只比较左右孩子会漏判（要整棵子树区间约束）；LC105 中序索引定位别算错。**
 ### 重点坑
-- [ ] **LC153/LC33 旋转数组二分「与右边界比较」**：最小值/搜索题统一与 `nums[right]` 比较——`nums[mid] > nums[right]` 说明最小值在右半；LC33 先判断哪半有序再二分。坑：`lo < hi` 与 `lo <= hi` 混用、`mid` 与边界相等时的处理。
-- [ ] **LC207 环检测「三色标记」**：DFS 必须区分「访问中（灰）」与「已完成（黑）」，递归路径上再次遇到灰色节点才是有环；只用一个 visited 集合判环会漏判。Kahn's BFS 则检查「出队节点数 == 节点总数」。
-- [ ] **LC76 最小覆盖子串「valid 计数与收缩时机」**：`valid` 只在 `window[c] == need[c]` 的临界点 ±1；更新答案必须在收缩左指针**之前**；用 `int[128]` 数组代替哈希表，避免装箱与 Integer 缓存问题。
-- [ ] **LC1 Two Sum「先查后存」+ Java 比较坑**：先 `containsKey(target - nums[i])` 再 `put`，否则同一个元素会被用两次；Java 中两个 `Integer` 对象比较必须用 `.equals()`（-128~127 之外会踩缓存坑），HashMap 的 values 尤其要注意。
+- [ ] **股票状态机「持有 / 不持有」的初始化与转移顺序**：`dp[0][持有] = -prices[0]` 别漏；LC309 冷却期——卖出后第二天才能买，转移顺序写反会「当天卖当天买」；LC714 手续费只在卖出时扣一次，别在买入时扣。
+- [ ] **链表反转的三指针顺序**：先 `next = curr.next` 存下家 → 再 `curr.next = prev` 改指向 → 最后移动指针，顺序错一步就断链；删除类题目（LC19、删头节点）一律用 dummy node 简化边界。
+- [ ] **LC98 验证 BST 的区间约束**：只检查「左 < 根 < 右」会漏判——`[5,1,4,null,null,3,6]` 局部合法、整体非法；必须递归传 `(min, max)` 区间，或中序遍历严格递增。
+- [ ] **树 DFS 深递归 StackOverflowError**：理解 Stack vs Heap 内存模型，深度递归（如链表状树）数据量不大也可能栈溢出；面试可提「显式栈 / 迭代」替代方案。
 
 ### 建议刷的新题
-- [ ] **滑动窗口**：Longest Repeating Character Replacement（LC424，Medium）— 关联已掌握 LC3/LC76 滑动窗口模板。**核心**：窗口内 `windowLen - maxCount <= k` 时右扩，否则收缩左指针；`maxCount` 为窗口内出现次数最多的字符数。**坑**：收缩时 `maxCount` 不必回退（历史最大值即可，答案只增不减）。
-- [ ] **图论**：Pacific Atlantic Water Flow（LC417，Medium）— 关联已掌握 LC200 Number of Islands 的 DFS/BFS。**核心**：从四条边界**反向** DFS/BFS，分别标记能流到太平洋/大西洋的格子，两个 boolean 矩阵都为 true 的格子即答案。**坑**：从海向陆地反向推（水往低处流，反向即往高处走）；别从每个格子正向 DFS，会超时。
-- [ ] **数组**：Maximum Product Subarray（LC152，Medium）— 关联已掌握 LC53 Maximum Subarray 的 Kadane。**核心**：同时维护 `maxProd` 与 `minProd`（负负得正），遇 0 重置为 1。**坑**：只维护最大值会漏掉「两个负数相乘变大」的情况。
-- [ ] **数组 / 双指针**：3Sum（LC15，Medium）— 关联已掌握 LC1 Two Sum 的哈希/双指针思想。**核心**：排序后固定 i，双指针 l/r 逼近 `-nums[i]`；跳过重复元素去重。**坑**：先排序是前提；去重要同时处理 i、l、r 三处重复。
-- [ ] **图论 / 回溯**：Word Search（LC79，Medium）— 关联已掌握 LC200/LC133 的 DFS 遍历。**核心**：网格 DFS + 回溯，访问过的格子临时标记（如置 '#'）再恢复；首字母不匹配直接剪枝跳过。**坑**：回溯后必须恢复现场；别忘记越界检查。
+- [ ] **链表**：Reorder List（LC143，Medium）— 关联已掌握 LC206 反转 + LC141 快慢指针 + LC21 合并。**核心**：快慢指针找中点 → 反转后半段 → 交替合并两段。**坑**：找中点后记得断开两段链表；交替合并时别丢链。
+- [ ] **树**：Subtree of Another Tree（LC572，Easy）— 关联已掌握 LC100 Same Tree。**核心**：遍历每个节点，判断「以该节点为根的子树是否与目标树相同」（Same Tree 递归）。**坑**：子树必须整棵匹配，不能只匹配部分路径。
+- [ ] **树**：Kth Smallest Element in a BST（LC230，Medium）— 关联已掌握 LC98 中序遍历。**核心**：BST 中序遍历即升序，数到第 k 个即答案；迭代栈版可提前终止。**坑**：递归版别遍历完整棵树再取；计数器需传引用 / 全局变量。
+- [ ] **动态规划**：House Robber（LC198，Medium）— 关联已掌握股票系列「持有 / 不持有」状态思想。**核心**：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`，相邻不能同时取。**坑**：基线 `dp[0]`、`dp[1]` 初始化；空间可滚动优化为两个变量。
+- [ ] **动态规划 / 贪心**：Jump Game（LC55，Medium）— 关联已掌握 LC122 贪心 + LC53 前缀思维。**核心**：维护最远可达 `maxReach = max(maxReach, i + nums[i])`，`i > maxReach` 即不可达。**坑**：贪心即可，无需 DP 数组；`maxReach >= n-1` 可提前返回。
 
 ## 历史复习记录
+- 2026-08-12：动态规划（股票系列）、链表、树与递归
 - 2026-08-11：数组 & 二分查找、图论 BFS/DFS、滑动窗口 & 字符串
 - 2026-08-10：链表、树与递归、间隔 / 设计题（堆）
 - 2026-08-09：图论 BFS/DFS、数组 & 二分查找、动态规划（股票系列）
