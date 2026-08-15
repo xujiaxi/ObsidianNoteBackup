@@ -1,26 +1,28 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-08-13）
+## 📅 今日复习（2026-08-14）
 
 ### 需要回顾
-- [ ] **间隔 / 设计题（堆）**：Meeting Rooms II（LC253）、Design Tic-Tac-Toe（LC348）、Design Hit Counter（LC362） — **核心：LC253 按开始时间排序 + 最小堆存「结束时间」，`start >= 堆顶` 则 pop 复用会议室、否则 push，堆大小即最大并发会议数。LC348 每行 / 每列 / 两对角线各维护计数器，玩家 1 记 +1、玩家 2 记 -1，某计数器绝对值 == n 即赢（O(1) 判定，无需遍历棋盘）。LC362 时间戳队列 / 环形数组，`getHits` 先清理 300 秒前的旧时间戳再返回长度。**面试口述**：先想「要不要排序」「堆里存什么」。**坑：LC253 不按 start 排序直接入堆必错；堆里存的是 end 不是 start；LC348 对角线条件 `row == col`、`row + col == n - 1` 别漏。**
-- [ ] **数组 & 二分查找**：Two Sum（LC1）、Maximum Subarray（LC53）、Find Minimum in Rotated Sorted Array（LC153）、Search in Rotated Sorted Array（LC33） — **核心：LC1 哈希表存「值 → 下标」，一次遍历查 `target - nums[i]`，先查后存防自配。LC53 Kadane——`cur = max(nums[i], cur + nums[i])`、`best = max(best, cur)`，全负数数组也能正确。LC153 与右边界比较——`nums[mid] > nums[right]` 则 `left = mid + 1`，否则 `right = mid`。LC33 先判「哪半有序」，target 在有序半内就缩到该半、否则去另一半，`nums[mid] == target` 优先返回。**面试口述**：先确认「是否旋转」「找值还是找边界」，再选模板。**坑：LC1 先存再查会重复用同一个元素；LC153 与左边界比较在非旋转 / 偶数长度时会错；LC33 循环条件 `left <= right` 与 `left == right` 边界漏判。**
-- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200） — **核心：LC200 沉岛——遍历到未访问的 '1' 计数 +1，DFS/BFS 把整片相邻陆地置 '0'。LC207 拓扑排序——Kahn（入度表 + 队列，逐个弹出入度为 0 的节点）或 DFS 三色标记（0 未访问 / 1 访问中 / 2 已完成）检测环，有环返回 false。LC133 克隆——`HashMap<原节点, 新节点>`，DFS 先创建新节点再递归邻居，用 map 判重防死循环。**面试口述**：先定「BFS 还是 DFS」「是否需要 visited / 入度表」。**坑：LC200 每个 '1' 只触发一次 DFS，沉岛后别重复计数；LC207 邻接表方向（prereq → course）必须与入度表一致；LC133 必须先建节点再处理邻居，否则无限递归。**
+- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19） — **核心：LC206 迭代反转——`prev/curr/next` 三指针，先存 `next` 再改 `curr.next`，最后返回 `prev`（新头）。LC141 快慢指针——`slow` 每次 1 步、`fast` 每次 2 步，相遇即有环，循环条件 `fast != null && fast.next != null`。LC21 dummy 哨兵节点 + 双指针比较，谁小接谁，最后接上剩余部分。LC19 快指针先走 `n+1` 步，让 `slow` 停在待删节点**前一个**，dummy 节点统一处理删头节点。**面试口述**：先确认「能否用 dummy」「需要几个指针」，画图演示指针移动。**坑：LC206 先改指针再存 next 会断链；LC141 忘记判 `fast.next != null` 会 NPE；LC19 快指针只走 n 步时 slow 会停在待删节点本身，需 `slow.next = slow.next.next` 删除。**
+- [ ] **树与递归**：Maximum Depth（LC104）、Same Tree（LC100）、Invert Binary Tree（LC226）、Level Order Traversal（LC102）、Construct Binary Tree from Preorder & Inorder（LC105）、Validate BST（LC98）、LCA of BST（LC235）/ LCA of Binary Tree（LC236） — **核心：递归模板——先写 base case 返回，再想左右子树递归结果如何合并。LC104 `1 + max(left, right)`。LC100 两树同步递归，值相等且左右都 Same。LC226 先交换左右子节点再递归。LC102 BFS 队列，每层先记录 `queue.size()` 再循环弹出。LC105 前序首元素定根，中序定位根 index，`leftLen = index - inStart`，按长度偏移递归。LC98 中序遍历递增，或递归传 `(min, max)` 边界。LC235 利用 BST 性质——`p.val < root.val < q.val` 则 root 即 LCA；LC236 二叉树 LCA 用后序递归，左右子树都有结果时当前节点即 LCA。**面试口述**：先想「递归返回值是什么」「base case 怎么写」。**坑：LC98 只比较左右子节点会漏掉祖先约束；LC105 递归传参用长度偏移别硬编码下标；LC102 循环内不重新取 size 会串层；LC226 交换后要递归处理子树。**
+- [ ] **滑动窗口 & 字符串**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76） — **核心：通用模板——外层 `while` 扩展右指针，内层 `while` 满足条件时收缩左指针。LC3 用 HashMap/Set 记录窗口内字符，出现重复时左指针收缩到重复字符后一位，答案取 `max(窗口长度)`。LC76 双 Map（need/window）+ `valid` 计数，`valid == need.size()` 时尝试收缩，**收缩前**先更新最小窗口答案。**面试口述**：先明确「窗口满足什么条件」「收缩时更新什么」。**坑：LC3 收缩条件写错会多收缩；LC76 忘记在收缩前记录答案、移出窗口字符时 `window` 计数和 `valid` 忘记同步更新。**
+
 ### 重点坑
-- [ ] **LC253 会议室 II 的排序与堆内容**：必须先按开始时间排序，堆里存「结束时间」——不排序直接入堆，堆顶不是最早结束的会议，复用判断全错；新会议 `start >= 堆顶 end` 才 pop 复用，否则 push 新结束时间。
-- [ ] **二分查找边界比较**：LC153 与右边界比（`nums[mid] > nums[right]` 才向右缩），与左边界比在非旋转 / 偶数长度场景会错；LC33 先判哪半有序再二分；`mid = left + (right - left) / 2` 防溢出，循环退出条件想清楚再写。
-- [ ] **LC207 建图方向与入度一致**：邻接表方向（prereq → course）和入度表必须对应，方向反了拓扑排序结果全错；DFS 三色标记法里「访问中再遇到该节点」才是环，已完成（2）不算环。
-- [ ] **LC200 沉岛计数**：每遇到一个未访问的 '1' 才计数 +1 并整片沉掉；若 DFS 里重复计数、或忘记把相邻陆地置 '0'，岛屿数会多算。
-- [ ] **Java Integer 比较用 `.equals()`**：HashMap 的 values 等 Integer 对象用 `==` 比较会踩 Integer Cache（-128 ~ 127）的坑——小值碰巧相等、大值必不等，面试写 Java 时务必用 `.equals()`。
+- [ ] **LC206 反转链表指针顺序**：必须先 `next = curr.next` 保存后继，再 `curr.next = prev`，最后 `prev = curr; curr = next`——顺序错直接断链丢节点；最终返回 `prev` 不是 `curr`。
+- [ ] **LC98 BST 验证的祖先约束**：只检查 `left < root < right` 会漏掉「右子树里出现比祖先小的节点」，必须递归传 `(min, max)` 边界或改中序遍历递增判断；LC235 是 BST 专用（值比较即可），LC236 通用二叉树要后序递归。
+- [ ] **LC3/LC76 滑动窗口收缩时机**：LC3 只在出现重复时收缩，收缩到窗口内无重复为止；LC76 用 `valid == need.size()` 判断完全覆盖，更新答案要在收缩之前，移出字符时 `window` 计数和 `valid` 都要同步更新。
+- [ ] **LC105 重建二叉树索引计算**：中序里定位根 index，`leftLen = index - inStart`，右子树起点是 `inStart + leftLen + 1`——用长度偏移而不是拍脑袋写死下标；前序指针每层 +1。
+- [ ] **LC141 / LC19 快慢指针边界**：LC141 循环条件 `fast != null && fast.next != null` 缺一不可，否则 NPE；LC19 用 dummy 节点、快指针先走 `n+1` 步，保证 slow 停在待删节点前一个，删头节点也能统一处理。
 
 ### 建议刷的新题
-- [ ] **间隔**：Merge Intervals（LC56，Medium）— 关联已掌握 LC253 间隔排序处理。**核心**：按 start 排序后线性扫描，`interval[0] <= prevEnd` 则合并（更新 end 取 max），否则开新区间。**坑**：不排序直接合并必错；合并时 end 要取两者较大值。
-- [ ] **堆**：Top K Frequent Elements（LC347，Medium）— 关联已掌握 LC253 最小堆。**核心**：HashMap 计数 + 大小为 k 的最小堆（按频率比较），堆满且新频率更高时 pop 堆顶；也可用桶排序 O(n)。**坑**：堆比较的是频率不是元素值；最后堆内元素顺序任意，无需排序输出。
-- [ ] **数组**：3Sum（LC15，Medium）— 关联已掌握 LC1 Two Sum。**核心**：排序 + 固定一个数 + 双指针找剩余两数，`sum < 0` 左移、`sum > 0` 右移。**坑**：固定数和双指针都要跳过重复值去重，否则结果重复。
-- [ ] **数组 / 动态规划**：Maximum Product Subarray（LC152，Medium）— 关联已掌握 LC53 Kadane。**核心**：同时维护当前最大 / 最小乘积（负负得正），`curMax = max(nums[i], nums[i]*curMax, nums[i]*curMin)`，遇 0 自动重置。**坑**：只维护最大值会漏掉「两个负数相乘变正」的情况，必须成对维护。
-- [ ] **图论**：Pacific Atlantic Water Flow（LC417，Medium）— 关联已掌握 LC200 沉岛 DFS。**核心**：从四条边界反向 DFS / BFS，分别标记能流入太平洋 / 大西洋的格子，两个标记都有的格子即答案。**坑**：反向从边界出发（水往高处流），两个方向的 visited 要分开标记，最后取交集。
+- [ ] **链表**：Reorder List（LC143，Medium）— 关联已掌握 LC206 反转链表 + 快慢指针。**核心**：快慢指针找中点 → 反转后半段 → 交替合并两半。**坑**：找中点注意奇偶长度；合并前先存 next 防止断链。
+- [ ] **链表 / 堆**：Merge K Sorted Lists（LC23，Hard）— 关联已掌握 LC21 合并两个有序链表 + LC253 最小堆。**核心**：k 个头节点入最小堆，每次弹出最小节点接到结果链表，再将其 `next` 入堆。**坑**：比较器按节点值；堆空即结束；别重复入堆已弹出的节点。
+- [ ] **树**：Subtree of Another Tree（LC572，Easy）— 关联已掌握 LC100 Same Tree。**核心**：对每个节点调用 `isSameTree(root, subRoot)`，或递归检查左右子树。**坑**：空树 / 空子树边界；要遍历所有节点而不是只比根。
+- [ ] **树**：Kth Smallest Element in a BST（LC230，Medium）— 关联已掌握 LC98 BST 中序遍历。**核心**：中序遍历天然递增，计数到 k 返回；迭代栈实现可提前剪枝。**坑**：k 从 1 计数；递归用全局 / 引用计数，返回值传递易错。
+- [ ] **滑动窗口**：Longest Repeating Character Replacement（LC424，Medium）— 关联已掌握 LC3/LC76 滑动窗口模板。**核心**：维护窗口内最高频字符数 maxCount，`窗口长度 - maxCount <= k` 则窗口合法可扩展，否则左指针右移；经典 trick 是窗口长度只增不减。**坑**：收缩时记得同步更新字符频率和 maxCount。
 
 ## 历史复习记录
+- 2026-08-14：链表、树与递归、滑动窗口 & 字符串
 - 2026-08-13：间隔 / 设计题（堆）、数组 & 二分查找、图论 BFS/DFS
 - 2026-08-12：动态规划（股票系列）、链表、树与递归
 - 2026-08-11：数组 & 二分查找、图论 BFS/DFS、滑动窗口 & 字符串
