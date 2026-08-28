@@ -1,25 +1,26 @@
 # 🎯 面试复习清单
 
-## 📅 今日复习（2026-08-26）
+## 📅 今日复习（2026-08-27）
 
 ### 需要回顾
-- [ ] **图论 BFS/DFS**：Clone Graph（LC133）、Course Schedule（LC207）、Number of Islands（LC200） — **核心：LC133 克隆图用 HashMap 缓存「原节点 → 克隆节点」，遍历时已访问直接返回缓存，避免死循环和重复创建；LC207 拓扑排序——Kahn's Algorithm（BFS：先算入度，入度为 0 的入队，弹出时把邻居入度减 1，最后看处理数量是否等于节点总数）或 DFS 三色标记法（0 未访问 / 1 访问中 / 2 已完成，遇到访问中说明有环）；LC200 沉岛算法——遇到 '1' 就 count++ 并把相连陆地全部置为 '0'，避免重复计数。**面试口述：先分清是「连通性遍历」还是「依赖排序」再选 DFS/BFS；图遍历必须先讲 visited 去重。**坑：BFS 忘记 visited 集合 → 死循环；LC207 用 DFS 检测环时必须区分「访问中」和「已完成」，只标记 visited 会误判；LC200 沉岛时忘记把当前格子置 '0' 会重复计数；克隆图返回的是克隆头节点不是原节点。**
-- [ ] **链表**：Reverse Linked List（LC206）、Linked List Cycle（LC141）、Merge Two Sorted Lists（LC21）、Remove Nth Node From End（LC19） — **核心：LC206 三指针 prev/curr/next 反转，或递归 `head.next.next = head`；LC141 快慢指针——快指针每次走两步、慢指针一步，相遇即有环；LC21 双指针比较值，dummy 哨兵接结果，遍历完把剩余链表直接接上；LC19 快指针先走 n 步再快慢同步走，慢指针停在待删节点前一个，用 dummy 处理删头节点边界。**面试口述：头节点可能变化的操作（反转、删除头）一律先建 dummy 节点；先画图再写指针移动。**坑：LC206 反转时忘记先保存 next 就断链；LC141 循环条件只判 `fast != null` 不判 `fast.next != null` → 空指针；LC21 忘了接剩余部分；LC19 不用 dummy 时删头节点出错；Java 中比较节点值用 `.equals()` 避免 Integer 缓存问题。**
-- [ ] **树与递归**：Maximum Depth（LC104）、Same Tree（LC100）、Invert Tree（LC226）、Level Order Traversal（LC102）、Construct from Preorder/Inorder（LC105）、Validate BST（LC98）、LCA of BST（LC235） — **核心：递归三要素——base case（null 判断）、递推关系、返回值；LC104 `max(left, right) + 1`；LC100 两棵树同步递归逐节点比较；LC226 交换左右子树后递归；LC102 层序用 BFS 队列，每轮先记录 `queue.size()` 再处理该层；LC105 用前序确定根、中序划分左右，配合 HashMap 存中序索引 O(1) 定位；LC98 验证 BST 用「中序遍历递增」或用 min/max 区间递归，不能只比较左右子节点；LC235 利用 BST 性质——p、q 都在左子树就往左走，都在右子树就往右走，分叉点即 LCA。**面试口述：先写 base case 再写递归体；明确每层递归返回什么。**坑：LC98 只比较 `root.left.val < root.val < root.right.val` 会漏判「右子树里有小于 root 的节点」——必须传 min/max 边界或中序遍历；LC105 忘记 HashMap 存中序索引退化成 O(N²)；深度递归可能 StackOverflowError，数据量大时改迭代；LC102 每层不记录 size 会把整棵树当一层输出。**
+- [ ] **滑动窗口 & 字符串**：Longest Substring Without Repeating Characters（LC3）、Minimum Window Substring（LC76） — **核心：LC3 滑动窗口 + HashMap 记录字符最后出现位置，遇重复字符左指针跳到 `max(left, map.get(c)+1)` 防止回退，答案取 `max(ans, right-left+1)`；LC76 通用模板——外层 while 扩右指针，内层 while 在「窗口已覆盖 t」时收缩左指针，用 need/have 频次计数判断覆盖（t 中重复字符要计频次），收缩前先记录当前窗口答案。**面试口述：先讲清「何时扩右、何时缩左、窗口合法的判定条件」再写代码。**坑：LC3 忘记更新字符最新位置、左指针不取 max 会回退导致重复字符又进窗口；LC76 覆盖判断只查存在不查频次会漏解；收缩时机——先更新答案再收缩。**
+- [ ] **动态规划（股票系列）**：Best Time to Buy and Sell Stock（LC121）、II（LC122）、III（LC123）、IV（LC188）、Cooldown（LC309）、Transaction Fee（LC714） — **核心：LC121 一次交易——遍历维护历史最低价，`profit = max(profit, price - minPrice)`；LC122 无限次——贪心累加所有正差价（`prices[i] > prices[i-1]` 就加）；LC123/LC188 有限次——状态机 DP：`dp[i][k][0/1]` 第 i 天、第 k 笔、持有/不持有，不持有 = max(前一天不持有, 前一天持有 + 卖出价)，持有 = max(前一天持有, 前一天不持有 - 买入价)，空间压缩后 k 倒序；LC309 冷冻期——不持有拆成「冷静期」与「可买」两态；LC714 手续费——买入时扣掉 fee 即可。**面试口述：先定义状态维度（天数 × 交易次数 × 是否持有），再写转移方程，最后压缩空间。**坑：转移顺序写反会互相污染（算「持有」要用旧「不持有」，需临时变量或倒序）；LC121 初始 minPrice 设 Integer.MAX_VALUE；LC123 两笔交易状态压缩时 k 倒序遍历。**
+- [ ] **间隔 / 设计题（堆）**：Meeting Rooms II（LC253）、Design Tic-Tac-Toe（LC348）、Design Hit Counter（LC362） — **核心：LC253 按开始时间排序 + 最小堆存结束时间，新会议 `start >= 堆顶 end` 就复用会议室（弹出堆顶再压入），否则新开一间，堆 size 即答案；LC348 行/列/两条对角线计数器，玩家 1 记 +1、玩家 2 记 -1，某计数器绝对值 == n 即胜；LC362 队列按时间戳存储，hit 入队，getHits 先弹出超过 300 秒的过期时间戳再返回队列长度。**面试口述：设计题先明确 API 与数据规模，再选数据结构，最后说清每个操作的时间复杂度。**坑：LC253 忘记先排序、堆里存的是结束时间不是开始时间；LC348 忘记检查对角线（i==j 与 i+j==n-1）；LC362 查询前必须先清过期时间戳，否则返回偏大。**
 
 ### 重点坑
-- [ ] **图论**：BFS 忘记 visited 去重 → 死循环；LC207 用 DFS 检测环要区分「访问中/已完成」状态，不能只记 visited；LC200 沉岛忘记把当前格子置 '0' 会重复计数。
-- [ ] **链表**：LC206 先保存 next 再改指针，否则断链；LC141 循环条件 `fast != null && fast.next != null` 都要判；LC19 删除头节点必须靠 dummy。
-- [ ] **树**：LC98 必须用 min/max 边界或中序遍历验证 BST，只比较相邻节点会漏判；LC105 用 HashMap 存中序索引避免 O(N²)；递归深度过大会栈溢出。
+- [ ] **滑动窗口**：LC3 左指针移动取 `max(left, map.get(c)+1)` 防止回退；LC76 用频次计数（need 数组）判断覆盖而非只判存在；收缩窗口前先更新答案。
+- [ ] **DP 股票**：状态机转移顺序写反会互相污染——算「持有」用旧「不持有」、算「不持有」用旧「持有」，用临时变量或倒序更新；LC123 空间压缩后 k 倒序遍历；LC121 minPrice 初始化为 Integer.MAX_VALUE。
+- [ ] **间隔 / 设计**：LC253 必须先按开始时间排序，堆内存结束时间，`start >= heap.peek()` 才复用会议室；LC362 getHits 先清过期时间戳再返回；LC348 别漏两条对角线。
 
 ### 建议刷的新题
-- [ ] **图论**：Pacific Atlantic Water Flow（LC417，Medium）— 关联已掌握知识点：LC200 岛屿 DFS/BFS（已完成）。**核心**：反向思维——从四条边的海洋出发向内 DFS/BFS，分别标记能流到太平洋 / 大西洋的格子，能同时到达两洋的格子即答案。**坑**：从边缘向内遍历，而不是对每个格子向外搜（否则 O(MN·MN) 超时）；两套 visited 数组要分开标记。
-- [ ] **图论**：Longest Consecutive Sequence（LC128，Medium）— 关联已掌握知识点：LC200 图遍历 / 哈希去重（已完成）。**核心**：所有数入 set，只从「序列起点」（`num-1` 不在 set 中）开始向后计数，每个数最多被访问一次，总 O(N)。**坑**：对每个数都从头数会 O(N²)；「`num-1` 不在 set 中」的起点判断是去重的关键。
-- [ ] **链表**：Reorder List（LC143，Medium）— 关联已掌握知识点：LC206 反转链表 + LC19 快慢指针（已完成）。**核心**：快慢指针找中点 → 反转后半段 → 交替合并两段。**坑**：找中点时注意奇偶长度；合并时先保存 next 再改指针，否则断链。
-- [ ] **树**：Kth Smallest Element in a BST（LC230，Medium）— 关联已掌握知识点：LC98 验证 BST 中序遍历（已完成）。**核心**：BST 中序遍历即升序序列，用栈迭代数到第 k 个即可（或递归计数）。**坑**：递归写法要能在找到后提前终止，别把整棵树遍历完；迭代栈模拟中序时入栈顺序别写反。
-- [ ] **树**：Subtree of Another Tree（LC572，Easy）— 关联已掌握知识点：LC100 Same Tree 递归（已完成）。**核心**：遍历主树每个节点，用 LC100 的 isSameTree 判断「以该节点为根的子树是否与 subRoot 完全相同」。**坑**：判空要严格（两边都 null 才相等）；根匹配后还要继续检查整棵子树完全一致。
+- [ ] **字符串**：Longest Repeating Character Replacement（LC424，Medium）— 关联已掌握知识点：LC3/LC76 滑动窗口模板（已完成）。**核心**：维护窗口内最大字符频次 maxFreq，`windowLen - maxFreq <= k` 时窗口合法，否则左指针收缩；maxFreq 只增不减仍保证正确。**坑**：更新 maxFreq 的时机（右指针扩展后立即更新）；收缩后无需回退 maxFreq。
+- [ ] **动态规划**：Climbing Stairs（LC70，Easy）— 关联已掌握知识点：LC121 股票 DP 的状态转移思维（已完成）。**核心**：`dp[i] = dp[i-1] + dp[i-2]` 斐波那契，滚动变量 O(1) 空间；注意 dp[0]/dp[1] 初始化。**坑**：n=1 边界直接返回；别用递归导致指数级重复计算。
+- [ ] **动态规划**：House Robber（LC198，Medium）— 关联已掌握知识点：股票 DP「选 / 不选」状态机（已完成）。**核心**：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`，相邻不能同时偷；可滚动两个变量。**坑**：dp 递推时 i-2 越界处理；与 LC213 House Robber II（环形）对比记忆。
+- [ ] **间隔**：Merge Intervals（LC56，Medium）— 关联已掌握知识点：LC253 区间排序 + 贪心（已完成）。**核心**：按 start 排序，`prev.end >= curr.start` 则合并（end 取 max），否则把 prev 加入结果并更新。**坑**：合并时 end 要取两者较大值而非直接覆盖；排序是前提，漏排序必错。
+- [ ] **堆**：Top K Frequent Elements（LC347，Medium）— 关联已掌握知识点：LC253 最小堆维护 top-k（已完成）。**核心**：HashMap 计数 + 大小为 k 的最小堆（或桶排序 O(N)）；堆顶即第 k 高频，优于最大堆存全部。**坑**：比较器写反会变成最大堆；k == n 时退化，注意边界。
 
 ## 历史复习记录
+- 2026-08-27：滑动窗口 & 字符串、动态规划（股票系列）、间隔 / 设计题（堆）
 - 2026-08-26：图论 BFS/DFS、链表、树与递归
 - 2026-08-25：滑动窗口 & 字符串、动态规划（股票系列）、间隔 / 设计题（堆）
 - 2026-08-24：图论 BFS/DFS、链表、树与递归
