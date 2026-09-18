@@ -7,7 +7,7 @@
 | Array | 2 | `array/` |
 | Binary Search | 2 | `binary-search/` |
 | Bit Manipulation | 0 | `bit-manipulation/` |
-| Graph | 3 | `graph/` |
+| Graph | 4 | `graph/` |
 | Linked List | 4 | `linked-list/` |
 | Sliding Window | 2 | `sliding-window/` |
 | Tree | 8 | `tree/` |
