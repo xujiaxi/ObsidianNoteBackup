@@ -237,6 +237,24 @@ import heapq                         # 堆 / 优先队列
 import math                          # 数学运算
 ```
 
+## 递归深度上限（判题环境差异，2026-09-18 实测）
+
+| 环境 | `sys.getrecursionlimit()` | 说明 |
+|------|---------------------------|------|
+| CPython 官方默认 | **1000** | 解释器默认值 |
+| **LeetCode Python3** | **550000** | 实测（用户确认）。比默认高 550 倍，所以网格题递归 DFS 在 LC 上几乎不可能爆 |
+| HackerRank / CoderPad 等 | 通常 1000 | 同一份递归代码换个平台直接 `RecursionError` |
+
+实测数据（本机 CPython 3.13.5）：
+- n×n 全 1 实心方块 → 递归深度 **= n²**：n=30 → 900（通过）；n=32 → 1024（爆默认 1000）
+- 100×100 随机网格：密度 0.3 → 深度 16；密度 0.5 → 深度 82；密度 0.7 / 0.9 → 爆栈
+- 深度 550000 的纯 Python 递归：0.34s，峰值 88MB —— LeetCode 的限额不是瓶颈
+
+要点：
+- **栈深度由最大连通块的蛇形路径长度决定，不是网格尺寸**
+- Python **3.11+ 纯 Python 递归不再消耗 C 栈**（调用被内联），所以 `setrecursionlimit` 设高一般只抛 `RecursionError` 或吃内存；**Python ≤ 3.10 设过高会真的段错误**（"Fatal Python error: Cannot recover from stack overflow"）
+- LeetCode 能过 ≠ 面试平台能过 → 面试主动用迭代 DFS，或主动说明风险（加分项）
+
 ## 性能小贴士
 
 ```python

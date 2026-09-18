@@ -65,4 +65,5 @@ class Solution {
 | Heap | grid 数组实体（只有一份） |
 | Stack | 每个 dfs 调用的栈帧（r, c 坐标 + 返回地址） |
 | 风险 | 全陆地时栈深度 ≈ 格子数。实测 n×n 实心块的深度 = n²，n ≥ 32 就超 Python 默认 limit=1000 → RecursionError |
-| 解决 | 大数据换 BFS 或迭代 DFS（显式栈）；或 `sys.setrecursionlimit`（注意仍受 C 栈/线程栈限制） |
+| 解决 | 大数据换 BFS 或迭代 DFS（显式栈）；或 `sys.setrecursionlimit`（Python 3.11+ 纯 Python 递归不占 C 栈，设高只会报错/吃内存；≤3.10 会段错误） |
+| 平台差异 | LeetCode 实测 limit = **550000**（2026-09-18），HackerRank/CoderPad 等为默认 1000 → 同一份递归代码换平台就爆 |

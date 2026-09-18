@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "knowledge/bfs-dfs-core.md",
+                "file": "plans/two-week-plan-2026-09-18.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "bfs-dfs-core"
+              "title": "two-week-plan-2026-09-18"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": true
+                "autoReveal": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -182,9 +184,9 @@
   },
   "active": "3a70c67de75efb2e",
   "lastOpenFiles": [
+    "knowledge/bfs-dfs-core.md",
     "knowledge/blind-75-overview.md",
     "knowledge/binary-search-template.md",
-    "knowledge/bfs-dfs-core.md",
     "leetcode/array/0001-two-sum.md",
     "leetcode/_index.md",
     "knowledge/python-syntax-for-leetcode.md",
