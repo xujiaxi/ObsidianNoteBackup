@@ -104,7 +104,7 @@
 - [ ] [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
 - [ ] [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
 
-> 注：Premium 题目可在 NeetCode.io / HackerRank / LintCode 找到替代
+> 注：用户有 **LeetCode Premium 订阅**，Premium 题（Meeting Rooms 系列、Alien Dictionary、Graph Valid Tree、Number of Connected Components、Serialize and Deserialize 等）直接做原题，不需要找替代。
 
 ## 复习策略
 

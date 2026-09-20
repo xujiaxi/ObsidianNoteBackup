@@ -24,7 +24,7 @@
 | String | 1 | `string/` |
 | Trie | 0 | `trie/` |
 | Two Pointers | 0 | `two-pointers/` |
-| Union Find | 0 | `union-find/` |
+| Union Find | 1 | `union-find/` |
 
 ## 当前进度
 

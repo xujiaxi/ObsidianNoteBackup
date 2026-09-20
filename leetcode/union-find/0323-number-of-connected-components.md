@@ -9,7 +9,7 @@ tags: [graph, union-find, dfs, connected-components]
 # 323. Number of Connected Components in an Undirected Graph
 
 > 面经出处：面经 6「find connected components in the graph」。
-> ⚠️ 这题在 LeetCode 上是 **Premium 会员题**，免费替代是 **LC 547 Number of Provinces**（同样求连通分量数，输入换成 n×n 邻接矩阵），两个代码本文都给了。
+> 用户有 LeetCode Premium 订阅 → 直接做本题。**LC 547 Number of Provinces** 作为同考点的补充练习（输入换成 n×n 邻接矩阵，代码本文也给了）。
 > 计划位置：`plans/two-week-plan-2026-09-18.md` Day 1。并查集模板见 `knowledge/union-find-template.md`。
 
 ## 题目
