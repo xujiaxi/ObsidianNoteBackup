@@ -182,8 +182,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "3a70c67de75efb2e",
+  "active": "631ec585a6520780",
   "lastOpenFiles": [
+    "system-design/framework.md",
+    "plans/two-week-plan-2026-09-18.md",
+    "system-design/fundamentals.md",
     "knowledge/bfs-dfs-core.md",
     "knowledge/blind-75-overview.md",
     "knowledge/binary-search-template.md",
