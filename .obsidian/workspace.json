@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "plans/two-week-plan-2026-09-18.md",
+                "file": "system-design/framework.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "two-week-plan-2026-09-18"
+              "title": "framework"
             }
           }
         ]
@@ -184,8 +184,8 @@
   },
   "active": "631ec585a6520780",
   "lastOpenFiles": [
-    "system-design/framework.md",
     "plans/two-week-plan-2026-09-18.md",
+    "system-design/framework.md",
     "system-design/fundamentals.md",
     "knowledge/bfs-dfs-core.md",
     "knowledge/blind-75-overview.md",
