@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "fb104928987afe7a",
+        "id": "0e99e52f03a81ba8",
         "type": "tabs",
         "children": [
           {
-            "id": "3a70c67de75efb2e",
+            "id": "c2b783d10d61b6cc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "system-design/framework.md",
-                "mode": "preview",
-                "source": true
+                "file": "system-design/metrics-monitoring.md",
+                "mode": "source",
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "framework"
+              "title": "metrics-monitoring"
             }
           }
         ]
@@ -182,23 +182,26 @@
       "bases:Create new base": false
     }
   },
-  "active": "631ec585a6520780",
+  "active": "c2b783d10d61b6cc",
   "lastOpenFiles": [
+    "plans/mianjing-question-map.md",
     "plans/two-week-plan-2026-09-18.md",
+    "system-design/metrics-monitoring.md",
     "system-design/framework.md",
     "system-design/fundamentals.md",
+    "knowledge/sliding-window-template.md",
+    "knowledge/message-queue.md",
+    "_review-checklist.md",
     "knowledge/bfs-dfs-core.md",
     "knowledge/blind-75-overview.md",
     "knowledge/binary-search-template.md",
     "leetcode/array/0001-two-sum.md",
     "leetcode/_index.md",
     "knowledge/python-syntax-for-leetcode.md",
-    "knowledge/sliding-window-template.md",
     "knowledge/tree-core.md",
     "knowledge/database.md",
     "knowledge/linked-list-template.md",
     "knowledge/os.md",
-    "knowledge/message-queue.md",
     "knowledge/computer-network.md",
     "leetcode/_模板.md",
     "Untitled 2.base",
@@ -209,7 +212,6 @@
     "knowledge/计算机网络.md",
     "knowledge/消息队列.md",
     "knowledge/操作系统.md",
-    "_复习清单.md",
-    "README.md"
+    "_复习清单.md"
   ]
 }

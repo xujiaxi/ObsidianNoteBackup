@@ -56,23 +56,23 @@
 
 ## Design 逐条映射
 
-| 面经# | 原题 | 归入母题 | 计划中的日子 |
-|---|---|---|---|
-| 1 | Design a KYC system | M6 IAM/KYC | Day 10 |
-| 2 | Design a Review Service | M3 Feed/UGC | Day 5 |
-| 3 | Multi-Region Metrics Monitoring System | M1 Metrics | Day 2–3 |
-| 5 | design youtube deep dive uploading large video | M8 Video | Day 11 |
-| 6 | design IAM system | M6 IAM/KYC | Day 9 |
-| 7 | design PKI | M7 PKI | Day 10 |
-| 8 | Uber | M10 Geo/Dispatch | Day 11 |
-| 9 | online ticket booking system | M9 Booking/Inventory | Day 8 |
-| 10 | notification system | M2 Notification | Day 4 |
-| 11 | 设计 search 系统 | M4 Search | Day 6 |
-| 12 | 游戏实时 Leaderboard，10M DAU（考点：跳表） | M5 Leaderboard | Day 7 |
-| 13 | pricing notification system | M2 Notification 变体 | Day 4 |
-| 14 | News Feed system | M3 Feed/UGC | Day 5 |
-| 15 | Metric 收集和查询系统 | M1 Metrics 变体 | Day 2–3 |
-| 16 | 库存管理系统（电商） | M9 Booking/Inventory 变体 | Day 8 |
+| 面经# | 原题                                             | 归入母题                    | 计划中的日子  |
+| --- | ---------------------------------------------- | ----------------------- | ------- |
+| 1   | Design a KYC system                            | M6 IAM/KYC              | Day 10  |
+| 2   | Design a Review Service                        | M3 Feed/UGC             | Day 5   |
+| 3   | Multi-Region Metrics Monitoring System         | M1 Metrics              | Day 2–3 |
+| 5   | design youtube deep dive uploading large video | M8 Video                | Day 11  |
+| 6   | design IAM system                              | M6 IAM/KYC              | Day 9   |
+| 7   | design PKI                                     | M7 PKI                  | Day 10  |
+| 8   | Uber                                           | M10 Geo/Dispatch        | Day 11  |
+| 9   | online ticket booking system                   | M9 Booking/Inventory    | Day 8   |
+| 10  | notification system                            | M2 Notification         | Day 4   |
+| 11  | 设计 search 系统                                   | M4 Search               | Day 6   |
+| 12  | 游戏实时 Leaderboard，10M DAU（考点：跳表）                | M5 Leaderboard          | Day 7   |
+| 13  | pricing notification system                    | M2 Notification 变体      | Day 4   |
+| 14  | News Feed system                               | M3 Feed/UGC             | Day 5   |
+| 15  | Metric 收集和查询系统                                 | M1 Metrics 变体           | Day 2–3 |
+| 16  | 库存管理系统（电商）                                     | M9 Booking/Inventory 变体 | Day 8   |
 
 ## 面经暴露的追问套路（每条都要准备 30 秒答案）
 
