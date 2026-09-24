@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "system-design/metrics-monitoring.md",
+                "file": "plans/two-week-plan-2026-09-18.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "metrics-monitoring"
+              "title": "two-week-plan-2026-09-18"
             }
           }
         ]
@@ -182,11 +182,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "c2b783d10d61b6cc",
+  "active": "631ec585a6520780",
   "lastOpenFiles": [
     "plans/mianjing-question-map.md",
-    "plans/two-week-plan-2026-09-18.md",
     "system-design/metrics-monitoring.md",
+    "plans/two-week-plan-2026-09-18.md",
     "system-design/framework.md",
     "system-design/fundamentals.md",
     "knowledge/sliding-window-template.md",
